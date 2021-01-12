@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Player {
 
     private String name;
-    private int money;
-    private static final int INITIAL_MONEY = 1000;
+    private long money;
+    private static final long INITIAL_MONEY = 1000;
     private ArrayList<Animal> animals = new ArrayList<>();
 
     public Player(String name){
@@ -23,11 +23,11 @@ public class Player {
         this.name = name;
     }
 
-    public int getMoney() {
+    public long getMoney() {
         return money;
     }
 
-    public void setMoney(int money) {
+    public void setMoney(long money) {
         this.money = money;
     }
 
