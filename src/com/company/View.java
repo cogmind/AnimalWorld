@@ -26,21 +26,17 @@ public class View {
         System.out.print(money + "€\t");
     }
 
-    public void displayAverageHealth(ArrayList<Integer> health){
-        // TODO Compute average health
-        int HP_TOTAL = 0;
-        int length = 0;
-        for(int hp : health) {
-            HP_TOTAL += hp;
-            length += 1;
-        }
-        System.out.printf("Total HP: %f Avg HP: %d", ((HP_TOTAL + 0.0) / length), HP_TOTAL);
+    public void displayAverageHealth(double averageHealth){
+        System.out.printf("Avg HP: %d", averageHealth);
+    }
+
+    public void displayTotalHealth(double totalHealth){
+        System.out.printf("Total HP: %d", totalHealth);
     }
 
     public void howManyRounds() {
         System.out.println("How many rounds (" + Game.MIN_ROUNDS + "-" + Game.MAX_ROUNDS + ") would you like to play?");
     }
-
 
     public void roundsOutOfBounds() {
         error("Rounds must be between " + Game.MIN_ROUNDS + " and " + Game.MAX_ROUNDS + ". Try again");
@@ -58,7 +54,7 @@ public class View {
         System.out.println("OPTIONS (Select one)\n1. Buy animals\n2. Buy food \n3. Feed animals\n4. Breed new animals (success rate " + Game.BREEDING_SUCCESS_RATE + "%) \n5. Sell animals\n");
     }
 
-    public void pleaseSelect(){
+    public void menuOutOfBounds(){
         error("Please select an option between 1 and 5.");
     }
 

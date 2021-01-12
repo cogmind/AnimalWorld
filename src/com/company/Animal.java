@@ -2,12 +2,14 @@ package com.company;
 
 public abstract class Animal {
 
+    private String type;
     private String name;
     private boolean isFemale;
     private byte health;
     private int price;
 
-    public Animal(String name, boolean isFemale, byte health, int price) {
+    public Animal(String type, String name, boolean isFemale, byte health, int price) {
+        this.type = type;
         this.name = name;
         this.isFemale = isFemale;
         this.health = health;

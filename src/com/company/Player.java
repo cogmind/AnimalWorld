@@ -7,6 +7,7 @@ public class Player {
     private String name;
     private long money;
     private static final long INITIAL_MONEY = 1000;
+    private ArrayList<Integer> allHealth = new ArrayList<>();
     private ArrayList<Animal> animals = new ArrayList<>();
 
     public Player(String name){
@@ -31,4 +32,23 @@ public class Player {
         this.money = money;
     }
 
+    public double getAverageHealth() {
+
+        int hp_total = 0;
+        int length = 0;
+        for (int hp : allHealth) {
+            hp_total += hp;
+            length += 1;
+        }
+        return (hp_total + 0.0) / length;
+    }
+
+    public double getTotalHealth() {
+
+        int hp_total = 0;
+        for (int hp : allHealth) {
+            hp_total += hp;
+        }
+        return hp_total;
+    }
 }

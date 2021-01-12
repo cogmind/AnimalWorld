@@ -1,8 +1,22 @@
 package com.company;
 
 public class Bird extends Animal {
-    // seals, whales, manatees, sea otters and polar bears. src wiki
-    public Bird(String name, boolean isFemale, byte health, int price){
-        super(name, isFemale, health, price);
+
+    public enum Type {
+
+        pigeon(10),
+        parrot(15),
+        owl(30),
+        eagle(80);
+
+        int price;
+
+        Type(int price) {
+            this.price = price;
+        }
+    }
+
+    public Bird(String type, String name, boolean isFemale, byte health, int price){
+        super(type, name, isFemale, health, price);
     }
 }

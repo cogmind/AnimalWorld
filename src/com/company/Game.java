@@ -49,7 +49,7 @@ public class Game {
             final byte MENU_END = 5;
 
             if (menuChoice < MENU_START || menuChoice > MENU_END) {
-                view.pleaseSelect();
+                view.menuOutOfBounds();
             } else {
 
                 switch (menuChoice) {
