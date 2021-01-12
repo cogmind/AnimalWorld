@@ -1,11 +1,13 @@
 package com.company;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game {
 
     private View view = new View();
     private boolean gameOver = false;
+    private ArrayList<Player> allPlayers = new ArrayList<>();
 
     public final static byte MIN_ROUNDS = 5;
     public final static byte MAX_ROUNDS = 30;
@@ -37,53 +39,73 @@ public class Game {
             }
         }
 
-        byte menuChoice;
-        // TODO for each player
-        // TODO If all players and rounds have been consumed, set gameOver to true OR break
-        while (!gameOver && rounds > 0) {
-
-            view.displayMainMenu();
-            menuChoice = scanner.nextByte();
-
-            final byte MENU_START = 1;
-            final byte MENU_END = 5;
-
-            if (menuChoice < MENU_START || menuChoice > MENU_END) {
-                view.menuOutOfBounds();
-            } else {
-
-                switch (menuChoice) {
-                    case 1 -> buyAnimal();
-                    case 2 -> buyFood();
-                    case 3 -> feed();
-                    case 4 -> breed();
-                    case 5 -> sell();
-                }
-
-            }
-            rounds--;
+        //Define players
+        String name;
+        for(byte player = 1; player <= players; player++) {
+            name = scanner.nextLine();
+            Player newPlayer = new Player(name, player);
+            allPlayers.add(newPlayer);
         }
+
+        for(Player player: allPlayers) {
+
+            byte menuChoice;
+            // TODO for each player
+            // TODO If all players and rounds have been consumed, set gameOver to true OR break
+            while (!gameOver && rounds > 0) {
+
+                //TODO Set gameOver condition ???
+
+                // View statistics
+                view.readyPlayerNo(player.getNumber());
+                view.displayMoney(player.getMoney());
+                view.displayTotalHealth(player.getTotalHealth());
+                view.displayAverageHealth(player.getAverageHealth());
+
+                view.displayMainMenu();
+                menuChoice = scanner.nextByte();
+
+                final byte MENU_START = 1;
+                final byte MENU_END = 5;
+
+                if (menuChoice < MENU_START || menuChoice > MENU_END) {
+                    view.menuOutOfBounds();
+                } else {
+
+                    switch (menuChoice) {
+                        case 1 -> buyAnimal(player);
+                        case 2 -> buyFood(player);
+                        case 3 -> feed(player);
+                        case 4 -> breed(player);
+                        case 5 -> sell(player);
+                    }
+
+                }
+                rounds--;
+            }
+        }
+
         view.endOfGame();
     }
 
-    public void buyAnimal() {
+    public void buyAnimal(Player player) {
         view.displayBuyAnimalMenu();
 
     }
 
-    public void buyFood() {
+    public void buyFood(Player player) {
         view.displayBuyFoodMenu();
     }
 
-    public void feed() {
+    public void feed(Player player) {
         view.displayFeedMenu();
     }
 
-    public void breed() {
+    public void breed(Player player) {
         view.displayBreedMenu();
     }
 
-    public void sell() {
+    public void sell(Player player) {
         view.displaySellAnimalMenu();
     }
 }

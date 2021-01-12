@@ -26,12 +26,12 @@ public class View {
         System.out.print(money + "€\t");
     }
 
-    public void displayAverageHealth(double averageHealth){
-        System.out.printf("Avg HP: %d", averageHealth);
+    public void displayAverageHealth(int averageHealth){
+        System.out.printf("Avg HP: %d\n", averageHealth);
     }
 
-    public void displayTotalHealth(double totalHealth){
-        System.out.printf("Total HP: %d", totalHealth);
+    public void displayTotalHealth(int totalHealth){
+        System.out.printf("Total HP: %d\t", totalHealth);
     }
 
     public void howManyRounds() {
@@ -85,5 +85,9 @@ public class View {
     public void endOfGame() {
         System.out.println("End of game. Exiting...");
         System.exit(0);
+    }
+
+    public void readyPlayerNo(byte number) {
+        System.out.println("Ready player no " + number);
     }
 }
