@@ -2,10 +2,17 @@ package com.company;
 
 public abstract class Animal {
 
+    public enum Type {
+    }
     private String type;
     private String name;
     private boolean isFemale;
     private byte health;
+
+    public int getPrice() {
+        return price;
+    }
+
     private int price;
 
     public Animal(String type, String name, boolean isFemale, byte health, int price) {

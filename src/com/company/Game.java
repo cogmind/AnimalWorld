@@ -5,9 +5,9 @@ import java.util.Scanner;
 
 public class Game {
 
-    private View view = new View();
+    private final View view = new View();
     private boolean gameOver = false;
-    private ArrayList<Player> allPlayers = new ArrayList<>();
+    private ArrayList<Player> allPlayers = new ArrayList<>(); //TODO Try if I can use final here, intelliJ recommends
 
     public final static byte MIN_ROUNDS = 5;
     public final static byte MAX_ROUNDS = 30;
@@ -46,14 +46,11 @@ public class Game {
             Player newPlayer = new Player(name, player);
             allPlayers.add(newPlayer);
         }
-
-        for(Player player: allPlayers) {
-
-            byte menuChoice;
-            // TODO for each player
-            // TODO If all players and rounds have been consumed, set gameOver to true OR break
-            while (!gameOver && rounds > 0) {
-
+        byte menuChoice;
+        // TODO for each player
+        // TODO If all players and rounds have been consumed, set gameOver to true OR break
+        while (!gameOver && rounds > 0) {
+            for(Player player: allPlayers) {
                 //TODO Set gameOver condition ???
 
                 // View statistics
@@ -79,9 +76,11 @@ public class Game {
                         case 4 -> breed(player);
                         case 5 -> sell(player);
                     }
-
                 }
                 rounds--;
+            }
+            if (allPlayers.size() == 0) {
+                gameOver = true; // TODO check if program halts after removing players
             }
         }
 
