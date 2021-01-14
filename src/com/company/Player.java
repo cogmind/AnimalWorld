@@ -5,18 +5,24 @@ import java.util.ArrayList;
 public class Player {
 
     private String name;
+    private byte number;
     private long money;
-    private static final long INITIAL_MONEY = 1000;
+    public static final long INITIAL_MONEY = 1000;
     private ArrayList<Integer> allHealth = new ArrayList<>();
     private ArrayList<Animal> animals = new ArrayList<>();
 
-    public Player(String name){
+    public Player(String name, byte number){
         this.setName(name);
+        this.number = number;
         this.setMoney(INITIAL_MONEY);
     }
 
     public String getName() {
         return name;
+    }
+
+    public byte getNumber() {
+        return number;
     }
 
     // Private because name changes are not allowed.
@@ -32,23 +38,32 @@ public class Player {
         this.money = money;
     }
 
-    public double getAverageHealth() {
+    public int getAverageHealth() {
 
-        int hp_total = 0;
-        int length = 0;
-        for (int hp : allHealth) {
-            hp_total += hp;
-            length += 1;
+        if (allHealth.size() > 0) {
+            int hp_total = 0;
+            int length = 0;
+            for (int hp : allHealth) {
+                hp_total += hp;
+                length += 1;
+            }
+            // TODO Problematic casting
+            return (int) Math.round((Double.valueOf(hp_total) / Double.valueOf(length)));
+        } else {
+            return 0;
         }
-        return (hp_total + 0.0) / length;
     }
 
-    public double getTotalHealth() {
+    public int getTotalHealth() {
 
-        int hp_total = 0;
-        for (int hp : allHealth) {
-            hp_total += hp;
+        if (allHealth.size() > 0) {
+            int hp_total = 0;
+            for (int hp : allHealth) {
+                hp_total += hp;
+            }
+            return hp_total;
+        } else {
+            return 0;
         }
-        return hp_total;
     }
 }

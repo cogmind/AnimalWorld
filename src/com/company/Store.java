@@ -10,8 +10,13 @@ public class Store {
     private final static boolean ENOUGH_MONEY = true;
     private final static boolean NOT_ENOUGH_MONEY = false;
     private long money = 40000;
-    ArrayList<Animal> animalsForSale = new ArrayList<>();
-    ArrayList<Food> foodForSale = new ArrayList<>();
+    private ArrayList<Animal> birds = new ArrayList<>();
+    private ArrayList<Animal> fishes = new ArrayList<>();
+    private ArrayList<Animal> cats = new ArrayList<>();
+    private ArrayList<Animal> livestock = new ArrayList<>();
+    private ArrayList<Animal> marineMammals = new ArrayList<>();
+
+    private ArrayList<Food> foodForSale = new ArrayList<>();
 
     public Store(Player customer, byte players) {
         this.customer = customer;
@@ -20,30 +25,32 @@ public class Store {
     }
 
     private void setupInventory() {
-        // For each type, buy k worth of animals for each animal type depending on how many players and initial money
+        // For each type, stock up k worth of animals for each animal type depending on
+        // how many players and initial money
+        // Also, randomize gender
         for (Bird.Type type: Bird.Type.values()){
             for (int i = 0; i < Math.floor(Player.INITIAL_MONEY * customers / type.price); i++) {
-                this.animalsForSale.add(new Bird(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price));
+                this.birds.add(new Bird(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price));
             }
         }
         for (Fish.Type type: Fish.Type.values()){
             for (int i = 0; i < Math.floor(Player.INITIAL_MONEY * customers / type.price); i++) {
-                this.animalsForSale.add(new Fish(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price));
+                this.fishes.add(new Fish(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price));
             }
         }
         for (Cat.Type type: Cat.Type.values()){
             for (int i = 0; i < Math.floor(Player.INITIAL_MONEY * customers / type.price); i++) {
-                this.animalsForSale.add(new Cat(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price));
+                this.cats.add(new Cat(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price));
             }
         }
         for (Livestock.Type type: Livestock.Type.values()){
             for (int i = 0; i < Math.floor(Player.INITIAL_MONEY * customers / type.price); i++) {
-                this.animalsForSale.add(new Livestock(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price));
+                this.livestock.add(new Livestock(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price));
             }
         }
         for (MarineMammal.Type type: MarineMammal.Type.values()){
             for (int i = 0; i < Math.floor(Player.INITIAL_MONEY * customers / type.price); i++) {
-                this.animalsForSale.add(new MarineMammal(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price));
+                this.marineMammals.add(new MarineMammal(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price));
             }
         }
 
@@ -71,10 +78,17 @@ public class Store {
         } else { return NOT_ENOUGH_MONEY;}
     }
 
-    public boolean buyAnimal(Animal animal) {
-        //TODO
-        this.animalsForSale.remove(animal);
-        return false;
+    // The store is buying, the customer is selling
+    public void buyAnimal(String typeOfAnimal, Animal animal) {
+
+        switch (typeOfAnimal) {
+            case "bird" -> this.birds.remove(animal);
+            case "fish" -> this.fishes.remove(animal);
+            case "cat" -> this.cats.remove(animal);
+            case "livestock" -> this.livestock.remove(animal);
+            case "marine mammal" -> this.marineMammals.remove(animal);
+        }
+        money -= animal.getPrice(); //TODO view displayStoreMoney
     }
 
     // The store is selling, the customer is buying

@@ -3,6 +3,7 @@ package com.company;
 public class MarineMammal extends Animal {
 
     public enum Type {
+
         SEA_OTTER(25),
         SEAL(100),
         POLAR_BEAR(250),

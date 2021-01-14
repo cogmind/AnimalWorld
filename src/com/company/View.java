@@ -59,9 +59,30 @@ public class View {
     }
 
     public void displayBuyAnimalMenu() {
-        //TODO animal store menu
-        print("TMP Store menu goes here");
+        print("BUY ANIMAL\nOPTIONS\n1.Bird\n2.Cat\n3.Livestock\n4.Fish\n5. Marine mammal\n");
+
     }
+
+    public void displayBuyBirdMenu() {
+        print("BIRD MENU\n1.Pigeon\n2.Parrot\n3.Owl\n4.Eagle\n");
+    }
+
+    public void displayBuyCatMenu() {
+        print("CAT MENU\n1.Kitten\n2.House cat\n3.Lynx\n4.Panther\n");
+    }
+
+    public void displayBuyLivestockMenu() {
+        print("LIVESTOCK MENU\n1.Cattle\n2.Sheep\n3.Bison\n");
+    }
+
+    public void displayBuyFishMenu() {
+        print("FISH MENU\n1.Goldfish\n2.Giant cat fish\n");
+    }
+
+    public void displayBuyMarineMammalMenu() {
+        print("MARINE MAMMAL MENU\n1.Sea otter\n2.Seal\n3.Polar bear\n4.Blue whale\n");
+    }
+
 
     public void displayBuyFoodMenu() {
         //TODO food store menu
@@ -74,10 +95,12 @@ public class View {
     }
 
     public void displayBreedMenu() {
+        //TODO
         print("TMP Breeding menu goes here");
 
     }
 
+    //TODO
     public void displaySellAnimalMenu() {
         print("TMP Sell animal menu goes here");
     }

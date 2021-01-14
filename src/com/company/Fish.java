@@ -2,6 +2,7 @@ package com.company;
 
 public class Fish extends Animal {
     public enum Type {
+
         GOLDFISH(5),
         COD(15),
         GIANT_CATFISH(40);

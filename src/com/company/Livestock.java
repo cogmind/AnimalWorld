@@ -2,6 +2,7 @@ package com.company;
 
 public class Livestock extends Animal {
     public enum Type {
+
         CATTLE(30),
         SHEEP(40),
         BISON(60);

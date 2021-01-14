@@ -2,8 +2,9 @@ package com.company;
 
 public class Cat extends Animal {
     public enum Type {
+
         KITTEN(20),
-        HOUSECAT(30),
+        HOUSE_CAT(30),
         LYNX(120),
         PANTHER(180);
 
