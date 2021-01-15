@@ -100,8 +100,8 @@ public class View {
     }
 
     //TODO
-    public void displaySellAnimalMenu(ArrayList<Animal> animals) {
-        print("SELL\nOWNED ANIMALS\n");
+    public void displayAnimalsMenu(ArrayList<Animal> animals) {
+        print("OWNED ANIMALS\n");
         int i = 0;
         for (Animal animal : animals) {
             i++;
@@ -136,5 +136,11 @@ public class View {
 
     public void displayBuyFishFoodMenu() {
         print("FISH FOOD MENU\n1. Krill\n2. Herring");
+    }
+
+    public void displaySelectFoodMenu(ArrayList<Food> foods) {
+        for(Food food : foods) {
+            System.out.println(food);
+        }
     }
 }

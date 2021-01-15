@@ -4,15 +4,17 @@ public class Bird extends Animal {
 
     public enum Type {
 
-        PIGEON(10),
-        PARROT(15),
-        OWL(30),
-        EAGLE(80);
+        PIGEON(10,"bird seeds"),
+        PARROT(15, "bird seeds"),
+        OWL(30, "mice"),
+        EAGLE(80, "raw steak");
 
         int price;
+        String diet;
 
-        Type(int price) {
+        Type(int price, String diet) {
             this.price = price;
+            this.diet = diet;
         }
     }
 

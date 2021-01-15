@@ -3,7 +3,6 @@ package com.company;
 public abstract class Food {
 
     private String type;
-    private int healthPoints = 10;
     private int price;
 
     public Food(String type, int price) {
@@ -16,6 +15,10 @@ public abstract class Food {
     }
 
     public int getPrice() {
-        return price * healthPoints / 100;
+        return price;
+    }
+
+    public String toString(){
+        return type;
     }
 }

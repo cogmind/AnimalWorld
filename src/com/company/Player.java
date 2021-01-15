@@ -95,4 +95,20 @@ public class Player {
         animals.remove(i);
     }
 
+    public ArrayList<Food> getFoods() {
+        return foods;
+    }
+
+    public boolean feed(Animal animalToFeed, Food food) {
+
+        boolean SUCCESSFUL = true;
+        boolean UNSUCCESSFUL = false;
+
+        if (animalToFeed.eat(food)) {
+            foods.remove();
+            return SUCCESSFUL;
+        } else {
+            return UNSUCCESSFUL;
+        }
+    }
 }

@@ -4,13 +4,16 @@ public class Livestock extends Animal {
 
     public enum Type {
 
-        CATTLE(30),
-        SHEEP(40),
-        BISON(60);
+        CATTLE(30, "corn"),
+        SHEEP(40, "corn"),
+        BISON(60, "corn");
 
         int price;
-        Type(int price){
+        String diet;
+
+        Type(int price, String diet) {
             this.price = price;
+            this.diet = diet;
         }
     }
 

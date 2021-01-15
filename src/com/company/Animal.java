@@ -37,8 +37,14 @@ public abstract class Animal {
         return "" + type + name + " (" + female + ") "+ health + " HP";
     }
 
-    public void eat(Food food) {
+    private isEdibleForMe() {
 
+    }
+
+    public boolean eat(Food food) {
+        isEdibleForMe(food)
+
+        return false;
     }
 
     public void die() {

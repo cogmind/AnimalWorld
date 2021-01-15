@@ -300,17 +300,34 @@ public class Game {
         }
     }
 
+    // TODO Function that validates input as byte
+
     public void feed(Player player, Scanner scanner) {
         view.displayFeedMenu();
+        view.displayAnimalsMenu(player.getAnimals());
+        byte menuChoice = scanner.nextByte();
+
+        Animal animalToFeed = player.getAnimal(menuChoice - 1);
+        ArrayList<Food> foods = player.getFoods();
+        view.displaySelectFoodMenu(foods);
+
+        player.feed(animalToFeed, food);
     }
 
     public void breed(Player player, Scanner scanner) {
         view.displayBreedMenu();
+        byte menuChoice1 = scanner.nextByte();
+        view.displayAnimalsMenu(player.getAnimals());
+        byte menuChoice2 = scanner.nextByte();
+        // TODO Store in separate list and remove the initial animal
+        // TODO Validation for SAME type and DIFFERENT genders + randomization 50% chance of offspring
+        // TODO Define n offspring in a separate variable for each type of animal
+        view.displayAnimalsMenu(player.getAnimals());
     }
 
     public void sell(Player player, Scanner scanner) {
         Store sellingStore = new Store(player, players);
-        view.displaySellAnimalMenu(player.getAnimals());
+        view.displayAnimalsMenu(player.getAnimals());
         Byte menuChoice = scanner.nextByte();
         Animal animal = player.getAnimal(menuChoice - 1);
         player.setMoney(player.getMoney() + animal.getPrice());
