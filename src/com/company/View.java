@@ -143,4 +143,12 @@ public class View {
             System.out.println(food);
         }
     }
+
+    public void successfulFeed() {
+        System.out.println("Feed successful!");
+    }
+
+    public void unsuccessfulFeed() {
+        System.out.println("Cannot feed that food to the animal. Wrong diet!");
+    }
 }

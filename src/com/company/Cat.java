@@ -3,10 +3,10 @@ package com.company;
 public class Cat extends Animal {
     public enum Type {
 
-        KITTEN(20, "mice"),
-        HOUSE_CAT(30, "mice"),
-        LYNX(120, "raw steak"),
-        PANTHER(180, "raw steak");
+        KITTEN(20, "MICE"),
+        HOUSE_CAT(30, "MICE"),
+        LYNX(120, "STEAK"),
+        PANTHER(180, "STEAK");
 
         int price;
         String diet;
@@ -16,7 +16,7 @@ public class Cat extends Animal {
             this.diet = diet;
         }
     }
-    public Cat(String type, String name, boolean isFemale, byte health, int price){
-        super(type, name, isFemale, health, price);
+    public Cat(String type, String name, boolean isFemale, byte health, int price, String diet){
+        super(type, name, isFemale, health, price, diet);
     }
 }

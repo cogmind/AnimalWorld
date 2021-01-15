@@ -34,19 +34,19 @@ public class Store {
 
         // Animals in stock
         for (Bird.Type type: Bird.Type.values()){
-            this.birds.put(type.toString(), new Bird(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price));
+            this.birds.put(type.toString(), new Bird(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price, type.diet));
         }
         for (Fish.Type type: Fish.Type.values()){
-            this.fishes.put(type.toString(), new Fish(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price));
+            this.fishes.put(type.toString(), new Fish(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price, type.diet));
         }
         for (Cat.Type type: Cat.Type.values()){
-            this.cats.put(type.toString(), new Cat(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price));
+            this.cats.put(type.toString(), new Cat(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price, type.diet));
         }
         for (Livestock.Type type: Livestock.Type.values()){
-            this.livestock.put(type.toString(), new Livestock(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price));
+            this.livestock.put(type.toString(), new Livestock(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price, type.diet));
         }
         for (MarineMammal.Type type: MarineMammal.Type.values()){
-            this.marineMammals.put(type.toString(), new MarineMammal(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price));
+            this.marineMammals.put(type.toString(), new MarineMammal(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price, type.diet));
         }
 
         // Foods in stock

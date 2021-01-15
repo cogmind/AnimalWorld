@@ -104,11 +104,16 @@ public class Player {
         boolean SUCCESSFUL = true;
         boolean UNSUCCESSFUL = false;
 
+        // Check if compatible with diet
         if (animalToFeed.eat(food)) {
-            foods.remove();
+            foods.remove(food);
             return SUCCESSFUL;
         } else {
             return UNSUCCESSFUL;
         }
+    }
+
+    public Food getFood(int i) {
+        return foods.get(i);
     }
 }

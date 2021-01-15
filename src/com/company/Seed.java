@@ -4,7 +4,7 @@ public class Seed extends Food {
 
     enum Type {
 
-        BIRDSEED(100),
+        BIRD_SEED(100),
         CORN(200);
 
         int price;

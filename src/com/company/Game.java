@@ -310,8 +310,14 @@ public class Game {
         Animal animalToFeed = player.getAnimal(menuChoice - 1);
         ArrayList<Food> foods = player.getFoods();
         view.displaySelectFoodMenu(foods);
+        menuChoice = scanner.nextByte();
 
-        player.feed(animalToFeed, food);
+        Food foodForAnimal = player.getFood(menuChoice - 1);
+
+        if (player.feed(animalToFeed, foodForAnimal)) {
+            view.successfulFeed();
+        } else {}
+            view.unsuccessfulFeed();
     }
 
     public void breed(Player player, Scanner scanner) {
