@@ -96,18 +96,10 @@ public class Store {
     }
 
     // The store is buying, the customer is selling
-    public void buyAnimal(String typeOfAnimal, String animalString) {
+    public void buyAnimal(Animal animal) {
 
-        Animal animal = null;
-
-        switch (typeOfAnimal) {
-            case "bird" -> animal = birds.get(animalString);
-            case "fish" -> animal = fishes.get(animalString);
-            case "cat" -> animal = cats.get(animalString);
-            case "livestock" -> animal = livestock.get(animalString);
-            case "marine mammal" -> animal = marineMammals.get(animalString);
-        }
-        money -= animal.getPrice(); //TODO view displayStoreMoney
+        customer.setMoney(animal.getPrice());
+        money -= animal.getPrice(); //TODO consider view displayStoreMoney
 
     }
 

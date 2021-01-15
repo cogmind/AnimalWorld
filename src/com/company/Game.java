@@ -106,6 +106,7 @@ public class Game {
                 case 4 -> buyFish(player, scanner, animalStore);
                 case 5 -> buyMarineMammal(player, scanner, animalStore);
             }
+            player.updateAllHealth();
         }
     }
 
@@ -164,7 +165,7 @@ public class Game {
         } else {
             Livestock.Type choice = Livestock.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
-            boolean successfulSale = animalStore.sellAnimal("bird", choice.toString());
+            boolean successfulSale = animalStore.sellAnimal("livestock", choice.toString());
             if (!successfulSale) {
                 view.unsuccessfulSale();
             } else {
@@ -308,6 +309,11 @@ public class Game {
     }
 
     public void sell(Player player, Scanner scanner) {
-        view.displaySellAnimalMenu();
+        Store sellingStore = new Store(player, players);
+        view.displaySellAnimalMenu(player.getAnimals());
+        Byte menuChoice = scanner.nextByte();
+        Animal animal = player.getAnimal(menuChoice - 1);
+        player.setMoney(player.getMoney() + animal.getPrice());
+        player.removeAnimal(menuChoice - 1);
     }
 }

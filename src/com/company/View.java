@@ -85,13 +85,12 @@ public class View {
 
 
     public void displayBuyFoodMenu() {
-        //TODO food store menu
-        print("TMP Food menu goes here");
+        print("BUY FOOD\nOPTIONS\n1. Seeds\n2. Meats\n3. Fish Food");
     }
 
     public void displayFeedMenu() {
         //TODO feeding menu
-        print("TMP Feed menu goes here");
+        print("FEEDING MENU\nSelect what animal to feed");
     }
 
     public void displayBreedMenu() {
@@ -101,8 +100,13 @@ public class View {
     }
 
     //TODO
-    public void displaySellAnimalMenu() {
-        print("TMP Sell animal menu goes here");
+    public void displaySellAnimalMenu(ArrayList<Animal> animals) {
+        print("SELL\nOWNED ANIMALS\n");
+        int i = 0;
+        for (Animal animal : animals) {
+            i++;
+            System.out.println(i + ". " + animal);
+        }
     }
 
     public void endOfGame() {

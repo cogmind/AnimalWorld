@@ -31,6 +31,12 @@ public abstract class Animal {
         this.health = health;
     }
 
+    @Override
+    public String toString() {
+        String female = isFemale ? "Female" : "Male";
+        return "" + type + name + " (" + female + ") "+ health + " HP";
+    }
+
     public void eat(Food food) {
 
     }

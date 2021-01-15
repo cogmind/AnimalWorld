@@ -8,7 +8,7 @@ public class Player {
     private byte number;
     private long money;
     public static final long INITIAL_MONEY = 1000;
-    private ArrayList<Integer> allHealth = new ArrayList<>();
+    private ArrayList<Byte> allHealth = new ArrayList<>();
     private ArrayList<Animal> animals = new ArrayList<>();
     private ArrayList<Food> foods = new ArrayList<>();
 
@@ -37,6 +37,13 @@ public class Player {
 
     public void setMoney(long money) {
         this.money = money;
+    }
+
+    public void updateAllHealth() {
+        allHealth.clear();
+        for(Animal animal : animals) {
+            allHealth.add(animal.getHealth());
+        }
     }
 
     public int getAverageHealth() {
@@ -75,4 +82,17 @@ public class Player {
     public void addFood(Food food) {
         foods.add(food);
     }
+
+    public ArrayList getAnimals() {
+        return animals;
+    }
+
+    public Animal getAnimal(int i) {
+        return animals.get(i);
+    }
+
+    public void removeAnimal(int i) {
+        animals.remove(i);
+    }
+
 }
