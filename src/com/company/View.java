@@ -54,33 +54,33 @@ public class View {
         System.out.println("OPTIONS (Select one)\n1. Buy animals\n2. Buy food \n3. Feed animals\n4. Breed new animals (success rate " + Game.BREEDING_SUCCESS_RATE + "%) \n5. Sell animals\n");
     }
 
-    public void menuOutOfBounds(){
-        error("Please select an option between 1 and 5.");
+    public void menuOutOfBounds(byte menu_end){
+        error("Please select an option between 1 and " + menu_end + ".");
     }
 
     public void displayBuyAnimalMenu() {
-        print("BUY ANIMAL\nOPTIONS\n1.Bird\n2.Cat\n3.Livestock\n4.Fish\n5. Marine mammal\n");
+        print("BUY ANIMAL\nOPTIONS\n1. Bird\n2. Cat\n3. Livestock\n4. Fish\n5. Marine mammal\n");
 
     }
 
     public void displayBuyBirdMenu() {
-        print("BIRD MENU\n1.Pigeon\n2.Parrot\n3.Owl\n4.Eagle\n");
+        print("BIRD MENU\n1. Pigeon\n2. Parrot\n3. Owl\n4. Eagle\n");
     }
 
     public void displayBuyCatMenu() {
-        print("CAT MENU\n1.Kitten\n2.House cat\n3.Lynx\n4.Panther\n");
+        print("CAT MENU\n1. Kitten\n2. House cat\n3. Lynx\n4. Panther\n");
     }
 
     public void displayBuyLivestockMenu() {
-        print("LIVESTOCK MENU\n1.Cattle\n2.Sheep\n3.Bison\n");
+        print("LIVESTOCK MENU\n1. Cattle\n2. Sheep\n3. Bison\n");
     }
 
     public void displayBuyFishMenu() {
-        print("FISH MENU\n1.Goldfish\n2.Giant cat fish\n");
+        print("FISH MENU\n1. Goldfish\n2. Giant cat fish\n");
     }
 
     public void displayBuyMarineMammalMenu() {
-        print("MARINE MAMMAL MENU\n1.Sea otter\n2.Seal\n3.Polar bear\n4.Blue whale\n");
+        print("MARINE MAMMAL MENU\n1. Sea otter\n2. Seal\n3. Polar bear\n4. Blue whale\n");
     }
 
 
@@ -112,5 +112,13 @@ public class View {
 
     public void readyPlayerNo(byte number) {
         System.out.println("Ready player no " + number);
+    }
+
+    public void unsuccessfulSale() {
+        print("Not enough money. Sale unsuccessful.");
+    }
+
+    public void successfulSale() {
+        print("Sufficient funds. Sale successful!");
     }
 }

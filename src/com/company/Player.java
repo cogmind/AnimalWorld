@@ -66,4 +66,8 @@ public class Player {
             return 0;
         }
     }
+
+    public void addAnimal(Animal animal) {
+        animals.add(animal);
+    }
 }

@@ -10,7 +10,7 @@ public abstract class Animal {
     private byte health;
 
     public int getPrice() {
-        return price;
+        return Math.round(price * health / 100);
     }
 
     private int price;
