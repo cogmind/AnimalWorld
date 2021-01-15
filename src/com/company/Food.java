@@ -2,12 +2,13 @@ package com.company;
 
 public abstract class Food {
 
-    private String name;
-    private int healthPoints = 100;
+    private String type;
+    private int healthPoints = 10;
     private int price;
 
-    public Food(int price) {
-
+    public Food(String type, int price) {
+        this.type = type;
+        this.price = price;
     }
 
     public void setPrice(int price) {

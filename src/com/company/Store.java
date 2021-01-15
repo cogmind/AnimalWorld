@@ -18,14 +18,9 @@ public class Store {
     private HashMap<String, Animal> fishes = new HashMap<String, Animal>();
     private HashMap<String, Animal> marineMammals = new HashMap<String, Animal>();
 
-//    private HashMap<Animal.Type, ArrayList<Animal>> birds = new HashMap<Animal.Type, new ArrayList<>>();
-//    private HashMap<Animal.Type, ArrayList<Animal>> cats = new HashMap<Animal.Type, new ArrayList<>>();
-//    private HashMap<Animal.Type, ArrayList<Animal>> livestock = new HashMap<Animal.Type, new ArrayList<>>();
-//    private HashMap<Animal.Type, ArrayList<Animal>> fishes = new HashMap<Animal.Type, new ArrayList<>>();
-//    private HashMap<Animal.Type, ArrayList<Animal>> marineMammals = new HashMap<Animal.Type, new ArrayList<>>();
-
-    //TODO as above
-    //private ArrayList<Food> foodForSale = new ArrayList<>();
+    private HashMap<String, Food> seeds = new HashMap<String, Food>();
+    private HashMap<String, Food> meats = new HashMap<String, Food>();
+    private HashMap<String, Food> fishFood = new HashMap<String, Food>();
 
     public Store(Player customer, byte players) {
         this.customer = customer;
@@ -57,7 +52,17 @@ public class Store {
             this.marineMammals.put(type.toString(), new MarineMammal(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price));
         }
 
-        //this.foodForSale;
+        // Foods
+        for (Seed.Type type: Seed.Type.values()){
+            this.seeds.put(type.toString(), new Seed(type.toString(), type.price));
+        }
+        for (Meat.Type type: Meat.Type.values()){
+            this.meats.put(type.toString(), new Meat(type.toString(), type.price));
+        }
+        for (FishFood.Type type: FishFood.Type.values()){
+            this.fishFood.put(type.toString(), new FishFood(type.toString(), type.price));
+        }
+
     }
 
     public boolean sell(Object animalOrFood, int price) {
@@ -97,19 +102,30 @@ public class Store {
         Animal animal = null;
 
         switch (typeOfAnimal) {
-            case "bird" -> animal = this.birds.get(animalString);
-            case "fish" -> animal = this.fishes.get(animalString);
-            case "cat" -> animal = this.cats.get(animalString);
-            case "livestock" -> animal = this.livestock.get(animalString);
-            case "marine mammal" -> animal = this.marineMammals.get(animalString);
+            case "bird" -> animal = birds.get(animalString);
+            case "fish" -> animal = fishes.get(animalString);
+            case "cat" -> animal = cats.get(animalString);
+            case "livestock" -> animal = livestock.get(animalString);
+            case "marine mammal" -> animal = marineMammals.get(animalString);
         }
         money -= animal.getPrice(); //TODO view displayStoreMoney
 
     }
 
     // The store is selling, the customer is buying
-    public boolean sellFood(Food food) {
-        if (sell(food, food.getPrice())) {
+    public boolean sellFood(String foodType, String specificFood) {
+
+        Food foodForSale = null;
+
+        switch (foodType) {
+            case "seed" -> foodForSale = seeds.get(specificFood);
+            case "meat" ->  foodForSale = meats.get(specificFood);
+            case "fish food" -> foodForSale = fishFood.get(specificFood);
+        }
+
+        if (sell(foodForSale, foodForSale.getPrice())) {
+            customer.addFood(foodForSale);
+            customer.setMoney(customer.getMoney() - foodForSale.getPrice());
             return ENOUGH_MONEY;
         } else {
             return NOT_ENOUGH_MONEY;

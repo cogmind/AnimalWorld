@@ -4,15 +4,16 @@ public class Meat extends Food {
 
     enum Type {
 
-        MICE(20),
-        RAW_STEAK(50);
+        MICE(200),
+        RAW_STEAK(500);
 
         int price;
         Type(int price){
             this.price = price;
         }
     }
-    public Meat(int price) {
-        super(price);
+
+    public Meat(String type, int price) {
+        super(type, price);
     }
 }

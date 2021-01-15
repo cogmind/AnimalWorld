@@ -4,17 +4,16 @@ public class FishFood extends Food {
 
     enum Type {
 
-        KRILL(5),
-        HERRING(15);
+        KRILL(50),
+        HERRING(200);
 
         int price;
         Type(int price){
             this.price = price;
         }
     }
-    public FishFood(int price){
-        super(price);
+    public FishFood(String type, int price){
+        super(type, price);
     }
-
 
 }

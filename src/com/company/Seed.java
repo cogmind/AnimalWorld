@@ -4,8 +4,8 @@ public class Seed extends Food {
 
     enum Type {
 
-        BIRDSEED(10),
-        CORN(20);
+        BIRDSEED(100),
+        CORN(200);
 
         int price;
         Type(int price){
@@ -13,7 +13,7 @@ public class Seed extends Food {
         }
     }
 
-    public Seed(int price) {
-        super(price);
+    public Seed(String type, int price) {
+        super(type, price);
     }
 }

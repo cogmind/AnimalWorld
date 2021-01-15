@@ -10,6 +10,7 @@ public class Player {
     public static final long INITIAL_MONEY = 1000;
     private ArrayList<Integer> allHealth = new ArrayList<>();
     private ArrayList<Animal> animals = new ArrayList<>();
+    private ArrayList<Food> foods = new ArrayList<>();
 
     public Player(String name, byte number){
         this.setName(name);
@@ -69,5 +70,9 @@ public class Player {
 
     public void addAnimal(Animal animal) {
         animals.add(animal);
+    }
+
+    public void addFood(Food food) {
+        foods.add(food);
     }
 }

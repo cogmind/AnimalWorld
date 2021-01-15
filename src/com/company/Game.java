@@ -133,18 +133,89 @@ public class Game {
 
     public void buyCat(Player player, Scanner scanner, Store animalStore) {
         view.displayBuyCatMenu();
+        byte menuChoice = scanner.nextByte();
+
+        byte MENU_START = 1;
+        byte MENU_END = 4;
+
+        if (menuChoice < MENU_START || menuChoice > MENU_END) {
+            view.menuOutOfBounds(MENU_END);
+        } else {
+            Cat.Type choice = Cat.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
+            // If sale is successful also updates player's (as customer in store) attributes
+            boolean successfulSale = animalStore.sellAnimal("cat", choice.toString());
+            if (!successfulSale) {
+                view.unsuccessfulSale();
+            } else {
+                view.successfulSale();
+            }
+        }
     }
 
     public void buyLivestock(Player player, Scanner scanner, Store animalStore) {
         view.displayBuyLivestockMenu();
+        byte menuChoice = scanner.nextByte();
+
+        byte MENU_START = 1;
+        byte MENU_END = 3;
+
+        if (menuChoice < MENU_START || menuChoice > MENU_END) {
+            view.menuOutOfBounds(MENU_END);
+        } else {
+            Livestock.Type choice = Livestock.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
+            // If sale is successful also updates player's (as customer in store) attributes
+            boolean successfulSale = animalStore.sellAnimal("bird", choice.toString());
+            if (!successfulSale) {
+                view.unsuccessfulSale();
+            } else {
+                view.successfulSale();
+            }
+        }
+
     }
 
     public void buyFish(Player player, Scanner scanner, Store animalStore) {
         view.displayBuyFishMenu();
+        byte menuChoice = scanner.nextByte();
+
+        byte MENU_START = 1;
+        byte MENU_END = 2;
+
+        if (menuChoice < MENU_START || menuChoice > MENU_END) {
+            view.menuOutOfBounds(MENU_END);
+        } else {
+            Fish.Type choice = Fish.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
+            // If sale is successful also updates player's (as customer in store) attributes
+            boolean successfulSale = animalStore.sellAnimal("bird", choice.toString());
+            if (!successfulSale) {
+                view.unsuccessfulSale();
+            } else {
+                view.successfulSale();
+            }
+        }
+
     }
 
     public void buyMarineMammal(Player player, Scanner scanner, Store animalStore) {
         view.displayBuyMarineMammalMenu();
+        byte menuChoice = scanner.nextByte();
+
+        byte MENU_START = 1;
+        byte MENU_END = 4;
+
+        if (menuChoice < MENU_START || menuChoice > MENU_END) {
+            view.menuOutOfBounds(MENU_END);
+        } else {
+            MarineMammal.Type choice = MarineMammal.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
+            // If sale is successful also updates player's (as customer in store) attributes
+            boolean successfulSale = animalStore.sellAnimal("bird", choice.toString());
+            if (!successfulSale) {
+                view.unsuccessfulSale();
+            } else {
+                view.successfulSale();
+            }
+        }
+
     }
 
     public void buyFood(Player player, Scanner scanner) {
