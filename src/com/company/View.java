@@ -121,4 +121,16 @@ public class View {
     public void successfulSale() {
         print("Sufficient funds. Sale successful!");
     }
+
+    public void displayBuySeedMenu() {
+        print("SEEDS MENU\n1. Bird seeds\n2. Corn");
+    }
+
+    public void displayBuyMeatMenu() {
+        print("MEATS MENU\n1. Mice\n2. Raw steak");
+    }
+
+    public void displayBuyFishFoodMenu() {
+        print("FISH FOOD MENU\n1. Krill\n2. Herring");
+    }
 }

@@ -30,12 +30,9 @@ public class Store {
 
     private void setupInventory() {
 
-        // For each type, stock up each type of animal for each animal type
-        // Also, randomize gender
-        //TODO Remember to restock (new chance at gender) every turn by running setupInventory() = endless store
-        //TODO Display inventory (x blue whales etc)
-        //for (int i = 0; i < Math.floor(Player.INITIAL_MONEY * customers / type.price); i++) {
+        // Only one randomized gender available per turn
 
+        // Animals in stock
         for (Bird.Type type: Bird.Type.values()){
             this.birds.put(type.toString(), new Bird(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price));
         }
@@ -52,7 +49,7 @@ public class Store {
             this.marineMammals.put(type.toString(), new MarineMammal(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price));
         }
 
-        // Foods
+        // Foods in stock
         for (Seed.Type type: Seed.Type.values()){
             this.seeds.put(type.toString(), new Seed(type.toString(), type.price));
         }
@@ -66,7 +63,7 @@ public class Store {
     }
 
     public boolean sell(Object animalOrFood, int price) {
-
+        // Helper method for sellAnimal and sellFood
         boolean enoughMoney;
 
         if (customer.getMoney() < price) {
@@ -80,6 +77,7 @@ public class Store {
 
     // The store is selling, the customer is buying
     public boolean sellAnimal(String animalType, String specificAnimal) {
+
         Animal animalForSale = null;
 
         switch (animalType) {
@@ -99,6 +97,7 @@ public class Store {
 
     // The store is buying, the customer is selling
     public void buyAnimal(String typeOfAnimal, String animalString) {
+
         Animal animal = null;
 
         switch (typeOfAnimal) {
