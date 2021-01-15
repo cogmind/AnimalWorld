@@ -60,6 +60,8 @@ public abstract class Animal {
         boolean ATE_FOOD = true;
         boolean DID_NOT_EAT_FOOD = false;
 
+        System.out.println(diet);
+        System.out.println(food.toString());
         if (diet == food.toString()) {
             setHealth((byte)Math.round(1.10 * getHealth()));
             if (getHealth() > 100) {
