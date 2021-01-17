@@ -60,6 +60,8 @@ public class Game {
                 view.displayMoney(player.getMoney());
                 view.displayTotalHealth(player.getTotalHealth());
                 view.displayAverageHealth(player.getAverageHealth());
+                view.displayAnimals(player.getAnimals());
+                view.lineFeed();
 
                 view.displayMainMenu();
                 menuChoice = scanner.nextByte();
@@ -79,6 +81,9 @@ public class Game {
                         case 5 -> sell(player, scanner);
                     }
                 }
+                view.displayEndOfTurn();
+                scanner.nextLine();
+                view.lines60();
                 rounds--;
             }
             if (allPlayers.size() == 0) {
@@ -304,11 +309,16 @@ public class Game {
     // TODO Function that validates input as byte
 
     public void feed(Player player, Scanner scanner) {
+        if (player.getFoods().size() == 0) {
+            view.noFoodAvailable();
+            return;
+        }
         view.displayFeedMenu();
         view.displayAnimalsMenu(player.getAnimals());
         byte menuChoice = scanner.nextByte();
 
         Animal animalToFeed = player.getAnimal(menuChoice - 1);
+
         ArrayList<Food> foods = player.getFoods();
         view.displaySelectFoodMenu(foods);
         menuChoice = scanner.nextByte();

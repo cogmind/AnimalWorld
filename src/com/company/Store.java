@@ -68,6 +68,8 @@ public class Store {
         boolean enoughMoney;
 
         if (customer.getMoney() < price) {
+            //TODO Remove debug statements
+            System.out.printf("get money: %s. Price: %s", customer.getMoney(), price);
             enoughMoney = NOT_ENOUGH_MONEY;
         } else {
             enoughMoney = ENOUGH_MONEY;
@@ -92,11 +94,11 @@ public class Store {
             case "marine mammal" -> animalForSale = marineMammals.get(specificAnimal);
         }
 
-        if (sell(animalForSale, animalForSale.getPrice())) {
+        boolean enoughMoney = sell(animalForSale, animalForSale.getPrice());
+        if (enoughMoney) {
             view.pleaseEnterName();
             animalForSale.setName(scanner.nextLine());
             customer.addAnimal(animalForSale);
-            customer.setMoney(customer.getMoney() - animalForSale.getPrice());
             return ENOUGH_MONEY;
         } else { return NOT_ENOUGH_MONEY;}
     }

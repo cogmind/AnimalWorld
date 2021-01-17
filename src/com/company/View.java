@@ -19,7 +19,11 @@ public class View {
     }
 
     public void lineFeed() {
-        print("\n");
+        System.out.println("\n");
+    }
+
+    public void lines60() {
+        print("");
     }
 
     public void displayMoney(long money){
@@ -34,6 +38,11 @@ public class View {
         System.out.printf("Total HP: %d\t", totalHealth);
     }
 
+    public void displayAnimals(ArrayList<Animal> animals) {
+        for (Animal animal : animals) {
+            System.out.printf(animal.toString());
+        }
+    }
     public void howManyRounds() {
         System.out.println("How many rounds (" + Game.MIN_ROUNDS + "-" + Game.MAX_ROUNDS + ") would you like to play?");
     }
@@ -58,6 +67,9 @@ public class View {
         error("Please select an option between 1 and " + menu_end + ".");
     }
 
+    public void displayEndOfTurn() {
+        System.out.println("End of turn. Press ENTER");
+    }
     public void displayBuyAnimalMenu() {
         print("BUY ANIMAL\nOPTIONS\n1. Bird\n2. Cat\n3. Livestock\n4. Fish\n5. Marine mammal\n");
 
@@ -169,5 +181,9 @@ public class View {
 
     public void sameGender() {
         System.out.println("Same gender. Unable to breed.");
+    }
+
+    public void noFoodAvailable() {
+        System.out.println("No food available. You have to buy some food first.");
     }
 }
