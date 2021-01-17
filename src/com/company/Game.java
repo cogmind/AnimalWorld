@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
@@ -123,7 +124,7 @@ public class Game {
         } else {
             Bird.Type choice = Bird.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
-            boolean successfulSale = animalStore.sellAnimal("bird", choice.toString());
+            boolean successfulSale = animalStore.sellAnimal("bird", choice.toString(), view, scanner);
             if (!successfulSale) {
                 view.unsuccessfulSale();
             } else {
@@ -144,7 +145,7 @@ public class Game {
         } else {
             Cat.Type choice = Cat.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
-            boolean successfulSale = animalStore.sellAnimal("cat", choice.toString());
+            boolean successfulSale = animalStore.sellAnimal("cat", choice.toString(), view, scanner);
             if (!successfulSale) {
                 view.unsuccessfulSale();
             } else {
@@ -165,7 +166,7 @@ public class Game {
         } else {
             Livestock.Type choice = Livestock.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
-            boolean successfulSale = animalStore.sellAnimal("livestock", choice.toString());
+            boolean successfulSale = animalStore.sellAnimal("livestock", choice.toString(), view, scanner);
             if (!successfulSale) {
                 view.unsuccessfulSale();
             } else {
@@ -187,7 +188,7 @@ public class Game {
         } else {
             Fish.Type choice = Fish.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
-            boolean successfulSale = animalStore.sellAnimal("bird", choice.toString());
+            boolean successfulSale = animalStore.sellAnimal("fish", choice.toString(), view, scanner);
             if (!successfulSale) {
                 view.unsuccessfulSale();
             } else {
@@ -209,7 +210,7 @@ public class Game {
         } else {
             MarineMammal.Type choice = MarineMammal.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
-            boolean successfulSale = animalStore.sellAnimal("bird", choice.toString());
+            boolean successfulSale = animalStore.sellAnimal("marine mammal", choice.toString(), view, scanner);
             if (!successfulSale) {
                 view.unsuccessfulSale();
             } else {
@@ -322,13 +323,82 @@ public class Game {
 
     public void breed(Player player, Scanner scanner) {
         view.displayBreedMenu();
+        ArrayList<Animal> startingAnimals = player.getAnimals();
+        view.displayAnimalsMenu(startingAnimals);
         byte menuChoice1 = scanner.nextByte();
-        view.displayAnimalsMenu(player.getAnimals());
+        Animal breedingAnimal1 = startingAnimals.get(menuChoice1 - 1);
+        startingAnimals.remove(menuChoice1 - 1);
+        view.displayAnimalsMenu(startingAnimals);
         byte menuChoice2 = scanner.nextByte();
-        // TODO Store in separate list and remove the initial animal
+        Animal breedingAnimal2 = startingAnimals.get(menuChoice2 - 1);
+
+        if (breedingAnimal1.getType().equals(breedingAnimal2.getType())) {
+            view.sameSpecies();
+            if (breedingAnimal1.getGender() != breedingAnimal2.getGender()) {
+                view.differentGender();
+                breedAnimals(breedingAnimal1, breedingAnimal2, player, scanner, view);
+            } else {
+                view.sameGender();
+            }
+        } else {
+            view.notSameSpecies();
+        }
+
         // TODO Validation for SAME type and DIFFERENT genders + randomization 50% chance of offspring
+
         // TODO Define n offspring in a separate variable for each type of animal
         view.displayAnimalsMenu(player.getAnimals());
+    }
+
+    private void breedAnimals(Animal breedingAnimal1, Animal breedingAnimal2, Player player, Scanner scanner, View view) {
+
+        String type = breedingAnimal1.getType();
+        int price = breedingAnimal1.getPrice();
+        String diet = breedingAnimal1.getDiet();
+        double foodFactor = breedingAnimal1.getFoodFactor();
+        byte max_offspring = breedingAnimal1.getOffspring();
+
+        String classname = breedingAnimal1.getClass().getSimpleName();
+
+        // Randomize with the offspring attribute as the max number of offsprings
+        Random random = new Random();
+        byte offsprings = breedingAnimal1.getOffspring();
+        offsprings = (byte) Math.round(random.nextDouble() * offsprings);
+
+        //TODO Remove DEBUG PRINT
+        System.out.println("offsprings: "+offsprings);
+
+        String name;
+        if (random.nextBoolean()) {
+            for (byte i = 0; i < offsprings; i++) {
+                view.pleaseEnterName();
+                name = scanner.nextLine();
+                boolean isFemale = random.nextBoolean();
+
+                switch (classname) {
+                    case "Bird" -> {
+                        Bird animal = new Bird(type, name, isFemale, (byte) 100, price, diet, foodFactor, max_offspring);
+                        player.addAnimal(animal);
+                    }
+                    case "Cat" -> {
+                        Cat animal = new Cat(type, name, isFemale, (byte) 100, price, diet, foodFactor, max_offspring);
+                        player.addAnimal(animal);
+                    }
+                    case "Livestock" -> {
+                        Livestock animal = new Livestock(type, name, isFemale, (byte) 100, price, diet, foodFactor, max_offspring);
+                        player.addAnimal(animal);
+                    }
+                    case "Fish" -> {
+                        Fish animal = new Fish(type, name, isFemale, (byte) 100, price, diet, foodFactor, max_offspring);
+                        player.addAnimal(animal);
+                    }
+                    case "MarineMammal" -> {
+                        MarineMammal animal = new MarineMammal(type, name, isFemale, (byte) 100, price, diet, foodFactor, max_offspring);
+                        player.addAnimal(animal);
+                    }
+                }
+            }
+        }
     }
 
     public void sell(Player player, Scanner scanner) {

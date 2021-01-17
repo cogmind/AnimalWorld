@@ -94,8 +94,7 @@ public class View {
     }
 
     public void displayBreedMenu() {
-        //TODO
-        print("TMP Breeding menu goes here");
+        print("BREEDING MENU\nSELECT ANIMAL");
 
     }
 
@@ -150,5 +149,25 @@ public class View {
 
     public void unsuccessfulFeed() {
         System.out.println("Cannot feed that food to the animal. Wrong diet!");
+    }
+
+    public void pleaseEnterName() {
+        System.out.println("Please enter a name for the animal: ");
+    }
+
+    public void sameSpecies() {
+        System.out.println("Same species");
+    }
+
+    public void notSameSpecies() {
+        System.out.println("Unable to breed different species.");
+    }
+
+    public void differentGender() {
+        System.out.println("Different genders");
+    }
+
+    public void sameGender() {
+        System.out.println("Same gender. Unable to breed.");
     }
 }

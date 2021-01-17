@@ -3,6 +3,7 @@ package com.company;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Store {
 
@@ -34,19 +35,19 @@ public class Store {
 
         // Animals in stock
         for (Bird.Type type: Bird.Type.values()){
-            this.birds.put(type.toString(), new Bird(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price, type.diet));
+            this.birds.put(type.toString(), new Bird(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price, type.diet, type.foodFactor, type.offspring));
         }
         for (Fish.Type type: Fish.Type.values()){
-            this.fishes.put(type.toString(), new Fish(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price, type.diet));
+            this.fishes.put(type.toString(), new Fish(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price, type.diet, type.foodFactor, type.offspring));
         }
         for (Cat.Type type: Cat.Type.values()){
-            this.cats.put(type.toString(), new Cat(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price, type.diet));
+            this.cats.put(type.toString(), new Cat(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price, type.diet, type.foodFactor, type.offspring));
         }
         for (Livestock.Type type: Livestock.Type.values()){
-            this.livestock.put(type.toString(), new Livestock(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price, type.diet));
+            this.livestock.put(type.toString(), new Livestock(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price, type.diet, type.foodFactor, type.offspring));
         }
         for (MarineMammal.Type type: MarineMammal.Type.values()){
-            this.marineMammals.put(type.toString(), new MarineMammal(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price, type.diet));
+            this.marineMammals.put(type.toString(), new MarineMammal(type.toString(), "", new Random().nextBoolean(), (byte) 100, type.price, type.diet, type.foodFactor, type.offspring));
         }
 
         // Foods in stock
@@ -76,9 +77,12 @@ public class Store {
     }
 
     // The store is selling, the customer is buying
-    public boolean sellAnimal(String animalType, String specificAnimal) {
+    public boolean sellAnimal(String animalType, String specificAnimal, View view, Scanner scanner) {
 
         Animal animalForSale = null;
+
+        //TODO comment out DEBUG statements
+        System.out.printf("animalType: %s, specificAnimal: %s", animalType, specificAnimal);
 
         switch (animalType) {
             case "bird" -> animalForSale = birds.get(specificAnimal);
@@ -89,6 +93,8 @@ public class Store {
         }
 
         if (sell(animalForSale, animalForSale.getPrice())) {
+            view.pleaseEnterName();
+            animalForSale.setName(scanner.nextLine());
             customer.addAnimal(animalForSale);
             customer.setMoney(customer.getMoney() - animalForSale.getPrice());
             return ENOUGH_MONEY;
