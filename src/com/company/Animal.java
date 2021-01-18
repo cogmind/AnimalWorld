@@ -73,7 +73,7 @@ public abstract class Animal {
     @Override
     public String toString() {
         String female = isFemale ? "Female" : "Male";
-        return "" + type + name + " (" + female + ") "+ health + " HP ";
+        return name + " " + type.toLowerCase() + " (" + female + ") "+ health + " HP. ";
     }
 
     public boolean eat(Food food) {

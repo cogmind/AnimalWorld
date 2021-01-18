@@ -70,6 +70,7 @@ public class View {
     public void displayEndOfTurn() {
         System.out.println("End of turn. Press ENTER");
     }
+
     public void displayBuyAnimalMenu() {
         print("BUY ANIMAL\nOPTIONS\n1. Bird\n2. Cat\n3. Livestock\n4. Fish\n5. Marine mammal\n");
 
@@ -106,7 +107,7 @@ public class View {
     }
 
     public void displayBreedMenu() {
-        print("BREEDING MENU\nSELECT ANIMAL");
+        System.out.println("BREEDING MENU\nSELECT ANIMAL");
 
     }
 
@@ -150,8 +151,10 @@ public class View {
     }
 
     public void displaySelectFoodMenu(ArrayList<Food> foods) {
+        int i = 1;
         for(Food food : foods) {
-            System.out.println(food);
+            i++;
+            System.out.println(i + ". " + food);
         }
     }
 
@@ -185,5 +188,13 @@ public class View {
 
     public void noFoodAvailable() {
         System.out.println("No food available. You have to buy some food first.");
+    }
+
+    public void unsuccessfulBreeding() {
+        System.out.println("Breeding unsuccessful (50% success rate)");
+    }
+
+    public void successfulBreeding() {
+        System.out.println("Breeding successful!");
     }
 }

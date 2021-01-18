@@ -333,7 +333,10 @@ public class Game {
 
     public void breed(Player player, Scanner scanner) {
         view.displayBreedMenu();
-        ArrayList<Animal> startingAnimals = player.getAnimals();
+
+        //Create a copy of the animal array list
+        ArrayList<Animal> startingAnimals = new ArrayList<Animal>(player.getAnimals());
+
         view.displayAnimalsMenu(startingAnimals);
         byte menuChoice1 = scanner.nextByte();
         Animal breedingAnimal1 = startingAnimals.get(menuChoice1 - 1);
@@ -341,6 +344,13 @@ public class Game {
         view.displayAnimalsMenu(startingAnimals);
         byte menuChoice2 = scanner.nextByte();
         Animal breedingAnimal2 = startingAnimals.get(menuChoice2 - 1);
+
+        //TODO Remove debug prints
+        System.out.println("BREEDING");
+        System.out.println(breedingAnimal1.getType());
+        System.out.println(breedingAnimal2.getType());
+        System.out.println(breedingAnimal1.getGender());
+        System.out.println(breedingAnimal2.getGender());
 
         if (breedingAnimal1.getType().equals(breedingAnimal2.getType())) {
             view.sameSpecies();
@@ -353,11 +363,6 @@ public class Game {
         } else {
             view.notSameSpecies();
         }
-
-        // TODO Validation for SAME type and DIFFERENT genders + randomization 50% chance of offspring
-
-        // TODO Define n offspring in a separate variable for each type of animal
-        view.displayAnimalsMenu(player.getAnimals());
     }
 
     private void breedAnimals(Animal breedingAnimal1, Animal breedingAnimal2, Player player, Scanner scanner, View view) {
@@ -371,9 +376,10 @@ public class Game {
         String classname = breedingAnimal1.getClass().getSimpleName();
 
         // Randomize with the offspring attribute as the max number of offsprings
+        // + 1 guarantees at least one offspring
         Random random = new Random();
         byte offsprings = breedingAnimal1.getOffspring();
-        offsprings = (byte) Math.round(random.nextDouble() * offsprings);
+        offsprings =  (byte) (Math.round(random.nextDouble() * offsprings+ 1));
 
         //TODO Remove DEBUG PRINT
         System.out.println("offsprings: "+offsprings);
@@ -381,8 +387,9 @@ public class Game {
         String name;
         if (random.nextBoolean()) {
             for (byte i = 0; i < offsprings; i++) {
+                view.successfulBreeding();
                 view.pleaseEnterName();
-                name = scanner.nextLine();
+                name = scanner.next(); //Since we are in a loop
                 boolean isFemale = random.nextBoolean();
 
                 switch (classname) {
@@ -408,6 +415,8 @@ public class Game {
                     }
                 }
             }
+        } else {
+            view.unsuccessfulBreeding();
         }
     }
 
