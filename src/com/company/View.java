@@ -9,7 +9,7 @@ public class View {
 
     }
 
-    private void print(String input) {
+    private void printMenu(String input) {
         System.out.println("\n".repeat(60));
         System.out.println(input);
     }
@@ -23,7 +23,7 @@ public class View {
     }
 
     public void lines60() {
-        print("");
+        printMenu("");
     }
 
     public void displayMoney(long money){
@@ -52,7 +52,7 @@ public class View {
     }
 
     public void howManyPlayers() {
-        print("How many players ("+ Game.MIN_PLAYERS + "-" + Game.MAX_PLAYERS + ")?");
+        printMenu("How many players ("+ Game.MIN_PLAYERS + "-" + Game.MAX_PLAYERS + ")?");
     }
 
     public void playersOutOfBounds() {
@@ -72,38 +72,38 @@ public class View {
     }
 
     public void displayBuyAnimalMenu() {
-        print("BUY ANIMAL\nOPTIONS\n1. Bird\n2. Cat\n3. Livestock\n4. Fish\n5. Marine mammal\n");
+        printMenu("BUY ANIMAL\nOPTIONS\n1. Bird\n2. Cat\n3. Livestock\n4. Fish\n5. Marine mammal\n");
 
     }
 
     public void displayBuyBirdMenu() {
-        print("BIRD MENU\n1. Pigeon\n2. Parrot\n3. Owl\n4. Eagle\n");
+        printMenu("BIRD MENU\n1. Pigeon\n2. Parrot\n3. Owl\n4. Eagle\n");
     }
 
     public void displayBuyCatMenu() {
-        print("CAT MENU\n1. Kitten\n2. House cat\n3. Lynx\n4. Panther\n");
+        printMenu("CAT MENU\n1. Kitten\n2. House cat\n3. Lynx\n4. Panther\n");
     }
 
     public void displayBuyLivestockMenu() {
-        print("LIVESTOCK MENU\n1. Cattle\n2. Sheep\n3. Bison\n");
+        printMenu("LIVESTOCK MENU\n1. Cattle\n2. Sheep\n3. Bison\n");
     }
 
     public void displayBuyFishMenu() {
-        print("FISH MENU\n1. Goldfish\n2. Giant cat fish\n");
+        printMenu("FISH MENU\n1. Goldfish\n2. Giant cat fish\n");
     }
 
     public void displayBuyMarineMammalMenu() {
-        print("MARINE MAMMAL MENU\n1. Sea otter\n2. Seal\n3. Polar bear\n4. Blue whale\n");
+        printMenu("MARINE MAMMAL MENU\n1. Sea otter\n2. Seal\n3. Polar bear\n4. Blue whale\n");
     }
 
 
     public void displayBuyFoodMenu() {
-        print("BUY FOOD\nOPTIONS\n1. Seeds\n2. Meats\n3. Fish Food");
+        printMenu("BUY FOOD\nOPTIONS\n1. Seeds\n2. Meats\n3. Fish Food");
     }
 
     public void displayFeedMenu() {
         //TODO feeding menu
-        print("FEEDING MENU\nSelect what animal to feed");
+        printMenu("FEEDING MENU\nSelect what animal to feed");
     }
 
     public void displayBreedMenu() {
@@ -113,7 +113,7 @@ public class View {
 
     //TODO
     public void displayAnimalsMenu(ArrayList<Animal> animals) {
-        print("OWNED ANIMALS\n");
+        printMenu("OWNED ANIMALS\n");
         int i = 0;
         for (Animal animal : animals) {
             i++;
@@ -131,23 +131,23 @@ public class View {
     }
 
     public void unsuccessfulSale() {
-        print("Not enough money. Sale unsuccessful.");
+        System.out.println("Not enough money. Sale unsuccessful.");
     }
 
     public void successfulSale() {
-        print("Sufficient funds. Sale successful!");
+        System.out.println("Sufficient funds. Sale successful!");
     }
 
     public void displayBuySeedMenu() {
-        print("SEEDS MENU\n1. Bird seeds\n2. Corn");
+        printMenu("SEEDS MENU\n1. Bird seeds\n2. Corn");
     }
 
     public void displayBuyMeatMenu() {
-        print("MEATS MENU\n1. Mice\n2. Raw steak");
+        printMenu("MEATS MENU\n1. Mice\n2. Raw steak");
     }
 
     public void displayBuyFishFoodMenu() {
-        print("FISH FOOD MENU\n1. Krill\n2. Herring");
+        printMenu("FISH FOOD MENU\n1. Krill\n2. Herring");
     }
 
     public void displaySelectFoodMenu(ArrayList<Food> foods) {
@@ -196,5 +196,9 @@ public class View {
 
     public void successfulBreeding() {
         System.out.println("Breeding successful!");
+    }
+
+    public void animalsDied(int size, byte number) {
+        System.out.println(size + " animals died for player " + number + ".");
     }
 }

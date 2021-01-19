@@ -51,6 +51,7 @@ public class Game {
         byte menuChoice;
         // TODO for each player
         // TODO If all players and rounds have been consumed, set gameOver to true OR break
+        // Main game loop
         while (!gameOver && rounds > 0) {
             for(Player player: allPlayers) {
                 //TODO Set gameOver condition ???
@@ -61,9 +62,15 @@ public class Game {
                 view.displayTotalHealth(player.getTotalHealth());
                 view.displayAverageHealth(player.getAverageHealth());
                 view.displayAnimals(player.getAnimals());
-                view.lineFeed();
+                //view.lineFeed();
 
                 view.displayMainMenu();
+
+                if (player.getDeadAnimals().size() > 0) {
+                    view.animalsDied(player.getDeadAnimals().size(), player.getNumber());
+                    player.clearDeadAnimals();
+                }
+
                 menuChoice = scanner.nextByte();
 
                 byte MENU_START = 1;
@@ -83,6 +90,29 @@ public class Game {
                 }
                 view.displayEndOfTurn();
                 scanner.nextLine();
+                int i = 0;
+                //Reduce health and record dead animals
+                ArrayList<Animal> allAnimals = player.getAnimals();
+                for (Animal animal : allAnimals) {
+                    animal.fatigueHealth();
+                    if (animal.getHealth() <= 0) {
+                        // TODO Remove debug print
+                        System.out.println("FOUND ONE DEAD ANIMAL");
+                        player.addDeadAnimals(animal);
+                    }
+                    i++;
+                }
+                //Remove dead animals
+                for (Animal deadAnimal : player.getDeadAnimals()) {
+                    //TODO Remove debug lines
+                    System.out.println("deadAnimal" + deadAnimal);
+                    System.out.println("player.getDeadAnimals().size" + player.getDeadAnimals().size());
+                    System.out.println(player.getDeadAnimals());
+
+                    player.removeAnimal(deadAnimal);
+                }
+
+
                 view.lines60();
                 rounds--;
             }

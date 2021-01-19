@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.Random;
+
 public abstract class Animal {
 
     public enum Type {
@@ -70,6 +72,14 @@ public abstract class Animal {
         this.health = health;
     }
 
+    public void fatigueHealth() {
+        Random random = new Random();
+        int lowerBound = 10;
+        int upperBound = 30;
+        int x = random.nextInt(upperBound - lowerBound) + lowerBound;
+        health = (byte) ((int) health - x);
+    }
+
     @Override
     public String toString() {
         String female = isFemale ? "Female" : "Male";
@@ -98,7 +108,4 @@ public abstract class Animal {
         return isFemale;
     }
 
-    public void die() {
-
-    }
 }

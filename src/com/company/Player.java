@@ -11,6 +11,9 @@ public class Player {
     private ArrayList<Byte> allHealth = new ArrayList<>();
     private ArrayList<Animal> animals = new ArrayList<>();
     private ArrayList<Food> foods = new ArrayList<>();
+    //Manage dead animals until next turn
+    private ArrayList<Animal> deadAnimals = new ArrayList<>();
+
 
     public Player(String name, byte number){
         this.setName(name);
@@ -91,8 +94,20 @@ public class Player {
         return animals.get(i);
     }
 
+    public void removeAnimal(Animal animal) {
+        animals.remove(animal);
+    }
+
     public void removeAnimal(int i) {
         animals.remove(i);
+    }
+
+    public ArrayList<Animal> getDeadAnimals() {
+        return deadAnimals;
+    }
+
+    public void clearDeadAnimals() {
+        deadAnimals.clear();
     }
 
     public ArrayList<Food> getFoods() {
@@ -115,5 +130,9 @@ public class Player {
 
     public Food getFood(int i) {
         return foods.get(i);
+    }
+
+    public void addDeadAnimals(Animal animal) {
+        deadAnimals.add(animal);
     }
 }
