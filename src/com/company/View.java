@@ -26,6 +26,9 @@ public class View {
         printMenu("");
     }
 
+    public void displayAnimalWorld() {
+        System.out.println("ANIMAL WORLD v1.0 by Daniel Labbé");
+    }
     public void displayMoney(long money){
         System.out.print(money + "€\t");
     }
@@ -52,11 +55,15 @@ public class View {
     }
 
     public void howManyPlayers() {
-        printMenu("How many players ("+ Game.MIN_PLAYERS + "-" + Game.MAX_PLAYERS + ")?");
+        System.out.println("How many players ("+ Game.MIN_PLAYERS + "-" + Game.MAX_PLAYERS + ")?");
     }
 
     public void playersOutOfBounds() {
         error("The number of players has to be between " + Game.MIN_PLAYERS + " and " + Game.MAX_PLAYERS + ".");
+    }
+
+    public void pleaseEnterNameForPlayer(byte number) {
+        System.out.print("Please enter a name for player number " + number + ": ");
     }
 
     public void displayMainMenu() {
@@ -126,8 +133,8 @@ public class View {
         System.exit(0);
     }
 
-    public void readyPlayerNo(byte number) {
-        System.out.println("Ready player no " + number);
+    public void readyPlayerNo(byte number, String name) {
+        System.out.println("Ready player no " + number + " (" + name + ")");
     }
 
     public void unsuccessfulSale() {
@@ -151,7 +158,7 @@ public class View {
     }
 
     public void displaySelectFoodMenu(ArrayList<Food> foods) {
-        int i = 1;
+        int i = 0;
         for(Food food : foods) {
             i++;
             System.out.println(i + ". " + food);
@@ -166,7 +173,7 @@ public class View {
         System.out.println("Cannot feed that food to the animal. Wrong diet!");
     }
 
-    public void pleaseEnterName() {
+    public void pleaseEnterNameForAnimal() {
         System.out.println("Please enter a name for the animal: ");
     }
 
@@ -190,6 +197,10 @@ public class View {
         System.out.println("No food available. You have to buy some food first.");
     }
 
+    public void noAnimalsAvailable() {
+        System.out.println("No animals available.");
+    }
+
     public void unsuccessfulBreeding() {
         System.out.println("Breeding unsuccessful (50% success rate)");
     }
@@ -200,5 +211,9 @@ public class View {
 
     public void animalsDied(int size, byte number) {
         System.out.println(size + " animals died for player " + number + ".");
+    }
+
+    public void playerGameOver(byte number, String name) {
+        System.out.println("No animals and no cash left! GAME OVER player " + number + " (" + name + ")");
     }
 }

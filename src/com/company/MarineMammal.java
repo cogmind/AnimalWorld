@@ -7,7 +7,7 @@ public class MarineMammal extends Animal {
         SEA_OTTER(25, "HERRING", 1.0, (byte) 1),
         SEAL(100, "HERRING", 5.0, (byte) 3),
         POLAR_BEAR(250, "STEAK", 4.0, (byte) 2),
-        BLUE_WHALE(1000, "KRILL", 20.0,(byte) 1);
+        BLUE_WHALE(1000, "KRILL", 8.0,(byte) 1);
 
         int price;
         String diet;

@@ -4,8 +4,8 @@ public class Bird extends Animal {
 
     public enum Type {
 
-        PIGEON(10,"BIRD_SEED", 0.3, (byte) 3),
-        PARROT(15, "BIRD_SEED", 0.3, (byte) 2),
+        PIGEON(10,"BIRD_SEED", 1.3, (byte) 3),
+        PARROT(15, "BIRD_SEED", 1.3, (byte) 2),
         OWL(30, "MICE", 2.0, (byte) 3),
         EAGLE(80, "STEAK", 4.0, (byte) 2);
 

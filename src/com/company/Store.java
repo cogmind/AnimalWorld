@@ -1,6 +1,5 @@
 package com.company;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
@@ -96,7 +95,7 @@ public class Store {
 
         boolean enoughMoney = sell(animalForSale, animalForSale.getPrice());
         if (enoughMoney) {
-            view.pleaseEnterName();
+            view.pleaseEnterNameForAnimal();
             animalForSale.setName(scanner.nextLine());
             customer.addAnimal(animalForSale);
             return ENOUGH_MONEY;
@@ -105,10 +104,8 @@ public class Store {
 
     // The store is buying, the customer is selling
     public void buyAnimal(Animal animal) {
-
-        customer.setMoney(animal.getPrice());
-        money -= animal.getPrice(); //TODO consider view displayStoreMoney
-
+        customer.setMoney(customer.getMoney() + animal.getPrice());
+        money -= animal.getPrice();
     }
 
     // The store is selling, the customer is buying

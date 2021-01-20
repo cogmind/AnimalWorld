@@ -24,6 +24,8 @@ public class Game {
         players = -1;
 
         while (!(rounds >= MIN_ROUNDS && rounds <= MAX_ROUNDS)) {
+            view.displayAnimalWorld();
+            view.lineFeed();
             view.howManyRounds();
             rounds = scanner.nextByte();
 
@@ -44,10 +46,13 @@ public class Game {
         //Define players
         String name;
         for(byte player = 1; player <= players; player++) {
+            view.pleaseEnterNameForPlayer(player);
+            scanner.nextLine();
             name = scanner.nextLine();
             Player newPlayer = new Player(name, player);
             allPlayers.add(newPlayer);
         }
+
         byte menuChoice;
         // TODO for each player
         // TODO If all players and rounds have been consumed, set gameOver to true OR break
@@ -57,12 +62,12 @@ public class Game {
                 //TODO Set gameOver condition ???
 
                 // View statistics
-                view.readyPlayerNo(player.getNumber());
+                view.lines60();
+                view.readyPlayerNo(player.getNumber(), player.getName());
                 view.displayMoney(player.getMoney());
                 view.displayTotalHealth(player.getTotalHealth());
                 view.displayAverageHealth(player.getAverageHealth());
                 view.displayAnimals(player.getAnimals());
-                //view.lineFeed();
 
                 view.displayMainMenu();
 
@@ -90,6 +95,7 @@ public class Game {
                 }
                 view.displayEndOfTurn();
                 scanner.nextLine();
+                scanner.nextLine();
                 int i = 0;
                 //Reduce health and record dead animals
                 ArrayList<Animal> allAnimals = player.getAnimals();
@@ -111,9 +117,16 @@ public class Game {
 
                     player.removeAnimal(deadAnimal);
                 }
-
-
                 view.lines60();
+
+                if (player.getMoney() <= 0 && player.getAnimals().size() == 0) {
+                    view.playerGameOver(player.getNumber(), player.getName());
+                    if (allPlayers.size() > 1) { //Cannot modify while in loop
+                        allPlayers.remove(player);
+                    } else {
+                        gameOver = true;
+                    }
+                }
                 rounds--;
             }
             if (allPlayers.size() == 0) {
@@ -343,10 +356,14 @@ public class Game {
             view.noFoodAvailable();
             return;
         }
+        if (player.getAnimals().size() == 0) {
+            view.noAnimalsAvailable();
+            return;
+        }
         view.displayFeedMenu();
         view.displayAnimalsMenu(player.getAnimals());
-        byte menuChoice = scanner.nextByte();
 
+        byte menuChoice = scanner.nextByte();
         Animal animalToFeed = player.getAnimal(menuChoice - 1);
 
         ArrayList<Food> foods = player.getFoods();
@@ -418,7 +435,7 @@ public class Game {
         if (random.nextBoolean()) {
             for (byte i = 0; i < offsprings; i++) {
                 view.successfulBreeding();
-                view.pleaseEnterName();
+                view.pleaseEnterNameForAnimal();
                 name = scanner.next(); //Since we are in a loop
                 boolean isFemale = random.nextBoolean();
 
@@ -451,11 +468,26 @@ public class Game {
     }
 
     public void sell(Player player, Scanner scanner) {
+        if (player.getAnimals().size() == 0){
+            view.noAnimalsAvailable();
+            return;
+        }
         Store sellingStore = new Store(player, players);
         view.displayAnimalsMenu(player.getAnimals());
         Byte menuChoice = scanner.nextByte();
+
         Animal animal = player.getAnimal(menuChoice - 1);
+        sellingStore.buyAnimal(animal);
         player.setMoney(player.getMoney() + animal.getPrice());
         player.removeAnimal(menuChoice - 1);
+    }
+
+    public void sellAll(Player player, Scanner scanner) {
+        Store sellingStore = new Store(player, players);
+        ArrayList<Animal> allAnimals = player.getAnimals();
+        for (Animal animal : allAnimals) {
+            player.setMoney(player.getMoney() + animal.getPrice());
+            player.removeAnimal(animal);
+        }
     }
 }

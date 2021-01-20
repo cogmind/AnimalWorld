@@ -3,8 +3,8 @@ package com.company;
 public class Cat extends Animal {
     public enum Type {
 
-        KITTEN(20, "MICE", 0.5, (byte) 0),
-        HOUSE_CAT(30, "MICE", 1.0, (byte) 5),
+        KITTEN(20, "MICE", 1.1, (byte) 0),
+        HOUSE_CAT(30, "MICE", 1.5, (byte) 5),
         LYNX(120, "STEAK", 2.0, (byte) 2),
         PANTHER(180, "STEAK", 4.0, (byte) 3);
 

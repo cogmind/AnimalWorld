@@ -19,6 +19,6 @@ public abstract class Food {
     }
 
     public String toString(){
-        return type;
+        return type.toLowerCase().replace("_", " ");
     }
 }

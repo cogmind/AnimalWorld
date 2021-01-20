@@ -93,8 +93,9 @@ public abstract class Animal {
         //TODO REMOVE 2x DEBUG LINES
         System.out.println(diet);
         System.out.println(food.toString());
+        System.out.println("foodFactor: " + foodFactor);
         if (diet == food.toString()) {
-            setHealth((byte)Math.round(1.10 * getHealth()));
+            setHealth((byte)Math.round(((0.10 / getFoodFactor()) + 1) * getHealth()));
             if (getHealth() > 100) {
                 setHealth((byte) 100);
             }

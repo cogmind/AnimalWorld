@@ -10,9 +10,8 @@ public class Player {
     public static final long INITIAL_MONEY = 1000;
     private ArrayList<Byte> allHealth = new ArrayList<>();
     private ArrayList<Animal> animals = new ArrayList<>();
-    private ArrayList<Food> foods = new ArrayList<>();
-    //Manage dead animals until next turn
     private ArrayList<Animal> deadAnimals = new ArrayList<>();
+    private ArrayList<Food> foods = new ArrayList<>();
 
 
     public Player(String name, byte number){

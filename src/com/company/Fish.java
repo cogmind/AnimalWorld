@@ -3,7 +3,7 @@ package com.company;
 public class Fish extends Animal {
     public enum Type {
 
-        GOLDFISH(5, "KRILL", 0.1, (byte) 6),
+        GOLDFISH(5, "KRILL", 1.1, (byte) 6),
         COD(15, "KRILL", 1.0, (byte) 3),
         GIANT_CATFISH(40, "KRILL", 5.0, (byte) 4);
 
