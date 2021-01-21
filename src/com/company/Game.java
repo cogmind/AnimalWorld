@@ -1,8 +1,6 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Game {
 
@@ -47,7 +45,6 @@ public class Game {
         String name;
         for(byte player = 1; player <= players; player++) {
             view.pleaseEnterNameForPlayer(player);
-            scanner.nextLine();
             name = scanner.nextLine();
             Player newPlayer = new Player(name, player);
             allPlayers.add(newPlayer);
@@ -94,31 +91,13 @@ public class Game {
                     }
                 }
                 view.displayEndOfTurn();
+                scanner.nextLine();//TODO, fix for individual nextFoo:s instead
                 scanner.nextLine();
-                scanner.nextLine();
-                int i = 0;
-                //Reduce health and record dead animals
-                ArrayList<Animal> allAnimals = player.getAnimals();
-                for (Animal animal : allAnimals) {
-                    animal.fatigueHealth();
-                    if (animal.getHealth() <= 0) {
-                        // TODO Remove debug print
-                        System.out.println("FOUND ONE DEAD ANIMAL");
-                        player.addDeadAnimals(animal);
-                    }
-                    i++;
-                }
-                //Remove dead animals
-                for (Animal deadAnimal : player.getDeadAnimals()) {
-                    //TODO Remove debug lines
-                    System.out.println("deadAnimal" + deadAnimal);
-                    System.out.println("player.getDeadAnimals().size" + player.getDeadAnimals().size());
-                    System.out.println(player.getDeadAnimals());
-
-                    player.removeAnimal(deadAnimal);
-                }
+                reduceHealthAndManageDeath(player);
                 view.lines60();
 
+                // If player loses, remove player
+                // TODO add to high score?
                 if (player.getMoney() <= 0 && player.getAnimals().size() == 0) {
                     view.playerGameOver(player.getNumber(), player.getName());
                     if (allPlayers.size() > 1) { //Cannot modify while in loop
@@ -134,7 +113,37 @@ public class Game {
             }
         }
 
+        // End of game logic
+        for (Player player: allPlayers) {
+            sellAll(player);
+        }
+
+        view.printHighScores(allPlayers);
         view.endOfGame();
+    }
+
+    private void reduceHealthAndManageDeath(Player player) {
+        //Reduce health and record dead animals
+        int i = 0;
+        ArrayList<Animal> allAnimals = player.getAnimals();
+        for (Animal animal : allAnimals) {
+            animal.fatigueHealth();
+            if (animal.getHealth() <= 0) {
+                // TODO Remove debug print
+                System.out.println("FOUND ONE DEAD ANIMAL");
+                player.addDeadAnimals(animal);
+            }
+            i++;
+        }
+        //Remove dead animals
+        for (Animal deadAnimal : player.getDeadAnimals()) {
+            //TODO Remove debug lines
+            System.out.println("deadAnimal" + deadAnimal);
+            System.out.println("player.getDeadAnimals().size" + player.getDeadAnimals().size());
+            System.out.println(player.getDeadAnimals());
+
+            player.removeAnimal(deadAnimal);
+        }
     }
 
     public void buyAnimal(Player player, Scanner scanner) {
@@ -482,7 +491,7 @@ public class Game {
         player.removeAnimal(menuChoice - 1);
     }
 
-    public void sellAll(Player player, Scanner scanner) {
+    public void sellAll(Player player) {
         Store sellingStore = new Store(player, players);
         ArrayList<Animal> allAnimals = player.getAnimals();
         for (Animal animal : allAnimals) {

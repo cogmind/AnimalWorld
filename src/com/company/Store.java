@@ -119,9 +119,9 @@ public class Store {
             case "fish food" -> foodForSale = fishFood.get(specificFood);
         }
 
-        if (sell(foodForSale, foodForSale.getPrice())) {
+        boolean enoughMoney = sell(foodForSale, foodForSale.getPrice());
+        if (enoughMoney) {
             customer.addFood(foodForSale);
-            customer.setMoney(customer.getMoney() - foodForSale.getPrice());
             return ENOUGH_MONEY;
         } else {
             return NOT_ENOUGH_MONEY;

@@ -1,6 +1,6 @@
 package com.company;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class View {
 
@@ -215,5 +215,22 @@ public class View {
 
     public void playerGameOver(byte number, String name) {
         System.out.println("No animals and no cash left! GAME OVER player " + number + " (" + name + ")");
+    }
+
+    public void printHighScores(ArrayList<Player> allPlayers) {
+
+        TreeMap<Long, String> highScore = new TreeMap<>(Collections.reverseOrder());
+
+        for (Player player: allPlayers) {
+            highScore.put(player.getMoney(), player.getName());
+        }
+
+        Set<Map.Entry<Long, String>> entries = highScore.entrySet();
+
+        int j = 1;
+        for (Map.Entry<Long, String>  entry : entries) {
+            System.out.println(j + ". " + entry.getValue() + " " + entry.getKey());
+            j++;
+        }
     }
 }
