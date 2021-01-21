@@ -90,7 +90,7 @@ public abstract class Animal {
         return name + " " + type.substring(0, 1).toUpperCase() + type.substring(1).toLowerCase() + " (" + female + ") "+ health + " HP. ";
     }
 
-    public boolean eat(Food food) {
+    public boolean eat(Food food, int kilos) {
         boolean ATE_FOOD = true;
         boolean DID_NOT_EAT_FOOD = false;
 
@@ -98,10 +98,14 @@ public abstract class Animal {
         System.out.println(diet);
         System.out.println(food.toString());
         System.out.println("foodFactor: " + foodFactor);
+        System.out.println("kilos" + kilos);
         if (diet == food.toString()) {
-            setHealth((byte)Math.round(((0.10 / getFoodFactor()) + 1) * getHealth()));
-            if (getHealth() > 100) {
-                setHealth((byte) 100);
+            while (kilos > 0) {
+                setHealth((byte) Math.round(((0.10 / getFoodFactor()) + 1) * getHealth()));
+                if (getHealth() > 100) {
+                    setHealth((byte) 100);
+                }
+                kilos -= 1;
             }
             return ATE_FOOD;
         } else {

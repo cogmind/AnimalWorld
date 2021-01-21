@@ -47,10 +47,10 @@ public class View {
         }
     }
 
-    public void displayFoods(ArrayList<Food> foods) {
+    public void displayFoods(LinkedHashMap<Food, Integer> foods) {
         System.out.println();
-        for (Food food : foods) {
-            System.out.print(food.toString() + " ");
+        for (Map.Entry kilosFood : foods.entrySet()) {
+            System.out.print(kilosFood.getKey() + ": " + kilosFood.getValue() + "kg ");
         }
         System.out.println();
     }
@@ -186,7 +186,7 @@ public class View {
         printMenu("FISH FOOD MENU\n1. Krill\n2. Herring");
     }
 
-    public void displaySelectFoodMenu(ArrayList<Food> foods) {
+    public void displaySelectFoodMenu(HashMap<Food, Integer> foods) {
         int i = 0;
         for(Food food : foods) {
             i++;
@@ -265,5 +265,9 @@ public class View {
 
     public void displayGenderMenu() {
         System.out.println("Please choose a gender: \n1. Female\n2. Male");
+    }
+
+    public void displayHowManyKilos(String foodType) {
+        System.out.println("How many kilos of " + " would you like to purchase?");
     }
 }

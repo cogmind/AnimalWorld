@@ -6,7 +6,7 @@ public class Game {
 
     private final View view = new View();
     private boolean gameOver = false;
-    private final ArrayList<Player> allPlayers = new ArrayList<>(); //TODO Try if I can use final here, intelliJ recommends
+    private final ArrayList<Player> allPlayers = new ArrayList<>();
     private ArrayList<Player> highScore = new ArrayList<>();
 
     public byte players;
@@ -336,7 +336,10 @@ public class Game {
         } else {
             Seed.Type choice = Seed.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
-            boolean successfulSale = foodStore.sellFood("seed", choice.toString());
+            view.displayHowManyKilos(choice.name());
+            int kilos = scanner.nextInt();
+            scanner.nextLine();
+            boolean successfulSale = foodStore.sellFood("seed", choice.toString(), kilos);
             if (!successfulSale) {
                 view.unsuccessfulSale();
             } else {
@@ -357,7 +360,10 @@ public class Game {
         } else {
             Meat.Type choice = Meat.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
-            boolean successfulSale = foodStore.sellFood("meat", choice.toString());
+            view.displayHowManyKilos(choice.name());
+            int kilos = scanner.nextInt();
+            scanner.nextLine();
+            boolean successfulSale = foodStore.sellFood("meat", choice.toString(), kilos);
             if (!successfulSale) {
                 view.unsuccessfulSale();
             } else {
@@ -378,7 +384,10 @@ public class Game {
         } else {
             FishFood.Type choice = FishFood.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
-            boolean successfulSale = foodStore.sellFood("fish food", choice.toString());
+            view.displayHowManyKilos(choice.name());
+            int kilos = scanner.nextInt();
+            scanner.nextLine();
+            boolean successfulSale = foodStore.sellFood("fish food", choice.toString(), kilos);
             if (!successfulSale) {
                 view.unsuccessfulSale();
             } else {
@@ -404,7 +413,7 @@ public class Game {
         byte menuChoice = scanner.nextByte();
         Animal animalToFeed = player.getAnimal(menuChoice - 1);
 
-        ArrayList<Food> foods = player.getFoods();
+        LinkedHashMap<Food, Integer> foods = player.getFoods();
         view.displaySelectFoodMenu(foods);
         menuChoice = scanner.nextByte();
 
