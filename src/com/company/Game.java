@@ -7,6 +7,7 @@ public class Game {
     private final View view = new View();
     private boolean gameOver = false;
     private ArrayList<Player> allPlayers = new ArrayList<>(); //TODO Try if I can use final here, intelliJ recommends
+    private ArrayList<Player> highScore = new ArrayList<>();
 
     public byte players;
     public final static byte MIN_ROUNDS = 5;
@@ -26,22 +27,24 @@ public class Game {
             view.lineFeed();
             view.howManyRounds();
             rounds = scanner.nextByte();
+            scanner.nextLine();
 
             if (rounds < 5 || rounds > 30) {
                 view.roundsOutOfBounds();
             }
         }
 
+        //Define players
         while (!(players >= MIN_PLAYERS && players <= MAX_PLAYERS)) {
             view.howManyPlayers();
             players = scanner.nextByte();
+            scanner.nextLine();
 
             if (players < MIN_PLAYERS || players > MAX_PLAYERS) {
                 view.playersOutOfBounds();
             }
         }
 
-        //Define players
         String name;
         for(byte player = 1; player <= players; player++) {
             view.pleaseEnterNameForPlayer(player);
@@ -65,6 +68,7 @@ public class Game {
                 view.displayTotalHealth(player.getTotalHealth());
                 view.displayAverageHealth(player.getAverageHealth());
                 view.displayAnimals(player.getAnimals());
+                view.displayFoods(player.getFoods());
 
                 view.displayMainMenu();
 
@@ -97,10 +101,11 @@ public class Game {
                 view.lines60();
 
                 // If player loses, remove player
-                // TODO add to high score?
+                // TODO add to high score
                 if (player.getMoney() <= 0 && player.getAnimals().size() == 0) {
                     view.playerGameOver(player.getNumber(), player.getName());
-                    if (allPlayers.size() > 1) { //Cannot modify while in loop
+                    if (allPlayers.size() > 1) {
+                        highScore.add(player);
                         allPlayers.remove(player);
                     } else {
                         gameOver = true;
@@ -116,9 +121,10 @@ public class Game {
         // End of game logic
         for (Player player: allPlayers) {
             sellAll(player);
+            highScore.add(player);
         }
 
-        view.printHighScores(allPlayers);
+        view.printHighScores(highScore);
         view.endOfGame();
     }
 
@@ -164,7 +170,28 @@ public class Game {
                 case 4 -> buyFish(player, scanner, animalStore);
                 case 5 -> buyMarineMammal(player, scanner, animalStore);
             }
+            //Update health
             player.updateAllHealth();
+
+            view.pleaseEnterNameForAnimal();
+            String name = scanner.nextLine();
+            // Since this is a queue, the last item is the newest
+            player.getAnimal(player.getAnimals().size() - 1).setName(name);
+
+            view.displayGenderMenu();
+            byte gender = scanner.nextByte();
+            boolean isFemale;
+            if (gender == 1) {
+                isFemale = true;
+            } else if (gender == 2) {
+                isFemale = false;
+            } else {
+                Random random = new Random();
+                isFemale = random.nextBoolean();
+            }
+            scanner.nextLine();
+            // Get last animal added and set gender
+            player.getAnimal(player.getAnimals().size() - 1).setGender(isFemale);
         }
     }
 
@@ -401,13 +428,6 @@ public class Game {
         byte menuChoice2 = scanner.nextByte();
         Animal breedingAnimal2 = startingAnimals.get(menuChoice2 - 1);
 
-        //TODO Remove debug prints
-        System.out.println("BREEDING");
-        System.out.println(breedingAnimal1.getType());
-        System.out.println(breedingAnimal2.getType());
-        System.out.println(breedingAnimal1.getGender());
-        System.out.println(breedingAnimal2.getGender());
-
         if (breedingAnimal1.getType().equals(breedingAnimal2.getType())) {
             view.sameSpecies();
             if (breedingAnimal1.getGender() != breedingAnimal2.getGender()) {
@@ -496,7 +516,7 @@ public class Game {
         ArrayList<Animal> allAnimals = player.getAnimals();
         for (Animal animal : allAnimals) {
             player.setMoney(player.getMoney() + animal.getPrice());
-            player.removeAnimal(animal);
+            //player.removeAnimal(animal); //ConcurrentModification. Skipped. TODO Check
         }
     }
 }

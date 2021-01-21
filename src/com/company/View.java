@@ -46,6 +46,15 @@ public class View {
             System.out.printf(animal.toString());
         }
     }
+
+    public void displayFoods(ArrayList<Food> foods) {
+        System.out.println();
+        for (Food food : foods) {
+            System.out.print(food.toString() + " ");
+        }
+        System.out.println();
+    }
+
     public void howManyRounds() {
         System.out.println("How many rounds (" + Game.MIN_ROUNDS + "-" + Game.MAX_ROUNDS + ") would you like to play?");
     }
@@ -232,5 +241,9 @@ public class View {
             System.out.println(j + ". " + entry.getValue() + " " + entry.getKey());
             j++;
         }
+    }
+
+    public void displayGenderMenu() {
+        System.out.println("Please choose a gender: \n1. Female\n2. Male");
     }
 }

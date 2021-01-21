@@ -60,6 +60,10 @@ public abstract class Animal {
         this.name = name;
     }
 
+    public void setGender(boolean isFemale) {
+        this.isFemale = isFemale;
+    }
+
     public int getPrice() {
         return Math.round(price * health / 100);
     }
@@ -83,7 +87,7 @@ public abstract class Animal {
     @Override
     public String toString() {
         String female = isFemale ? "Female" : "Male";
-        return name + " " + type.toLowerCase() + " (" + female + ") "+ health + " HP. ";
+        return name + " " + type.substring(0, 1).toUpperCase() + type.substring(1).toLowerCase() + " (" + female + ") "+ health + " HP. ";
     }
 
     public boolean eat(Food food) {
