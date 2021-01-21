@@ -87,22 +87,16 @@ public abstract class Animal {
     @Override
     public String toString() {
         String female = isFemale ? "Female" : "Male";
-        return name + " " + type.substring(0, 1).toUpperCase() + type.substring(1).toLowerCase() + " (" + female + ") "+ health + " HP. ";
+        return name + " " + View.capitalize(type) + " (" + female + ") "+ health + " HP. ";
     }
 
     public boolean eat(Food food, int kilos) {
         boolean ATE_FOOD = true;
         boolean DID_NOT_EAT_FOOD = false;
 
-        //TODO REMOVE 2x DEBUG LINES
-        System.out.println(diet.substring(0, 1).toUpperCase() + diet.substring(1).toLowerCase());
-        System.out.println(food.toString());
-        System.out.println("foodFactor: " + foodFactor);
-        System.out.println("kilos" + kilos);
+        diet = View.capitalize(diet).replace("_", " ");
 
-        // Same formatting as food.toString() i.e. capitalization
-        diet = diet.substring(0, 1).toUpperCase() + diet.substring(1).toLowerCase();
-        if (diet == food.toString()) {
+        if (diet.equals(food.toString()))  {
             while (kilos > 0) {
                 setHealth((byte) Math.round(((0.10 / getFoodFactor()) + 1) * getHealth()));
                 if (getHealth() > 100) {

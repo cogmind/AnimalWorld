@@ -128,8 +128,6 @@ public class Game {
         view.endOfGame();
     }
 
-    public static String capitalize(String input) { return input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();}
-
     private void reduceHealthAndManageDeath(Player player) {
         //Reduce health and record dead animals
         int i = 0;

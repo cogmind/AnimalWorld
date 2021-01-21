@@ -9,6 +9,8 @@ public class View {
 
     }
 
+    public static String capitalize(String input) { return input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();}
+
     private void printMenu(String input) {
         System.out.println("\n".repeat(60));
         System.out.println(input);
@@ -17,6 +19,7 @@ public class View {
     private void displayError(String input){
         System.err.println(input);
     }
+
 
     public void createLineFeed() {
         System.out.println("\n");
@@ -268,10 +271,10 @@ public class View {
     }
 
     public void displayHowManyKilosToBuy(String foodType) {
-        System.out.println("How many kilos of " + foodType.substring(0, 1).toUpperCase() + foodType.substring(1).toLowerCase() + " would you like to purchase?");
+        System.out.println("How many kilos of " + View.capitalize(foodType).replace("_", " ") + " would you like to purchase?");
     }
 
     public void displayHowManyKilosToFeed(String foodType) {
-        System.out.println("How many kilos of " + foodType + " would you like to feed?");
+        System.out.println("How many kilos of " + View.capitalize(foodType).replace("_", " ") + " would you like to feed?");
     }
 }
