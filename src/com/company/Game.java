@@ -336,7 +336,7 @@ public class Game {
         } else {
             Seed.Type choice = Seed.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
-            view.displayHowManyKilos(choice.name());
+            view.displayHowManyKilosToBuy(choice.name());
             int kilos = scanner.nextInt();
             scanner.nextLine();
             boolean successfulSale = foodStore.sellFood("seed", choice.toString(), kilos);
@@ -360,7 +360,7 @@ public class Game {
         } else {
             Meat.Type choice = Meat.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
-            view.displayHowManyKilos(choice.name());
+            view.displayHowManyKilosToBuy(choice.name());
             int kilos = scanner.nextInt();
             scanner.nextLine();
             boolean successfulSale = foodStore.sellFood("meat", choice.toString(), kilos);
@@ -384,7 +384,7 @@ public class Game {
         } else {
             FishFood.Type choice = FishFood.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
-            view.displayHowManyKilos(choice.name());
+            view.displayHowManyKilosToBuy(choice.name());
             int kilos = scanner.nextInt();
             scanner.nextLine();
             boolean successfulSale = foodStore.sellFood("fish food", choice.toString(), kilos);
@@ -419,7 +419,10 @@ public class Game {
 
         Food foodForAnimal = player.getFood(menuChoice - 1);
 
-        if (player.feed(animalToFeed, foodForAnimal)) {
+        view.displayHowManyKilosToFeed(foodForAnimal.toString());
+        int kilos = scanner.nextInt();
+        scanner.nextLine();
+        if (player.feed(animalToFeed, foodForAnimal, kilos)) {
             view.successfulFeed();
         } else {}
             view.unsuccessfulFeed();

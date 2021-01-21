@@ -188,7 +188,7 @@ public class View {
 
     public void displaySelectFoodMenu(HashMap<Food, Integer> foods) {
         int i = 0;
-        for(Food food : foods) {
+        for(Food food : foods.keySet()) {
             i++;
             System.out.println(i + ". " + food);
         }
@@ -267,7 +267,11 @@ public class View {
         System.out.println("Please choose a gender: \n1. Female\n2. Male");
     }
 
-    public void displayHowManyKilos(String foodType) {
-        System.out.println("How many kilos of " + " would you like to purchase?");
+    public void displayHowManyKilosToBuy(String foodType) {
+        System.out.println("How many kilos of " + foodType + " would you like to purchase?");
+    }
+
+    public void displayHowManyKilosToFeed(String foodType) {
+        System.out.println("How many kilos of " + foodType + " would you like to feed?");
     }
 }

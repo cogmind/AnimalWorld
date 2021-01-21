@@ -134,9 +134,8 @@ public class Player {
         }
     }
 
-    public Set getFood(int i) {
-        
-        return foods.entrySet();
+    public Food getFood(int i) {
+        return (Food) foods.keySet().toArray()[i];
     }
 
     public void addDeadAnimals(Animal animal) {
