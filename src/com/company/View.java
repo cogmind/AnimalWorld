@@ -93,23 +93,43 @@ public class View {
     }
 
     public void displayBuyBirdMenu() {
-        printMenu("BIRD MENU\n1. Pigeon\n2. Parrot\n3. Owl\n4. Eagle\n");
+        printMenu("BIRD MENU\n1. Pigeon (" + Bird.Type.PIGEON.price + "€" +
+                ")\n2. Parrot (" + Bird.Type.PARROT.price + "€" +
+                ")\n3. Owl (" + Bird.Type.OWL.price  + "€" +
+                ")\n4. Eagle (" + Bird.Type.EAGLE.price + "€"
+                );
     }
 
     public void displayBuyCatMenu() {
-        printMenu("CAT MENU\n1. Kitten\n2. House cat\n3. Lynx\n4. Panther\n");
+        printMenu("CAT MENU\n1. Kitten (" + Cat.Type.KITTEN.price + "€)" +
+                "\n2. House cat (" + Cat.Type.HOUSE_CAT.price + "€)" +
+                "\n3. Lynx (" + Cat.Type.LYNX.price + "€)" +
+                "\n4. Panther (" + Cat.Type.PANTHER.price + "€)"
+                );
     }
 
     public void displayBuyLivestockMenu() {
-        printMenu("LIVESTOCK MENU\n1. Cattle\n2. Sheep\n3. Bison\n");
+        printMenu("LIVESTOCK MENU" +
+                "\n1. Cattle (" + Livestock.Type.CATTLE.price + "€)" +
+                "\n2. Sheep (" + Livestock.Type.SHEEP.price + "€)" +
+                "\n3. Bison (" + Livestock.Type.BISON.price + "€)"
+                );
     }
 
     public void displayBuyFishMenu() {
-        printMenu("FISH MENU\n1. Goldfish\n2. Giant cat fish\n");
+        printMenu("FISH MENU" +
+                "\n1. Goldfish (" + Fish.Type.GOLDFISH.price + "€)" +
+                "\n2. Giant cat fish (" + Fish.Type.GIANT_CATFISH.price + "€)"
+                );
     }
 
     public void displayBuyMarineMammalMenu() {
-        printMenu("MARINE MAMMAL MENU\n1. Sea otter\n2. Seal\n3. Polar bear\n4. Blue whale\n");
+        printMenu("MARINE MAMMAL MENU" +
+                "\n1. Sea otter (" + MarineMammal.Type.SEA_OTTER.price + "€)" +
+                "\n2. Seal (" + MarineMammal.Type.SEAL.price + "€)" +
+                "\n3. Polar bear (" + MarineMammal.Type.POLAR_BEAR.price + "€)" +
+                "\n4. Blue whale ("+ MarineMammal.Type.BLUE_WHALE.price + "€)"
+                );
     }
 
 
