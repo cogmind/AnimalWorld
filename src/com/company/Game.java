@@ -6,7 +6,7 @@ public class Game {
 
     private final View view = new View();
     private boolean gameOver = false;
-    private ArrayList<Player> allPlayers = new ArrayList<>(); //TODO Try if I can use final here, intelliJ recommends
+    private final ArrayList<Player> allPlayers = new ArrayList<>(); //TODO Try if I can use final here, intelliJ recommends
     private ArrayList<Player> highScore = new ArrayList<>();
 
     public byte players;
