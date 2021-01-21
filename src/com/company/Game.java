@@ -24,7 +24,7 @@ public class Game {
 
         while (!(rounds >= MIN_ROUNDS && rounds <= MAX_ROUNDS)) {
             view.displayAnimalWorld();
-            view.lineFeed();
+            view.createLineFeed();
             view.howManyRounds();
             rounds = scanner.nextByte();
             scanner.nextLine();
@@ -62,7 +62,7 @@ public class Game {
                 //TODO Set gameOver condition ???
 
                 // View statistics
-                view.lines60();
+                view.make60Lines();
                 view.readyPlayerNo(player.getNumber(), player.getName());
                 view.displayMoney(player.getMoney());
                 view.displayTotalHealth(player.getTotalHealth());
@@ -78,6 +78,7 @@ public class Game {
                 }
 
                 menuChoice = scanner.nextByte();
+                scanner.nextLine();
 
                 byte MENU_START = 1;
                 byte MENU_END = 5;
@@ -95,10 +96,9 @@ public class Game {
                     }
                 }
                 view.displayEndOfTurn();
-                scanner.nextLine();//TODO, fix for individual nextFoo:s instead
                 scanner.nextLine();
                 reduceHealthAndManageDeath(player);
-                view.lines60();
+                view.make60Lines();
 
                 // If player loses, remove player
                 // TODO add to high score
@@ -156,6 +156,7 @@ public class Game {
         view.displayBuyAnimalMenu();
         Store animalStore = new Store(player, players);
         byte menuChoice = scanner.nextByte();
+        scanner.nextLine();
 
         byte MENU_START = 1;
         byte MENU_END = 5;
@@ -174,7 +175,8 @@ public class Game {
             player.updateAllHealth();
 
             view.pleaseEnterNameForAnimal();
-            String name = scanner.nextLine();
+            String name = scanner.next();
+            scanner.nextLine();
             // Since this is a queue, the last item is the newest
             player.getAnimal(player.getAnimals().size() - 1).setName(name);
 
@@ -189,7 +191,6 @@ public class Game {
                 Random random = new Random();
                 isFemale = random.nextBoolean();
             }
-            scanner.nextLine();
             // Get last animal added and set gender
             player.getAnimal(player.getAnimals().size() - 1).setGender(isFemale);
         }
@@ -199,6 +200,7 @@ public class Game {
 
         view.displayBuyBirdMenu();
         byte menuChoice = scanner.nextByte();
+        scanner.nextLine();
 
         byte MENU_START = 1;
         byte MENU_END = 4;

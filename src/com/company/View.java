@@ -4,7 +4,7 @@ import java.util.*;
 
 public class View {
 
-    //TODO Gather all Sysouts here
+    // Gather all Sysouts here
     public View() {
 
     }
@@ -14,15 +14,15 @@ public class View {
         System.out.println(input);
     }
 
-    private void error(String input){
+    private void displayError(String input){
         System.err.println(input);
     }
 
-    public void lineFeed() {
+    public void createLineFeed() {
         System.out.println("\n");
     }
 
-    public void lines60() {
+    public void make60Lines() {
         printMenu("");
     }
 
@@ -60,7 +60,7 @@ public class View {
     }
 
     public void roundsOutOfBounds() {
-        error("Rounds must be between " + Game.MIN_ROUNDS + " and " + Game.MAX_ROUNDS + ". Try again");
+        displayError("Rounds must be between " + Game.MIN_ROUNDS + " and " + Game.MAX_ROUNDS + ". Try again");
     }
 
     public void howManyPlayers() {
@@ -68,7 +68,7 @@ public class View {
     }
 
     public void playersOutOfBounds() {
-        error("The number of players has to be between " + Game.MIN_PLAYERS + " and " + Game.MAX_PLAYERS + ".");
+        displayError("The number of players has to be between " + Game.MIN_PLAYERS + " and " + Game.MAX_PLAYERS + ".");
     }
 
     public void pleaseEnterNameForPlayer(byte number) {
@@ -80,7 +80,7 @@ public class View {
     }
 
     public void menuOutOfBounds(byte menu_end){
-        error("Please select an option between 1 and " + menu_end + ".");
+        displayError("Please select an option between 1 and " + menu_end + ".");
     }
 
     public void displayEndOfTurn() {

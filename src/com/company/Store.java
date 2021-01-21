@@ -95,8 +95,8 @@ public class Store {
 
         boolean enoughMoney = sell(animalForSale, animalForSale.getPrice());
         if (enoughMoney) {
-            view.pleaseEnterNameForAnimal();
-            animalForSale.setName(scanner.nextLine());
+            //view.pleaseEnterNameForAnimal();
+            //animalForSale.setName(scanner.nextLine());
             customer.addAnimal(animalForSale);
             return ENOUGH_MONEY;
         } else { return NOT_ENOUGH_MONEY;}
