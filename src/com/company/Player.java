@@ -135,6 +135,7 @@ public class Player {
     }
 
     public Food getFood(int i) {
+        //A Linked Hash Map is ordered and allows us to do this
         return (Food) foods.keySet().toArray()[i];
     }
 

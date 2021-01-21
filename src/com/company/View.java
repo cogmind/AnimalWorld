@@ -268,7 +268,7 @@ public class View {
     }
 
     public void displayHowManyKilosToBuy(String foodType) {
-        System.out.println("How many kilos of " + foodType + " would you like to purchase?");
+        System.out.println("How many kilos of " + foodType.substring(0, 1).toUpperCase() + foodType.substring(1).toLowerCase() + " would you like to purchase?");
     }
 
     public void displayHowManyKilosToFeed(String foodType) {

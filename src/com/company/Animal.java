@@ -95,10 +95,13 @@ public abstract class Animal {
         boolean DID_NOT_EAT_FOOD = false;
 
         //TODO REMOVE 2x DEBUG LINES
-        System.out.println(diet);
+        System.out.println(diet.substring(0, 1).toUpperCase() + diet.substring(1).toLowerCase());
         System.out.println(food.toString());
         System.out.println("foodFactor: " + foodFactor);
         System.out.println("kilos" + kilos);
+
+        // Same formatting as food.toString() i.e. capitalization
+        diet = diet.substring(0, 1).toUpperCase() + diet.substring(1).toLowerCase();
         if (diet == food.toString()) {
             while (kilos > 0) {
                 setHealth((byte) Math.round(((0.10 / getFoodFactor()) + 1) * getHealth()));
