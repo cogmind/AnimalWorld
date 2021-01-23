@@ -4,7 +4,7 @@ import java.util.*;
 
 public class View {
 
-    // Gather all Sysouts here
+    // Gather all Sysouts and Syserrors here
     public View() {
 
     }
@@ -22,7 +22,7 @@ public class View {
         System.out.println("\n");
     }
 
-    public void make60Lines() {
+    public void create60Lines() {
         printMenu("");
     }
 
@@ -41,9 +41,13 @@ public class View {
         System.out.printf("Total HP: %d\t", totalHealth);
     }
 
-    public void displayAnimals(ArrayList<Animal> animals) {
-        for (Animal animal : animals) {
-            System.out.printf(animal.toString());
+    public void displayAnimals(ArrayList<Animal> animals, ArrayList<Integer> healthReductions) {
+
+        Iterator<Animal> animalIterator = animals.iterator();
+        Iterator<Integer> healthReductionIterator = healthReductions.iterator();
+
+        while (animalIterator.hasNext() && healthReductionIterator.hasNext()) {
+            System.out.printf(animalIterator.next().toString() + "(-" + healthReductionIterator.next() + " HP). ");
         }
     }
 

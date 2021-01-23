@@ -21,24 +21,27 @@ public class Game {
         Scanner scanner = new Scanner(System.in);
         byte rounds = -1;
         players = -1;
+        ArrayList<Integer> healthReductions = new ArrayList<>();
+
+        view.displayAnimalWorld();
+        view.createLineFeed();
 
         while (!(rounds >= MIN_ROUNDS && rounds <= MAX_ROUNDS)) {
-            view.displayAnimalWorld();
-            view.createLineFeed();
-            view.howManyRounds();
-            rounds = scanner.nextByte();
-            scanner.nextLine();
 
-            if (rounds < 5 || rounds > 30) {
-                view.roundsOutOfBounds();
+            while (rounds == -1 || (rounds < 5 || rounds > 30)) {
+                view.howManyRounds();
+                rounds = scanNextByte(scanner); // Separate function to catch errors
+                System.out.println(rounds);
+                if (rounds < 5 || rounds > 30) {
+                    view.roundsOutOfBounds();
+                }
             }
         }
 
         //Define players
         while (!(players >= MIN_PLAYERS && players <= MAX_PLAYERS)) {
             view.howManyPlayers();
-            players = scanner.nextByte();
-            scanner.nextLine();
+            players = scanNextByte(scanner);
 
             if (players < MIN_PLAYERS || players > MAX_PLAYERS) {
                 view.playersOutOfBounds();
@@ -54,20 +57,20 @@ public class Game {
         }
 
         byte menuChoice;
-        // TODO for each player
-        // TODO If all players and rounds have been consumed, set gameOver to true OR break
+
         // Main game loop
         while (!gameOver && rounds > 0) {
             for(Player player: allPlayers) {
-                //TODO Set gameOver condition ???
+
+                player.updateAllHealth();
 
                 // View statistics
-                view.make60Lines();
+                view.create60Lines();
                 view.readyPlayerNo(player.getNumber(), player.getName());
                 view.displayMoney(player.getMoney());
                 view.displayTotalHealth(player.getTotalHealth());
                 view.displayAverageHealth(player.getAverageHealth());
-                view.displayAnimals(player.getAnimals());
+                view.displayAnimals(player.getAnimals(), healthReductions); // Include health reductions
                 view.displayFoods(player.getFoods());
 
                 view.displayMainMenu();
@@ -77,8 +80,7 @@ public class Game {
                     player.clearDeadAnimals();
                 }
 
-                menuChoice = scanner.nextByte();
-                scanner.nextLine();
+                menuChoice = scanNextByte(scanner);
 
                 byte MENU_START = 1;
                 byte MENU_END = 5;
@@ -97,11 +99,11 @@ public class Game {
                 }
                 view.displayEndOfTurn();
                 scanner.nextLine();
-                reduceHealthAndManageDeath(player);
-                view.make60Lines();
+                healthReductions = reduceHealthAndManageDeath(player);
+                view.create60Lines();
 
                 // If player loses, remove player
-                // TODO add to high score
+                // Add player to high score table
                 if (player.getMoney() <= 0 && player.getAnimals().size() == 0) {
                     view.playerGameOver(player.getNumber(), player.getName());
                     if (allPlayers.size() > 1) {
@@ -121,42 +123,55 @@ public class Game {
         // End of game logic
         for (Player player: allPlayers) {
             sellAll(player);
-            highScore.add(player);
+            highScore.add(player); // Add remaining players to high score table
         }
 
         view.printHighScores(highScore);
         view.endOfGame();
     }
 
-    private void reduceHealthAndManageDeath(Player player) {
+    private byte scanNextByte(Scanner scanner) {
+
+        byte menuChoice = -1;
+
+        try {
+            menuChoice = scanner.nextByte();
+        } catch (InputMismatchException inputMismatch) {
+            System.err.println("ERROR: Input mismatch. Please enter a number.");
+        }
+
+        scanner.nextLine();
+        return menuChoice;
+    }
+
+    private ArrayList<Integer> reduceHealthAndManageDeath(Player player) {
         //Reduce health and record dead animals
         int i = 0;
         ArrayList<Animal> allAnimals = player.getAnimals();
+
+        int healthReduction;
+        ArrayList<Integer> healthReductions = new ArrayList<>(allAnimals.size());
+
         for (Animal animal : allAnimals) {
-            animal.fatigueHealth();
+            healthReduction = animal.fatigueHealth();
+            healthReductions.add(healthReduction);
             if (animal.getHealth() <= 0) {
-                // TODO Remove debug print
-                System.out.println("FOUND ONE DEAD ANIMAL");
                 player.addDeadAnimals(animal);
             }
             i++;
         }
         //Remove dead animals
         for (Animal deadAnimal : player.getDeadAnimals()) {
-            //TODO Remove debug lines
-            System.out.println("deadAnimal" + deadAnimal);
-            System.out.println("player.getDeadAnimals().size" + player.getDeadAnimals().size());
-            System.out.println(player.getDeadAnimals());
-
             player.removeAnimal(deadAnimal);
         }
+
+        return healthReductions;
     }
 
     public void buyAnimal(Player player, Scanner scanner) {
         view.displayBuyAnimalMenu();
         Store animalStore = new Store(player, players);
-        byte menuChoice = scanner.nextByte();
-        scanner.nextLine();
+        byte menuChoice = scanNextByte(scanner);
 
         byte MENU_START = 1;
         byte MENU_END = 5;
@@ -171,8 +186,6 @@ public class Game {
                 case 4 -> buyFish(player, scanner, animalStore);
                 case 5 -> buyMarineMammal(player, scanner, animalStore);
             }
-            //Update health
-            player.updateAllHealth();
 
             view.pleaseEnterNameForAnimal();
             String name = scanner.next();
@@ -181,8 +194,10 @@ public class Game {
             player.getAnimal(player.getAnimals().size() - 1).setName(name);
 
             view.displayGenderMenu();
-            byte gender = scanner.nextByte();
+
+            byte gender = scanNextByte(scanner);
             boolean isFemale;
+
             if (gender == 1) {
                 isFemale = true;
             } else if (gender == 2) {
@@ -199,8 +214,7 @@ public class Game {
     public void buyBird(Player player, Scanner scanner, Store animalStore) {
 
         view.displayBuyBirdMenu();
-        byte menuChoice = scanner.nextByte();
-        scanner.nextLine();
+        byte menuChoice = scanNextByte(scanner);
 
         byte MENU_START = 1;
         byte MENU_END = 4;
@@ -221,7 +235,7 @@ public class Game {
 
     public void buyCat(Player player, Scanner scanner, Store animalStore) {
         view.displayBuyCatMenu();
-        byte menuChoice = scanner.nextByte();
+        byte menuChoice = scanNextByte(scanner);
 
         byte MENU_START = 1;
         byte MENU_END = 4;
@@ -242,7 +256,7 @@ public class Game {
 
     public void buyLivestock(Player player, Scanner scanner, Store animalStore) {
         view.displayBuyLivestockMenu();
-        byte menuChoice = scanner.nextByte();
+        byte menuChoice = scanNextByte(scanner);
 
         byte MENU_START = 1;
         byte MENU_END = 3;
@@ -264,7 +278,7 @@ public class Game {
 
     public void buyFish(Player player, Scanner scanner, Store animalStore) {
         view.displayBuyFishMenu();
-        byte menuChoice = scanner.nextByte();
+        byte menuChoice = scanNextByte(scanner);
 
         byte MENU_START = 1;
         byte MENU_END = 2;
@@ -286,7 +300,7 @@ public class Game {
 
     public void buyMarineMammal(Player player, Scanner scanner, Store animalStore) {
         view.displayBuyMarineMammalMenu();
-        byte menuChoice = scanner.nextByte();
+        byte menuChoice = scanNextByte(scanner);
 
         byte MENU_START = 1;
         byte MENU_END = 4;
@@ -308,7 +322,7 @@ public class Game {
     public void buyFood(Player player, Scanner scanner) {
         view.displayBuyFoodMenu();
         Store foodStore = new Store(player, players);
-        byte menuChoice = scanner.nextByte();
+        byte menuChoice = scanNextByte(scanner);
 
         byte MENU_START = 1;
         byte MENU_END = 3;
@@ -326,7 +340,7 @@ public class Game {
 
     private void buySeed(Player player, Scanner scanner, Store foodStore) {
         view.displayBuySeedMenu();
-        byte menuChoice = scanner.nextByte();
+        byte menuChoice = scanNextByte(scanner);
 
         byte MENU_START = 1;
         byte MENU_END = 2;
@@ -347,7 +361,7 @@ public class Game {
 
     private void buyMeat(Player player, Scanner scanner, Store foodStore) {
         view.displayBuyMeatMenu();
-        byte menuChoice = scanner.nextByte();
+        byte menuChoice = scanNextByte(scanner);
 
         byte MENU_START = 1;
         byte MENU_END = 2;
@@ -368,7 +382,7 @@ public class Game {
 
     private void buyFishFood(Player player, Scanner scanner, Store foodStore) {
         view.displayBuyFishFoodMenu();
-        byte menuChoice = scanner.nextByte();
+        byte menuChoice = scanNextByte(scanner);
 
         byte MENU_START = 1;
         byte MENU_END = 2;
@@ -401,12 +415,12 @@ public class Game {
         view.displayFeedMenu();
         view.displayAnimalsMenu(player.getAnimals());
 
-        byte menuChoice = scanner.nextByte();
+        byte menuChoice = scanNextByte(scanner);
         Animal animalToFeed = player.getAnimal(menuChoice - 1);
 
         ArrayList<Food> foods = player.getFoods();
         view.displaySelectFoodMenu(foods);
-        menuChoice = scanner.nextByte();
+        menuChoice = scanNextByte(scanner);
 
         Food foodForAnimal = player.getFood(menuChoice - 1);
 
@@ -423,11 +437,11 @@ public class Game {
         ArrayList<Animal> startingAnimals = new ArrayList<Animal>(player.getAnimals());
 
         view.displayAnimalsMenu(startingAnimals);
-        byte menuChoice1 = scanner.nextByte();
+        byte menuChoice1 = scanNextByte(scanner);
         Animal breedingAnimal1 = startingAnimals.get(menuChoice1 - 1);
         startingAnimals.remove(menuChoice1 - 1);
         view.displayAnimalsMenu(startingAnimals);
-        byte menuChoice2 = scanner.nextByte();
+        byte menuChoice2 = scanNextByte(scanner);
         Animal breedingAnimal2 = startingAnimals.get(menuChoice2 - 1);
 
         if (breedingAnimal1.getType().equals(breedingAnimal2.getType())) {
@@ -505,7 +519,7 @@ public class Game {
         }
         Store sellingStore = new Store(player, players);
         view.displayAnimalsMenu(player.getAnimals());
-        Byte menuChoice = scanner.nextByte();
+        Byte menuChoice = scanNextByte(scanner);
 
         Animal animal = player.getAnimal(menuChoice - 1);
         sellingStore.buyAnimal(animal);

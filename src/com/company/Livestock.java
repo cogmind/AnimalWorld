@@ -4,9 +4,9 @@ public class Livestock extends Animal {
 
     public enum Type {
 
-        CATTLE(30, "CORN", 3.0, (byte) 1),
-        SHEEP(40, "CORN", 2.0, (byte) 1),
-        BISON(60, "CORN", 4.0, (byte) 1);
+        CATTLE(30, "CORN", 1.5, (byte) 1),
+        SHEEP(40, "CORN", 1.0, (byte) 1),
+        BISON(60, "CORN", 1.7, (byte) 1);
 
         int price;
         String diet;

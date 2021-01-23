@@ -76,18 +76,20 @@ public abstract class Animal {
         this.health = health;
     }
 
-    public void fatigueHealth() {
+    public int fatigueHealth() {
         Random random = new Random();
         int lowerBound = 10;
         int upperBound = 30;
         int x = random.nextInt(upperBound - lowerBound) + lowerBound;
         health = (byte) ((int) health - x);
+
+        return x;
     }
 
     @Override
     public String toString() {
         String female = isFemale ? "Female" : "Male";
-        return name + " " + type.substring(0, 1).toUpperCase() + type.substring(1).toLowerCase() + " (" + female + ") "+ health + " HP. ";
+        return name + " " + type.substring(0, 1).toUpperCase() + type.substring(1).toLowerCase() + " (" + female + ") "+ health + " HP ";
     }
 
     public boolean eat(Food food) {
