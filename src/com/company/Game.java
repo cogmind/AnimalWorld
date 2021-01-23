@@ -6,7 +6,7 @@ public class Game {
 
     private final View view = new View();
     private boolean gameOver = false;
-    private ArrayList<Player> allPlayers = new ArrayList<>(); //TODO Try if I can use final here, intelliJ recommends
+    private final ArrayList<Player> allPlayers = new ArrayList<>();
     private ArrayList<Player> highScore = new ArrayList<>();
 
     public byte players;
@@ -82,6 +82,7 @@ public class Game {
 
                 byte MENU_START = 1;
                 byte MENU_END = 5;
+                int successfulFeedNumber = -1;
 
                 if (menuChoice < MENU_START || menuChoice > MENU_END) {
                     view.menuOutOfBounds(MENU_END);
@@ -90,18 +91,17 @@ public class Game {
                     switch (menuChoice) {
                         case 1 -> buyAnimal(player, scanner);
                         case 2 -> buyFood(player, scanner);
-                        case 3 -> feed(player, scanner);
+                        case 3 -> {successfulFeedNumber = feed(player, scanner);}
                         case 4 -> breed(player, scanner);
                         case 5 -> sell(player, scanner);
                     }
                 }
                 view.displayEndOfTurn();
                 scanner.nextLine();
-                reduceHealthAndManageDeath(player);
+                reduceHealthAndManageDeath(player, successfulFeedNumber);
                 view.make60Lines();
 
-                // If player loses, remove player
-                // TODO add to high score
+                // If player loses, remove player and add to highscore table
                 if (player.getMoney() <= 0 && player.getAnimals().size() == 0) {
                     view.playerGameOver(player.getNumber(), player.getName());
                     if (allPlayers.size() > 1) {
@@ -128,16 +128,18 @@ public class Game {
         view.endOfGame();
     }
 
-    private void reduceHealthAndManageDeath(Player player) {
-        //Reduce health and record dead animals
+    private void reduceHealthAndManageDeath(Player player, int successfulFeedNumber) {
+        // Reduce health and record dead animals
         int i = 0;
         ArrayList<Animal> allAnimals = player.getAnimals();
         for (Animal animal : allAnimals) {
-            animal.fatigueHealth();
-            if (animal.getHealth() <= 0) {
-                // TODO Remove debug print
-                System.out.println("FOUND ONE DEAD ANIMAL");
-                player.addDeadAnimals(animal);
+            // The animal that was recently fed gets to keep its health points
+            if (!((successfulFeedNumber) == i)) {
+                animal.fatigueHealth();
+                // Check for dead animals
+                if (animal.getHealth() <= 0) {
+                    player.addDeadAnimals(animal);
+                }
             }
             i++;
         }
@@ -336,7 +338,10 @@ public class Game {
         } else {
             Seed.Type choice = Seed.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
-            boolean successfulSale = foodStore.sellFood("seed", choice.toString());
+            view.displayHowManyKilosToBuy(choice.name());
+            int kilos = scanner.nextInt();
+            scanner.nextLine();
+            boolean successfulSale = foodStore.sellFood("seed", choice.toString(), kilos);
             if (!successfulSale) {
                 view.unsuccessfulSale();
             } else {
@@ -357,7 +362,10 @@ public class Game {
         } else {
             Meat.Type choice = Meat.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
-            boolean successfulSale = foodStore.sellFood("meat", choice.toString());
+            view.displayHowManyKilosToBuy(choice.name());
+            int kilos = scanner.nextInt();
+            scanner.nextLine();
+            boolean successfulSale = foodStore.sellFood("meat", choice.toString(), kilos);
             if (!successfulSale) {
                 view.unsuccessfulSale();
             } else {
@@ -378,7 +386,10 @@ public class Game {
         } else {
             FishFood.Type choice = FishFood.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
-            boolean successfulSale = foodStore.sellFood("fish food", choice.toString());
+            view.displayHowManyKilosToBuy(choice.name());
+            int kilos = scanner.nextInt();
+            scanner.nextLine();
+            boolean successfulSale = foodStore.sellFood("fish food", choice.toString(), kilos);
             if (!successfulSale) {
                 view.unsuccessfulSale();
             } else {
@@ -389,14 +400,14 @@ public class Game {
 
     // TODO Function that validates input as byte
 
-    public void feed(Player player, Scanner scanner) {
+    public int feed(Player player, Scanner scanner) {
         if (player.getFoods().size() == 0) {
             view.noFoodAvailable();
-            return;
+            return -1;
         }
         if (player.getAnimals().size() == 0) {
             view.noAnimalsAvailable();
-            return;
+            return -1;
         }
         view.displayFeedMenu();
         view.displayAnimalsMenu(player.getAnimals());
@@ -404,16 +415,23 @@ public class Game {
         byte menuChoice = scanner.nextByte();
         Animal animalToFeed = player.getAnimal(menuChoice - 1);
 
-        ArrayList<Food> foods = player.getFoods();
+        LinkedHashMap<Food, Integer> foods = player.getFoods();
         view.displaySelectFoodMenu(foods);
         menuChoice = scanner.nextByte();
 
         Food foodForAnimal = player.getFood(menuChoice - 1);
 
-        if (player.feed(animalToFeed, foodForAnimal)) {
+        view.displayHowManyKilosToFeed(foodForAnimal.toString());
+        int kilos = scanner.nextInt();
+        scanner.nextLine();
+        boolean successfulFeed = player.feed(animalToFeed, foodForAnimal, kilos);
+        if (successfulFeed) {
             view.successfulFeed();
-        } else {}
+            return menuChoice - 1;
+        } else {
             view.unsuccessfulFeed();
+            return -1;
+        }
     }
 
     public void breed(Player player, Scanner scanner) {

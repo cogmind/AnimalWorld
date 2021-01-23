@@ -1,6 +1,6 @@
 package com.company;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Player {
 
@@ -11,8 +11,7 @@ public class Player {
     private ArrayList<Byte> allHealth = new ArrayList<>();
     private ArrayList<Animal> animals = new ArrayList<>();
     private ArrayList<Animal> deadAnimals = new ArrayList<>();
-    private ArrayList<Food> foods = new ArrayList<>();
-
+    private LinkedHashMap<Food, Integer> foods = new LinkedHashMap();
 
     public Player(String name, byte number){
         this.setName(name);
@@ -81,8 +80,13 @@ public class Player {
         animals.add(animal);
     }
 
-    public void addFood(Food food) {
-        foods.add(food);
+    public void addFood(Food food, int kilos) {
+
+        if (foods.containsKey(food)) {
+            foods.replace(food, kilos + foods.get(food));
+        } else {
+            foods.put(food, kilos);
+        }
     }
 
     public ArrayList getAnimals() {
@@ -109,18 +113,23 @@ public class Player {
         deadAnimals.clear();
     }
 
-    public ArrayList<Food> getFoods() {
+    public LinkedHashMap<Food, Integer> getFoods() {
         return foods;
     }
 
-    public boolean feed(Animal animalToFeed, Food food) {
+    public boolean feed(Animal animalToFeed, Food food, int kilos) {
 
         boolean SUCCESSFUL = true;
         boolean UNSUCCESSFUL = false;
 
         // Check if compatible with diet
-        if (animalToFeed.eat(food)) {
-            foods.remove(food);
+        boolean ate_food = animalToFeed.eat(food, kilos);
+
+        if (ate_food) {
+            foods.replace(food, foods.get(food) - kilos);
+            if (foods.get(food) <= 0) {
+                foods.remove(food);
+            }
             return SUCCESSFUL;
         } else {
             return UNSUCCESSFUL;
@@ -128,7 +137,8 @@ public class Player {
     }
 
     public Food getFood(int i) {
-        return foods.get(i);
+        //A Linked Hash Map is ordered and allows us to do this
+        return (Food) foods.keySet().toArray()[i];
     }
 
     public void addDeadAnimals(Animal animal) {

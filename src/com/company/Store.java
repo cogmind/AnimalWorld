@@ -82,9 +82,6 @@ public class Store {
 
         Animal animalForSale = null;
 
-        //TODO comment out DEBUG statements
-        System.out.printf("animalType: %s, specificAnimal: %s", animalType, specificAnimal);
-
         switch (animalType) {
             case "bird" -> animalForSale = birds.get(specificAnimal);
             case "cat" ->  animalForSale = cats.get(specificAnimal);
@@ -109,7 +106,7 @@ public class Store {
     }
 
     // The store is selling, the customer is buying
-    public boolean sellFood(String foodType, String specificFood) {
+    public boolean sellFood(String foodType, String specificFood, int kilos) {
 
         Food foodForSale = null;
 
@@ -121,7 +118,7 @@ public class Store {
 
         boolean enoughMoney = sell(foodForSale, foodForSale.getPrice());
         if (enoughMoney) {
-            customer.addFood(foodForSale);
+            customer.addFood(foodForSale, kilos);
             return ENOUGH_MONEY;
         } else {
             return NOT_ENOUGH_MONEY;
