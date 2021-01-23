@@ -123,7 +123,9 @@ public class Player {
         boolean UNSUCCESSFUL = false;
 
         // Check if compatible with diet
-        if (animalToFeed.eat(food, kilos)) {
+        boolean ate_food = animalToFeed.eat(food, kilos);
+
+        if (ate_food) {
             foods.replace(food, foods.get(food) - kilos);
             if (foods.get(food) <= 0) {
                 foods.remove(food);

@@ -251,14 +251,18 @@ public class View {
 
     public void printHighScores(ArrayList<Player> allPlayers) {
 
+        // We need a tree map to sort the entries
+        // Initialized with a descending order
         TreeMap<Long, String> highScore = new TreeMap<>(Collections.reverseOrder());
 
+        // Sort by money (long) as key
         for (Player player: allPlayers) {
             highScore.put(player.getMoney(), player.getName());
         }
 
         Set<Map.Entry<Long, String>> entries = highScore.entrySet();
 
+        // Printing value before key produces a high score table
         int j = 1;
         for (Map.Entry<Long, String>  entry : entries) {
             System.out.println(j + ". " + entry.getValue() + " " + entry.getKey());
