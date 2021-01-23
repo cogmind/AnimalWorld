@@ -18,7 +18,8 @@ public abstract class Food {
         return price;
     }
 
+    @Override
     public String toString(){
-        return type.substring(0, 1).toUpperCase() + type.substring(1).toLowerCase().replace("_", " ");
+        return View.capitalize(type).replace("_", " ");
     }
 }

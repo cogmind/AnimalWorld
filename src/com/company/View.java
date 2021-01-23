@@ -9,6 +9,8 @@ public class View {
 
     }
 
+    public static String capitalize(String input) { return input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();}
+
     private void printMenu(String input) {
         System.out.println("\n".repeat(60));
         System.out.println(input);
@@ -17,6 +19,7 @@ public class View {
     private void displayError(String input){
         System.err.println(input);
     }
+
 
     public void createLineFeed() {
         System.out.println("\n");
@@ -51,10 +54,10 @@ public class View {
         }
     }
 
-    public void displayFoods(ArrayList<Food> foods) {
+    public void displayFoods(LinkedHashMap<Food, Integer> foods) {
         System.out.println();
-        for (Food food : foods) {
-            System.out.print(food.toString() + " ");
+        for (Map.Entry kilosFood : foods.entrySet()) {
+            System.out.print(kilosFood.getKey() + ": " + kilosFood.getValue() + "kg ");
         }
         System.out.println();
     }
@@ -190,9 +193,9 @@ public class View {
         printMenu("FISH FOOD MENU\n1. Krill\n2. Herring");
     }
 
-    public void displaySelectFoodMenu(ArrayList<Food> foods) {
+    public void displaySelectFoodMenu(HashMap<Food, Integer> foods) {
         int i = 0;
-        for(Food food : foods) {
+        for(Food food : foods.keySet()) {
             i++;
             System.out.println(i + ". " + food);
         }
@@ -252,14 +255,18 @@ public class View {
 
     public void printHighScores(ArrayList<Player> allPlayers) {
 
+        // We need a tree map to sort the entries
+        // Initialized with a descending order
         TreeMap<Long, String> highScore = new TreeMap<>(Collections.reverseOrder());
 
+        // Sort by money (long) as key
         for (Player player: allPlayers) {
             highScore.put(player.getMoney(), player.getName());
         }
 
         Set<Map.Entry<Long, String>> entries = highScore.entrySet();
 
+        // Printing value before key produces a high score table
         int j = 1;
         for (Map.Entry<Long, String>  entry : entries) {
             System.out.println(j + ". " + entry.getValue() + " " + entry.getKey());
@@ -269,5 +276,13 @@ public class View {
 
     public void displayGenderMenu() {
         System.out.println("Please choose a gender: \n1. Female\n2. Male");
+    }
+
+    public void displayHowManyKilosToBuy(String foodType) {
+        System.out.println("How many kilos of " + View.capitalize(foodType).replace("_", " ") + " would you like to purchase?");
+    }
+
+    public void displayHowManyKilosToFeed(String foodType) {
+        System.out.println("How many kilos of " + View.capitalize(foodType).replace("_", " ") + " would you like to feed?");
     }
 }

@@ -89,21 +89,22 @@ public abstract class Animal {
     @Override
     public String toString() {
         String female = isFemale ? "Female" : "Male";
-        return name + " " + type.substring(0, 1).toUpperCase() + type.substring(1).toLowerCase() + " (" + female + ") "+ health + " HP ";
+        return name + " " + View.capitalize(type) + " (" + female + ") "+ health + " HP. ";
     }
 
     public boolean eat(Food food) {
         boolean ATE_FOOD = true;
         boolean DID_NOT_EAT_FOOD = false;
 
-        //TODO REMOVE 2x DEBUG LINES
-        System.out.println(diet);
-        System.out.println(food.toString());
-        System.out.println("foodFactor: " + foodFactor);
-        if (diet == food.toString()) {
-            setHealth((byte)Math.round(((0.10 / getFoodFactor()) + 1) * getHealth()));
-            if (getHealth() > 100) {
-                setHealth((byte) 100);
+        diet = View.capitalize(diet).replace("_", " ");
+
+        if (diet.equals(food.toString()))  {
+            while (kilos > 0) {
+                setHealth((byte) Math.round(((0.10 / getFoodFactor()) + 1) * getHealth()));
+                if (getHealth() > 100) {
+                    setHealth((byte) 100);
+                }
+                kilos -= 1;
             }
             return ATE_FOOD;
         } else {
