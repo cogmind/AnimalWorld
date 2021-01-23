@@ -92,7 +92,7 @@ public abstract class Animal {
         return name + " " + View.capitalize(type) + " (" + female + ") "+ health + " HP. ";
     }
 
-    public boolean eat(Food food) {
+    public boolean eat(Food food, int kilos) {
         boolean ATE_FOOD = true;
         boolean DID_NOT_EAT_FOOD = false;
 

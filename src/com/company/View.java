@@ -193,7 +193,7 @@ public class View {
         printMenu("FISH FOOD MENU\n1. Krill\n2. Herring");
     }
 
-    public void displaySelectFoodMenu(HashMap<Food, Integer> foods) {
+    public void displaySelectFoodMenu(LinkedHashMap<Food, Integer> foods) {
         int i = 0;
         for(Food food : foods.keySet()) {
             i++;
