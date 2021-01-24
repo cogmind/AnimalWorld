@@ -83,7 +83,15 @@ public class View {
     }
 
     public void displayMainMenu() {
-        System.out.println("OPTIONS (Select one)\n1. Buy animals\n2. Buy food \n3. Feed animals\n4. Breed new animals (success rate " + Game.BREEDING_SUCCESS_RATE + "%) \n5. Sell animals\n");
+        System.out.println("OPTIONS (Select one)" +
+                "\n1. Buy animals" +
+                "\n2. Buy food " +
+                "\n3. Feed animals" +
+                "\n4. Breed new animals (success rate " + Game.BREEDING_SUCCESS_RATE + "%) " +
+                "\n5. Sell animals" +
+                "\n6. Save game" +
+                "\n7. Quit game"
+                );
     }
 
     public void menuOutOfBounds(byte menu_end){
@@ -182,15 +190,24 @@ public class View {
     }
 
     public void displayBuySeedMenu() {
-        printMenu("SEEDS MENU\n1. Bird seeds\n2. Corn");
+        printMenu("SEEDS MENU" +
+                "\n1. Bird seeds (" + Seed.Type.BIRD_SEED.price + "€)" +
+                "\n2. Corn (" + Seed.Type.CORN.price + "€)"
+                );
     }
 
     public void displayBuyMeatMenu() {
-        printMenu("MEATS MENU\n1. Mice\n2. Raw steak");
+        printMenu("MEATS MENU" +
+                "\n1. Mice ("  + Meat.Type.MICE.price + "€)" +
+                "\n2. Raw steak (" + Meat.Type.RAW_STEAK.price + "€)"
+                );
     }
 
     public void displayBuyFishFoodMenu() {
-        printMenu("FISH FOOD MENU\n1. Krill\n2. Herring");
+        printMenu("FISH FOOD MENU" +
+                "\n1. Krill (" + FishFood.Type.KRILL.price + "€)" +
+                "\n2. Herring (" + FishFood.Type.HERRING.price + "€)"
+                );
     }
 
     public void displaySelectFoodMenu(LinkedHashMap<Food, Integer> foods) {
@@ -284,5 +301,27 @@ public class View {
 
     public void displayHowManyKilosToFeed(String foodType) {
         System.out.println("How many kilos of " + View.capitalize(foodType).replace("_", " ") + " would you like to feed?");
+    }
+
+    public void pleaseEnterFileName() {
+        System.out.println("Please enter a file name: ");
+    }
+
+    public void dataWrittenToDisk() {
+        System.out.println("Your data has been written to disk");
+    }
+
+    public void displayPreloadMenu() {
+        System.out.println("START" +
+                "\n1. NEW GAME" +
+                "\n2. LOAD GAME");
+    }
+
+    public void reallyQuit() {
+        System.out.println("Are you sure you wish to quit the game? (Y/N)");
+    }
+
+    public void dataNotWrittenToDisk() {
+        System.out.println("Error. Data NOT written to disk.");
     }
 }

@@ -5,6 +5,7 @@ import java.util.*;
 public class Game {
 
     private final View view = new View();
+    private static final String SAVE_PATH = "./sav/";
     private boolean gameOver = false;
     private ArrayList<Player> allPlayers = new ArrayList<>(); //TODO Try if I can use final here, intelliJ recommends
     private ArrayList<Player> highScore = new ArrayList<>();
@@ -25,6 +26,13 @@ public class Game {
 
         view.displayAnimalWorld();
         view.createLineFeed();
+        view.displayPreloadMenu();
+        byte menuChoice = scanNextByte(scanner);
+
+        switch (menuChoice) {
+            case 1: break;
+            case 2: ArrayList<Player> allPlayers = loadGame(scanner);
+        }
 
         while (!(rounds >= MIN_ROUNDS && rounds <= MAX_ROUNDS)) {
 
@@ -38,25 +46,26 @@ public class Game {
             }
         }
 
-        //Define players
-        while (!(players >= MIN_PLAYERS && players <= MAX_PLAYERS)) {
-            view.howManyPlayers();
-            players = scanNextByte(scanner);
+        if (allPlayers.size() == 0) {
+            // Define players for New game
+            while (!(players >= MIN_PLAYERS && players <= MAX_PLAYERS)) {
+                view.howManyPlayers();
+                players = scanNextByte(scanner);
 
-            if (players < MIN_PLAYERS || players > MAX_PLAYERS) {
-                view.playersOutOfBounds();
+                if (players < MIN_PLAYERS || players > MAX_PLAYERS) {
+                    view.playersOutOfBounds();
+                }
+            }
+
+            String name;
+            for(byte player = 1; player <= players; player++) {
+                view.pleaseEnterNameForPlayer(player);
+                name = scanner.nextLine();
+                Player newPlayer = new Player(name, player);
+                allPlayers.add(newPlayer);
             }
         }
 
-        String name;
-        for(byte player = 1; player <= players; player++) {
-            view.pleaseEnterNameForPlayer(player);
-            name = scanner.nextLine();
-            Player newPlayer = new Player(name, player);
-            allPlayers.add(newPlayer);
-        }
-
-        byte menuChoice;
 
         // Main game loop
         while (!gameOver && rounds > 0) {
@@ -83,7 +92,7 @@ public class Game {
                 menuChoice = scanNextByte(scanner);
 
                 byte MENU_START = 1;
-                byte MENU_END = 5;
+                byte MENU_END = 7;
                 int successfulFeedNumber = -1;
 
                 if (menuChoice < MENU_START || menuChoice > MENU_END) {
@@ -96,6 +105,8 @@ public class Game {
                         case 3 -> {successfulFeedNumber = feed(player, scanner);}
                         case 4 -> breed(player, scanner);
                         case 5 -> sell(player, scanner);
+                        case 6 -> saveGame(allPlayers, scanner);
+                        case 7 -> quitGame(scanner);
                     }
                 }
                 view.displayEndOfTurn();
@@ -129,6 +140,38 @@ public class Game {
 
         view.printHighScores(highScore);
         view.endOfGame();
+    }
+
+    private void quitGame(Scanner scanner) {
+        view.reallyQuit();
+        String choice = scanner.nextLine();
+        if (choice.matches("y|Y|Yes|YES")) {
+            System.exit(0);
+        }
+    }
+
+    private void saveGame(ArrayList<Player> data, Scanner scanner) {
+
+        view.pleaseEnterFileName();
+        String filePath = scanner.nextLine();
+
+        // Assuming these file separators works on all OS:s
+        boolean successfulWrite = Serializer.serialize(SAVE_PATH + filePath, data);
+        if (successfulWrite) {
+            view.dataWrittenToDisk();
+        } else {
+            view.dataNotWrittenToDisk();
+        }
+    }
+
+    private ArrayList<Player> loadGame(Scanner scanner) {
+
+        view.pleaseEnterFileName();
+        String filePath = scanner.nextLine();
+
+        allPlayers = (ArrayList) Serializer.deserialize(SAVE_PATH + filePath);
+
+        return allPlayers;
     }
 
     private byte scanNextByte(Scanner scanner) {

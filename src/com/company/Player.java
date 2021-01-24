@@ -1,8 +1,9 @@
 package com.company;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Player {
+public class Player implements Serializable {
 
     private String name;
     private byte number;
@@ -13,7 +14,7 @@ public class Player {
     private ArrayList<Animal> deadAnimals = new ArrayList<>();
     private LinkedHashMap<Food, Integer> foods = new LinkedHashMap();
 
-    public Player(String name, byte number){
+    public Player(String name, byte number) {
         this.setName(name);
         this.number = number;
         this.setMoney(INITIAL_MONEY);
