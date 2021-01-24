@@ -1,19 +1,21 @@
 package com.company;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public abstract class Animal {
 
     public enum Type {
 
-        NULL(0, "", 0.0, (byte) 0);
+        NULL(0, new String[]{""}, 0.0, (byte) 0);
 
         int price;
-        String diet;
+        String[] diet;
         double foodFactor;
         byte offspring;
 
-        Type(int price, String diet, double foodFactor, byte offspring) {
+        Type(int price, String[] diet, double foodFactor, byte offspring) {
             this.price = price;
             this.diet = diet;
             this.foodFactor = foodFactor;
@@ -25,11 +27,11 @@ public abstract class Animal {
     private boolean isFemale;
     private byte health;
     private int price;
-    private String diet;
+    private String[] diet;
     double foodFactor;
     byte offspring;
 
-    public Animal(String type, String name, boolean isFemale, byte health, int price, String diet, double foodFactor, byte offspring) {
+    public Animal(String type, String name, boolean isFemale, byte health, int price, String[] diet, double foodFactor, byte offspring) {
         this.type = type;
         this.name = name;
         this.isFemale = isFemale;
@@ -44,7 +46,7 @@ public abstract class Animal {
         return type;
     }
 
-    public String getDiet() {
+    public String[] getDiet() {
         return diet;
     }
 
@@ -89,16 +91,18 @@ public abstract class Animal {
     @Override
     public String toString() {
         String female = isFemale ? "Female" : "Male";
-        return name + " " + View.capitalize(type) + " (" + female + ") "+ health + " HP. ";
+        return name + " " + View.capitalize(type) + " (" + female + ") "+ health + " HP ";
     }
 
     public boolean eat(Food food, int kilos) {
+
         boolean ATE_FOOD = true;
         boolean DID_NOT_EAT_FOOD = false;
 
-        diet = View.capitalize(diet).replace("_", " ");
+        List<String> dietList = Arrays.asList(diet);
+        dietList.replaceAll(x -> View.capitalize(x).replace("_", " "));
 
-        if (diet.equals(food.toString()))  {
+        if (dietList.contains(food.toString()))  {
             while (kilos > 0) {
                 setHealth((byte) Math.round(((0.10 / getFoodFactor()) + 1) * getHealth()));
                 if (getHealth() > 100) {

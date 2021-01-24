@@ -476,7 +476,7 @@ public class Game {
 
         String type = breedingAnimal1.getType();
         int price = breedingAnimal1.getPrice();
-        String diet = breedingAnimal1.getDiet();
+        String[] diet = breedingAnimal1.getDiet();
         double foodFactor = breedingAnimal1.getFoodFactor();
         byte max_offspring = breedingAnimal1.getOffspring();
 

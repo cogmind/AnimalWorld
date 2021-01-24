@@ -138,6 +138,9 @@ public class Player {
 
     public Food getFood(int i) {
         //A Linked Hash Map is ordered and allows us to do this
+        System.out.println(foods);
+        System.out.println(foods.entrySet());
+        System.out.println(foods.keySet());
         return (Food) foods.keySet().toArray()[i];
     }
 
