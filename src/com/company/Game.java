@@ -395,7 +395,12 @@ public class Game {
             Seed.Type choice = Seed.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
             view.displayHowManyKilosToBuy(choice.name());
-            int kilos = scanner.nextInt();//TODO try catch
+            int kilos = -1;
+            try {
+                kilos = scanner.nextInt();
+            } catch (InputMismatchException inputMismatchException) {
+                view.displayPleaseEnterOnlyNumbers();
+            }
             scanner.nextLine();
             boolean successfulSale = foodStore.sellFood("seed", choice.toString(), kilos);
             if (!successfulSale) {

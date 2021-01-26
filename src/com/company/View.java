@@ -324,4 +324,8 @@ public class View {
     public void dataNotWrittenToDisk() {
         System.out.println("Error. Data NOT written to disk.");
     }
+
+    public void displayPleaseEnterOnlyNumbers() {
+        System.err.println("Error. Please enter only numbers.");
+    }
 }
