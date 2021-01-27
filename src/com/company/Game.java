@@ -22,7 +22,6 @@ public class Game {
         Scanner scanner = new Scanner(System.in);
         byte rounds = -1;
         players = -1;
-        ArrayList<Integer> healthReductions = new ArrayList<>();
 
         view.displayAnimalWorld();
         view.createLineFeed();
@@ -79,7 +78,7 @@ public class Game {
                 view.displayMoney(player.getMoney());
                 view.displayTotalHealth(player.getTotalHealth());
                 view.displayAverageHealth(player.getAverageHealth());
-                view.displayAnimals(player.getAnimals(), healthReductions); // Include health reductions
+                view.displayAnimals(player.getAnimals(), player.getHealthReductions()); // Include health reductions
                 view.displayFoods(player.getFoods());
 
                 view.displayMainMenu();
@@ -111,7 +110,7 @@ public class Game {
                 }
                 view.displayEndOfTurn();
                 scanner.nextLine();
-                healthReductions = reduceHealthAndManageDeath(player);
+                player.setHealthReductions(reduceHealthAndManageDeath(player));
                 view.create60Lines();
 
                 // If player loses, remove player

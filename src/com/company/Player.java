@@ -14,10 +14,21 @@ public class Player implements Serializable {
     private ArrayList<Animal> deadAnimals = new ArrayList<>();
     private LinkedHashMap<Food, Integer> foods = new LinkedHashMap();
 
+
+    private ArrayList<Integer> healthReductions = new ArrayList<>();
+
     public Player(String name, byte number) {
         this.setName(name);
         this.number = number;
         this.setMoney(INITIAL_MONEY);
+    }
+
+    public ArrayList<Integer> getHealthReductions() {
+        return healthReductions;
+    }
+
+    public void setHealthReductions(ArrayList<Integer> healthReductions) {
+        this.healthReductions = healthReductions;
     }
 
     public String getName() {
