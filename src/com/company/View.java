@@ -1,5 +1,6 @@
 package com.company;
 
+import java.io.File;
 import java.util.*;
 
 public class View {
@@ -98,7 +99,7 @@ public class View {
                 );
     }
 
-    public void menuOutOfBounds(byte menu_end){
+    public void displayMenuOutOfBounds(byte menu_end){
         displayError("Please select an option between 1 and " + menu_end + ".");
     }
 
@@ -259,11 +260,11 @@ public class View {
     }
 
     public void unsuccessfulBreeding() {
-        System.out.println("Breeding unsuccessful (50% success rate)");
+        System.out.println("Breeding unsuccessful (50% success rate).");
     }
 
-    public void successfulBreeding() {
-        System.out.println("Breeding successful!");
+    public void successfulBreeding(byte offsprings) {
+        System.out.println("Breeding successful! " + offsprings + " offspring(s) created");
     }
 
     public void animalsDied(int size, byte number) {
@@ -310,7 +311,7 @@ public class View {
     }
 
     public void pleaseEnterFileName() {
-        System.out.println("Please enter a file name: ");
+        System.out.println("\nPlease enter a file name: ");
     }
 
     public void dataWrittenToDisk() {
@@ -333,5 +334,13 @@ public class View {
 
     public void displayPleaseEnterOnlyNumbers() {
         System.err.println("Error. Please enter only numbers.");
+    }
+
+    public void displayFiles() {
+        File[] gameFiles = new File(Game.SAVE_PATH).listFiles();
+        printMenu("Saved games:");
+        for(File gameFile : gameFiles){
+            System.out.println(gameFile.getName());
+        }
     }
 }

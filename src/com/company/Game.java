@@ -5,7 +5,7 @@ import java.util.*;
 public class Game {
 
     private final View view = new View();
-    private static final String SAVE_PATH = "./sav/";
+    public static final String SAVE_PATH = "./sav/";
     private boolean gameOver = false;
     private ArrayList<Player> allPlayers = new ArrayList<>(); //TODO Try if I can use final here, intelliJ recommends
     private ArrayList<Player> highScore = new ArrayList<>();
@@ -95,7 +95,7 @@ public class Game {
                 int successfulFeedNumber = -1;
 
                 if (menuChoice < MENU_START || menuChoice > MENU_END) {
-                    view.menuOutOfBounds(MENU_END);
+                    view.displayMenuOutOfBounds(MENU_END);
                 } else {
 
                     switch (menuChoice) {
@@ -165,6 +165,7 @@ public class Game {
 
     private ArrayList<Player> loadGame(Scanner scanner) {
 
+        view.displayFiles();
         view.pleaseEnterFileName();
         String filePath = scanner.nextLine();
 
@@ -220,7 +221,7 @@ public class Game {
         byte MENU_END = 5;
 
         if (menuChoice < MENU_START || menuChoice > MENU_END) {
-            view.menuOutOfBounds(MENU_END);
+            view.displayMenuOutOfBounds(MENU_END);
         } else {
             switch (menuChoice) {
                 case 1 -> buyBird(player, scanner, animalStore);
@@ -263,7 +264,7 @@ public class Game {
         byte MENU_END = 4;
 
         if (menuChoice < MENU_START || menuChoice > MENU_END) {
-            view.menuOutOfBounds(MENU_END);
+            view.displayMenuOutOfBounds(MENU_END);
         } else {
             Bird.Type choice = Bird.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
@@ -284,7 +285,7 @@ public class Game {
         byte MENU_END = 4;
 
         if (menuChoice < MENU_START || menuChoice > MENU_END) {
-            view.menuOutOfBounds(MENU_END);
+            view.displayMenuOutOfBounds(MENU_END);
         } else {
             Cat.Type choice = Cat.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
@@ -305,7 +306,7 @@ public class Game {
         byte MENU_END = 3;
 
         if (menuChoice < MENU_START || menuChoice > MENU_END) {
-            view.menuOutOfBounds(MENU_END);
+            view.displayMenuOutOfBounds(MENU_END);
         } else {
             Livestock.Type choice = Livestock.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
@@ -327,7 +328,7 @@ public class Game {
         byte MENU_END = 2;
 
         if (menuChoice < MENU_START || menuChoice > MENU_END) {
-            view.menuOutOfBounds(MENU_END);
+            view.displayMenuOutOfBounds(MENU_END);
         } else {
             Fish.Type choice = Fish.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
@@ -349,7 +350,7 @@ public class Game {
         byte MENU_END = 4;
 
         if (menuChoice < MENU_START || menuChoice > MENU_END) {
-            view.menuOutOfBounds(MENU_END);
+            view.displayMenuOutOfBounds(MENU_END);
         } else {
             MarineMammal.Type choice = MarineMammal.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
@@ -371,7 +372,7 @@ public class Game {
         byte MENU_END = 3;
 
         if (menuChoice < MENU_START || menuChoice > MENU_END) {
-            view.menuOutOfBounds(MENU_END);
+            view.displayMenuOutOfBounds(MENU_END);
         } else {
             switch (menuChoice) {
                 case 1 -> buySeed(player, scanner, foodStore);
@@ -389,7 +390,7 @@ public class Game {
         byte MENU_END = 2;
 
         if (menuChoice < MENU_START || menuChoice > MENU_END) {
-            view.menuOutOfBounds(MENU_END);
+            view.displayMenuOutOfBounds(MENU_END);
         } else {
             Seed.Type choice = Seed.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
@@ -418,7 +419,7 @@ public class Game {
         byte MENU_END = 2;
 
         if (menuChoice < MENU_START || menuChoice > MENU_END) {
-            view.menuOutOfBounds(MENU_END);
+            view.displayMenuOutOfBounds(MENU_END);
         } else {
             Meat.Type choice = Meat.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
@@ -442,7 +443,7 @@ public class Game {
         byte MENU_END = 2;
 
         if (menuChoice < MENU_START || menuChoice > MENU_END) {
-            view.menuOutOfBounds(MENU_END);
+            view.displayMenuOutOfBounds(MENU_END);
         } else {
             FishFood.Type choice = FishFood.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
@@ -479,7 +480,7 @@ public class Game {
             menuChoice = scanNextByte(scanner);
 
             if (menuChoice < MENU_START || menuChoice > MENU_END) {
-                view.menuOutOfBounds(MENU_END);
+                view.displayMenuOutOfBounds(MENU_END);
             }
         }
 
@@ -494,7 +495,7 @@ public class Game {
             menuChoice = scanNextByte(scanner);
 
             if (menuChoice < MENU_START || menuChoice > MENU_END) {
-                view.menuOutOfBounds(MENU_END);
+                view.displayMenuOutOfBounds(MENU_END);
             }
         }
 
@@ -516,6 +517,7 @@ public class Game {
 
     public void breed(Player player, Scanner scanner) {
 
+
         if (player.getAnimals().size() < 2) {
             view.youNeedAtLeastTwoAnimals();
             return;
@@ -527,12 +529,33 @@ public class Game {
         ArrayList<Animal> startingAnimals = new ArrayList<Animal>(player.getAnimals());
 
         view.displayAnimalsMenu(startingAnimals);
-        byte menuChoice1 = scanNextByte(scanner);
+
+        byte menuChoice1 = -1;
+        byte menuChoice2 = -1;
+        byte MENU_START = 1;
+        byte MENU_END = (byte) player.getAnimals().size();
+
+        while (menuChoice1 < MENU_START || menuChoice1 > MENU_END || menuChoice1 == -1) {
+
+            menuChoice1 = scanNextByte(scanner);
+
+            if (menuChoice1 < MENU_START || menuChoice1 > MENU_END) {
+                view.displayMenuOutOfBounds(MENU_END);
+            }
+        }
         Animal breedingAnimal1 = startingAnimals.get(menuChoice1 - 1);
         startingAnimals.remove(menuChoice1 - 1);
 
         view.displayAnimalsMenu(startingAnimals);
-        byte menuChoice2 = scanNextByte(scanner);
+
+        while (menuChoice2 < MENU_START || menuChoice2 > MENU_END || menuChoice2 == -1) {
+
+            menuChoice2 = scanNextByte(scanner);
+            if (menuChoice1 < MENU_START || menuChoice1 > MENU_END) {
+                view.displayMenuOutOfBounds(MENU_END);
+            }
+        }
+
         Animal breedingAnimal2 = startingAnimals.get(menuChoice2 - 1);
 
         if (breedingAnimal1.getType().equals(breedingAnimal2.getType())) {
@@ -564,15 +587,12 @@ public class Game {
         byte offsprings = breedingAnimal1.getOffspring();
         offsprings =  (byte) (Math.round(random.nextDouble() * offsprings+ 1));
 
-        //TODO Remove DEBUG PRINT
-        System.out.println("offsprings: "+offsprings);
-
         String name;
         if (random.nextBoolean()) {
+            view.successfulBreeding(offsprings);
             for (byte i = 0; i < offsprings; i++) {
-                view.successfulBreeding();
                 view.pleaseEnterNameForAnimal();
-                name = scanner.next(); //Since we are in a loop
+                name = scanner.next();
                 boolean isFemale = random.nextBoolean();
 
                 switch (classname) {
@@ -618,7 +638,7 @@ public class Game {
         byte MENU_END = (byte) player.getAnimals().size();
 
         if (menuChoice < MENU_START || menuChoice > MENU_END) {
-            view.menuOutOfBounds(MENU_END);
+            view.displayMenuOutOfBounds(MENU_END);
         }
 
         Animal animal = player.getAnimal(menuChoice - 1);
