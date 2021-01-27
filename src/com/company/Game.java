@@ -5,12 +5,12 @@ import java.util.*;
 public class Game {
 
     private final View view = new View();
-    public static final String SAVE_PATH = "./sav/";
     private boolean gameOver = false;
-    private ArrayList<Player> allPlayers = new ArrayList<>(); //TODO Try if I can use final here, intelliJ recommends
+    private ArrayList<Player> allPlayers = new ArrayList<>();
     private ArrayList<Player> highScore = new ArrayList<>();
+    private byte players;
 
-    public byte players;
+    public static final String SAVE_PATH = "./sav/";
     public final static byte MIN_ROUNDS = 5;
     public final static byte MAX_ROUNDS = 30;
     public final static byte MIN_PLAYERS = 1;
@@ -65,7 +65,6 @@ public class Game {
             }
         }
 
-
         // Main game loop
         while (!gameOver && rounds > 0) {
             for(Player player: allPlayers) {
@@ -88,25 +87,29 @@ public class Game {
                     player.clearDeadAnimals();
                 }
 
-                menuChoice = scanNextByte(scanner);
+                int successfulFeedNumber = -1;
 
                 byte MENU_START = 1;
                 byte MENU_END = 7;
-                int successfulFeedNumber = -1;
+                menuChoice = -1;
 
-                if (menuChoice < MENU_START || menuChoice > MENU_END) {
-                    view.displayMenuOutOfBounds(MENU_END);
-                } else {
+                while (menuChoice < MENU_START || menuChoice > MENU_END || menuChoice == -1) {
 
-                    switch (menuChoice) {
-                        case 1 -> buyAnimal(player, scanner);
-                        case 2 -> buyFood(player, scanner);
-                        case 3 -> {successfulFeedNumber = feed(player, scanner);}
-                        case 4 -> breed(player, scanner);
-                        case 5 -> sell(player, scanner);
-                        case 6 -> saveGame(allPlayers, scanner);
-                        case 7 -> quitGame(scanner);
+                    menuChoice = scanNextByte(scanner);
+                    if (menuChoice < MENU_START || menuChoice > MENU_END) {
+                        view.displayMenuOutOfBounds(MENU_END);
                     }
+                }
+
+                switch (menuChoice) {
+                    case 1 -> buyAnimal(player, scanner);
+                    case 2 -> buyFood(player, scanner);
+                    case 3 -> {successfulFeedNumber = feed(player, scanner);}
+                    case 4 -> breed(player, scanner);
+                    case 5 -> sell(player, scanner);
+                    case 6 -> saveGame(allPlayers, scanner);
+                    case 7 -> quitGame(scanner);
+
                 }
                 view.displayEndOfTurn();
                 scanner.nextLine();
@@ -213,8 +216,10 @@ public class Game {
     }
 
     public void buyAnimal(Player player, Scanner scanner) {
+
         view.displayBuyAnimalMenu();
         Store animalStore = new Store(player, players);
+
         byte menuChoice = scanNextByte(scanner);
 
         byte MENU_START = 1;
@@ -234,7 +239,7 @@ public class Game {
             view.pleaseEnterNameForAnimal();
             String name = scanner.next();
             scanner.nextLine();
-            // Since this is a queue, the last item is the newest
+            // Since an arraylist is a queue, the last item is the newest added
             player.getAnimal(player.getAnimals().size() - 1).setName(name);
 
             view.displayGenderMenu();
@@ -343,6 +348,7 @@ public class Game {
     }
 
     public void buyMarineMammal(Player player, Scanner scanner, Store animalStore) {
+
         view.displayBuyMarineMammalMenu();
         byte menuChoice = scanNextByte(scanner);
 
@@ -364,6 +370,7 @@ public class Game {
     }
 
     public void buyFood(Player player, Scanner scanner) {
+
         view.displayBuyFoodMenu();
         Store foodStore = new Store(player, players);
         byte menuChoice = scanNextByte(scanner);
@@ -383,6 +390,7 @@ public class Game {
     }
 
     private void buySeed(Player player, Scanner scanner, Store foodStore) {
+
         view.displayBuySeedMenu();
         byte menuChoice = scanNextByte(scanner);
 
@@ -412,6 +420,7 @@ public class Game {
     }
 
     private void buyMeat(Player player, Scanner scanner, Store foodStore) {
+
         view.displayBuyMeatMenu();
         byte menuChoice = scanner.nextByte();
 
@@ -436,6 +445,7 @@ public class Game {
     }
 
     private void buyFishFood(Player player, Scanner scanner, Store foodStore) {
+
         view.displayBuyFishFoodMenu();
         byte menuChoice = scanner.nextByte();
 
@@ -469,6 +479,7 @@ public class Game {
             view.noAnimalsAvailable();
             return -1;
         }
+
         view.displayFeedMenu();
         view.displayAnimalsMenu(player.getAnimals());
 
@@ -485,6 +496,7 @@ public class Game {
         }
 
         Animal animalToFeed = player.getAnimal(menuChoice - 1);
+
         LinkedHashMap<Food, Integer> foods = player.getFoods();
         view.displaySelectFoodMenu(foods);
 
@@ -516,7 +528,6 @@ public class Game {
     }
 
     public void breed(Player player, Scanner scanner) {
-
 
         if (player.getAnimals().size() < 2) {
             view.youNeedAtLeastTwoAnimals();
@@ -582,7 +593,7 @@ public class Game {
         String classname = breedingAnimal1.getClass().getSimpleName();
 
         // Randomize with the offspring attribute as the max number of offsprings
-        // + 1 guarantees at least one offspring
+        // + 1 guarantees at least one offspring (if successful)
         Random random = new Random();
         byte offsprings = breedingAnimal1.getOffspring();
         offsprings =  (byte) (Math.round(random.nextDouble() * offsprings+ 1));
@@ -650,12 +661,12 @@ public class Game {
     public static int getMaxKilos(Player player, int price) {
         return (int) Math.floor(player.getMoney() / price);
     }
+
     public void sellAll(Player player) {
         Store sellingStore = new Store(player, players);
         ArrayList<Animal> allAnimals = player.getAnimals();
         for (Animal animal : allAnimals) {
             player.setMoney(player.getMoney() + animal.getPrice());
-            //player.removeAnimal(animal); //ConcurrentModification. Skipped. TODO Check
         }
     }
 }
