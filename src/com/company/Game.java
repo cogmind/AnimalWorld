@@ -393,7 +393,7 @@ public class Game {
         } else {
             Seed.Type choice = Seed.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
-            view.displayHowManyKilosToBuy(choice.name());
+            view.displayHowManyKilosToBuy(choice.name(), getMaxKilos(player, choice.price));
             int kilos = -1;
             try {
                 kilos = scanner.nextInt();
@@ -422,7 +422,7 @@ public class Game {
         } else {
             Meat.Type choice = Meat.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
-            view.displayHowManyKilosToBuy(choice.name());
+            view.displayHowManyKilosToBuy(choice.name(), getMaxKilos(player, choice.price));
             int kilos = scanner.nextInt();
             scanner.nextLine();
             boolean successfulSale = foodStore.sellFood("meat", choice.toString(), kilos);
@@ -446,7 +446,7 @@ public class Game {
         } else {
             FishFood.Type choice = FishFood.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
             // If sale is successful also updates player's (as customer in store) attributes
-            view.displayHowManyKilosToBuy(choice.name());
+            view.displayHowManyKilosToBuy(choice.name(), getMaxKilos(player, choice.price));
             int kilos = scanner.nextInt();
             scanner.nextLine();
             boolean successfulSale = foodStore.sellFood("fish food", choice.toString(), kilos);
@@ -459,6 +459,7 @@ public class Game {
     }
 
     public int feed(Player player, Scanner scanner) {
+
         if (player.getFoods().size() == 0) {
             view.noFoodAvailable();
             return -1;
@@ -470,11 +471,32 @@ public class Game {
         view.displayFeedMenu();
         view.displayAnimalsMenu(player.getAnimals());
 
-        byte menuChoice = scanNextByte(scanner);
-        Animal animalToFeed = player.getAnimal(menuChoice - 1);
+        byte menuChoice = -1;
+        byte MENU_START = 1;
+        byte MENU_END = (byte) player.getAnimals().size();
 
+        while (menuChoice < MENU_START || menuChoice > MENU_END || menuChoice == -1) {
+            menuChoice = scanNextByte(scanner);
+
+            if (menuChoice < MENU_START || menuChoice > MENU_END) {
+                view.menuOutOfBounds(MENU_END);
+            }
+        }
+
+        Animal animalToFeed = player.getAnimal(menuChoice - 1);
         LinkedHashMap<Food, Integer> foods = player.getFoods();
         view.displaySelectFoodMenu(foods);
+
+        MENU_END = (byte) player.getFoods().size();
+
+        while (menuChoice < MENU_START || menuChoice > MENU_END || menuChoice == -1) {
+
+            menuChoice = scanNextByte(scanner);
+
+            if (menuChoice < MENU_START || menuChoice > MENU_END) {
+                view.menuOutOfBounds(MENU_END);
+            }
+        }
 
         Food foodForAnimal = player.getFood(menuChoice - 1);
 
@@ -493,6 +515,12 @@ public class Game {
     }
 
     public void breed(Player player, Scanner scanner) {
+
+        if (player.getAnimals().size() < 2) {
+            view.youNeedAtLeastTwoAnimals();
+            return;
+        }
+
         view.displayBreedMenu();
 
         //Create a copy of the animal array list
@@ -502,6 +530,7 @@ public class Game {
         byte menuChoice1 = scanNextByte(scanner);
         Animal breedingAnimal1 = startingAnimals.get(menuChoice1 - 1);
         startingAnimals.remove(menuChoice1 - 1);
+
         view.displayAnimalsMenu(startingAnimals);
         byte menuChoice2 = scanNextByte(scanner);
         Animal breedingAnimal2 = startingAnimals.get(menuChoice2 - 1);
@@ -575,13 +604,22 @@ public class Game {
     }
 
     public void sell(Player player, Scanner scanner) {
+
         if (player.getAnimals().size() == 0){
             view.noAnimalsAvailable();
             return;
         }
+
         Store sellingStore = new Store(player, players);
         view.displayAnimalsMenu(player.getAnimals());
         Byte menuChoice = scanNextByte(scanner);
+
+        byte MENU_START = 1;
+        byte MENU_END = (byte) player.getAnimals().size();
+
+        if (menuChoice < MENU_START || menuChoice > MENU_END) {
+            view.menuOutOfBounds(MENU_END);
+        }
 
         Animal animal = player.getAnimal(menuChoice - 1);
         sellingStore.buyAnimal(animal);
@@ -589,6 +627,9 @@ public class Game {
         player.removeAnimal(menuChoice - 1);
     }
 
+    public static int getMaxKilos(Player player, int price) {
+        return (int) Math.floor(player.getMoney() / price);
+    }
     public void sellAll(Player player) {
         Store sellingStore = new Store(player, players);
         ArrayList<Animal> allAnimals = player.getAnimals();

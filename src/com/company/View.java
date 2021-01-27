@@ -11,6 +11,10 @@ public class View {
 
     public static String capitalize(String input) { return input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();}
 
+    public void youNeedAtLeastTwoAnimals() {
+        System.err.println("You need at least two animals to breed.");
+    }
+
     private void printMenu(String input) {
         System.out.println("\n".repeat(60));
         System.out.println(input);
@@ -295,12 +299,14 @@ public class View {
         System.out.println("Please choose a gender: \n1. Female\n2. Male");
     }
 
-    public void displayHowManyKilosToBuy(String foodType) {
-        System.out.println("How many kilos of " + View.capitalize(foodType).replace("_", " ") + " would you like to purchase?");
+    public void displayHowManyKilosToBuy(String foodType, int maxKilos) {
+        System.out.println("How many kilos of " + View.capitalize(foodType).replace("_", " ")
+                + " would you like to purchase (max " + maxKilos + ") ?");
     }
 
     public void displayHowManyKilosToFeed(String foodType) {
-        System.out.println("How many kilos of " + View.capitalize(foodType).replace("_", " ") + " would you like to feed?");
+        System.out.println("How many kilos of " + View.capitalize(foodType).replace("_", " ")
+                + " would you like to feed?");
     }
 
     public void pleaseEnterFileName() {

@@ -67,8 +67,6 @@ public class Store {
         boolean enoughMoney;
 
         if (customer.getMoney() < price) {
-            //TODO Remove debug statements
-            System.out.printf("get money: %s. Price: %s", customer.getMoney(), price);
             enoughMoney = NOT_ENOUGH_MONEY;
         } else {
             enoughMoney = ENOUGH_MONEY;
@@ -116,7 +114,7 @@ public class Store {
             case "fish food" -> foodForSale = fishFood.get(specificFood);
         }
 
-        boolean enoughMoney = sell(foodForSale, foodForSale.getPrice());
+        boolean enoughMoney = sell(foodForSale, kilos * foodForSale.getPrice());
         if (enoughMoney) {
             customer.addFood(foodForSale, kilos);
             return ENOUGH_MONEY;
