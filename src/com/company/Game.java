@@ -9,6 +9,7 @@ public class Game {
     private ArrayList<Player> allPlayers = new ArrayList<>();
     private ArrayList<Player> highScore = new ArrayList<>();
     private byte players;
+    private static final byte PROBABILITY_SURVIVAL = 50;
 
     public static final String SAVE_PATH = "./sav/";
     public final static byte MIN_ROUNDS = 5;
@@ -16,12 +17,15 @@ public class Game {
     public final static byte MIN_PLAYERS = 1;
     public final static byte MAX_PLAYERS = 4;
     public final static byte BREEDING_SUCCESS_RATE = 50;
+    public final static byte PROBABILITY_SICK = 20;
+    public final static byte SICK_FEE = 10; // A percentage of the current price for the animal
 
     public Game() {
 
         Scanner scanner = new Scanner(System.in);
         byte rounds = -1;
         players = -1;
+        ArrayList[] sickInfo;
 
         view.displayAnimalWorld();
         view.createLineFeed();
@@ -109,11 +113,14 @@ public class Game {
                     case 5 -> sell(player, scanner);
                     case 6 -> saveGame(allPlayers, scanner);
                     case 7 -> quitGame(scanner);
-
                 }
+
+                player.setHealthReductions(reduceHealthAndManageDeath(player));
+                sickInfo = manageSickAnimals(player, scanner);
+
                 view.displayEndOfTurn();
                 scanner.nextLine();
-                player.setHealthReductions(reduceHealthAndManageDeath(player));
+
                 view.create60Lines();
 
                 // If player loses, remove player
@@ -144,11 +151,35 @@ public class Game {
         view.endOfGame();
     }
 
+    private ArrayList[] manageSickAnimals(Player player, Scanner scanner) {
+
+        byte SICK_ANIMALS = 0;
+        byte FEES = 1;
+
+        ArrayList[] sickInfo = player.getSickAnimals();
+
+        if (sickInfo[SICK_ANIMALS].size() > 0) {
+            int totalFee = view.displaySickAnimals(sickInfo[SICK_ANIMALS], sickInfo[FEES]);
+            String veterinaryChoice = scanner.nextLine();
+            if (veterinaryChoice.matches("y|Y|Yes|YES")) {
+                player.setMoney(player.getMoney() - totalFee);
+                view.displayVeterinaryReceipt(sickInfo, player);
+                player.letSickAnimalsDie(sickInfo[SICK_ANIMALS], PROBABILITY_SURVIVAL);
+            } else {
+                player.letSickAnimalsDie(sickInfo[SICK_ANIMALS], 0);
+            }
+
+        }
+        return sickInfo;
+    }
+
     private void quitGame(Scanner scanner) {
         view.reallyQuit();
         String choice = scanner.nextLine();
         if (choice.matches("y|Y|Yes|YES")) {
             System.exit(0);
+        } else {
+            return;
         }
     }
 

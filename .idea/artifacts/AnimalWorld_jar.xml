@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="AnimalWorld:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/AnimalWorld_jar</output-path>
+    <root id="archive" name="AnimalWorld.jar">
+      <element id="module-output" name="AnimalWorld" />
+    </root>
+  </artifact>
+</component>

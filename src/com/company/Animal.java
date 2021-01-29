@@ -7,22 +7,6 @@ import java.util.Random;
 
 public abstract class Animal implements Serializable {
 
-    public enum Type {
-
-        NULL(0, new String[]{""}, 0.0, (byte) 0);
-
-        int price;
-        String[] diet;
-        double foodFactor;
-        byte offspring;
-
-        Type(int price, String[] diet, double foodFactor, byte offspring) {
-            this.price = price;
-            this.diet = diet;
-            this.foodFactor = foodFactor;
-            this.offspring = offspring;
-        }
-    }
     private String type;
     private String name;
     private boolean isFemale;
@@ -69,6 +53,10 @@ public abstract class Animal implements Serializable {
 
     public int getPrice() {
         return Math.round(price * health / 100);
+    }
+
+    public int getOriginalPrice() {
+        return price;
     }
 
     public byte getHealth() {

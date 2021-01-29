@@ -159,4 +159,39 @@ public class Player implements Serializable {
     public void addDeadAnimals(Animal animal) {
         deadAnimals.add(animal);
     }
+
+    public ArrayList[] getSickAnimals() {
+        Random random = new Random();
+        int r;
+        ArrayList<Integer> fees = new ArrayList<>();
+        ArrayList<Integer> sickAnimals = new ArrayList<>();
+        int counter = 0;
+        ArrayList<Animal> animals = getAnimals();
+        for (Animal animal : animals){
+            r = random.nextInt(100);
+            if (r <= Game.PROBABILITY_SICK) {
+                sickAnimals.add(counter);
+                fees.add(Math.round((100 + Game.SICK_FEE) * animal.getOriginalPrice() / 100));
+            }
+            counter += 1;
+        }
+
+        ArrayList[] sickInfo = {sickAnimals, fees};
+
+        return sickInfo;
+    }
+
+    public void letSickAnimalsDie(ArrayList<Integer> sickAnimals, int survivalRate) {
+
+        Random random = new Random();
+        int r = 0;
+
+        Collections.reverse(sickAnimals);
+        for (int i = sickAnimals.size() - 1; i >= 0; i--) {
+            r = random.nextInt(100);
+            if (survivalRate < r) {
+                removeAnimal(sickAnimals.get(i));
+            }
+        }
+    }
 }

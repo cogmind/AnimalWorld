@@ -10,7 +10,9 @@ public class View {
 
     }
 
-    public static String capitalize(String input) { return input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();}
+    public static String capitalize(String input) {
+        return input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
+    }
 
     public void youNeedAtLeastTwoAnimals() {
         System.err.println("You need at least two animals to breed.");
@@ -21,7 +23,7 @@ public class View {
         System.out.println(input);
     }
 
-    private void displayError(String input){
+    private void displayError(String input) {
         System.err.println(input);
     }
 
@@ -37,15 +39,16 @@ public class View {
     public void displayAnimalWorld() {
         System.out.println("ANIMAL WORLD v1.0 by Daniel Labbé");
     }
-    public void displayMoney(long money){
+
+    public void displayMoney(long money) {
         System.out.print(money + "€\t");
     }
 
-    public void displayAverageHealth(int averageHealth){
+    public void displayAverageHealth(int averageHealth) {
         System.out.printf("Avg HP: %d\n", averageHealth);
     }
 
-    public void displayTotalHealth(int totalHealth){
+    public void displayTotalHealth(int totalHealth) {
         System.out.printf("Total HP: %d\t", totalHealth);
     }
 
@@ -76,7 +79,7 @@ public class View {
     }
 
     public void howManyPlayers() {
-        System.out.println("How many players ("+ Game.MIN_PLAYERS + "-" + Game.MAX_PLAYERS + ")?");
+        System.out.println("How many players (" + Game.MIN_PLAYERS + "-" + Game.MAX_PLAYERS + ")?");
     }
 
     public void playersOutOfBounds() {
@@ -96,10 +99,10 @@ public class View {
                 "\n5. Sell animals" +
                 "\n6. Save game" +
                 "\n7. Quit game"
-                );
+        );
     }
 
-    public void displayMenuOutOfBounds(byte menu_end){
+    public void displayMenuOutOfBounds(byte menu_end) {
         displayError("Please select an option between 1 and " + menu_end + ".");
     }
 
@@ -115,9 +118,9 @@ public class View {
     public void displayBuyBirdMenu() {
         printMenu("BIRD MENU\n1. Pigeon (" + Bird.Type.PIGEON.price + "€" +
                 ")\n2. Parrot (" + Bird.Type.PARROT.price + "€" +
-                ")\n3. Owl (" + Bird.Type.OWL.price  + "€" +
+                ")\n3. Owl (" + Bird.Type.OWL.price + "€" +
                 ")\n4. Eagle (" + Bird.Type.EAGLE.price + "€"
-                );
+        );
     }
 
     public void displayBuyCatMenu() {
@@ -125,7 +128,7 @@ public class View {
                 "\n2. House cat (" + Cat.Type.HOUSE_CAT.price + "€)" +
                 "\n3. Lynx (" + Cat.Type.LYNX.price + "€)" +
                 "\n4. Panther (" + Cat.Type.PANTHER.price + "€)"
-                );
+        );
     }
 
     public void displayBuyLivestockMenu() {
@@ -133,14 +136,14 @@ public class View {
                 "\n1. Cattle (" + Livestock.Type.CATTLE.price + "€)" +
                 "\n2. Sheep (" + Livestock.Type.SHEEP.price + "€)" +
                 "\n3. Bison (" + Livestock.Type.BISON.price + "€)"
-                );
+        );
     }
 
     public void displayBuyFishMenu() {
         printMenu("FISH MENU" +
                 "\n1. Goldfish (" + Fish.Type.GOLDFISH.price + "€)" +
                 "\n2. Giant cat fish (" + Fish.Type.GIANT_CATFISH.price + "€)"
-                );
+        );
     }
 
     public void displayBuyMarineMammalMenu() {
@@ -148,8 +151,8 @@ public class View {
                 "\n1. Sea otter (" + MarineMammal.Type.SEA_OTTER.price + "€)" +
                 "\n2. Seal (" + MarineMammal.Type.SEAL.price + "€)" +
                 "\n3. Polar bear (" + MarineMammal.Type.POLAR_BEAR.price + "€)" +
-                "\n4. Blue whale ("+ MarineMammal.Type.BLUE_WHALE.price + "€)"
-                );
+                "\n4. Blue whale (" + MarineMammal.Type.BLUE_WHALE.price + "€)"
+        );
     }
 
 
@@ -198,26 +201,26 @@ public class View {
         printMenu("SEEDS MENU" +
                 "\n1. Bird seeds (" + Seed.Type.BIRD_SEED.price + "€)" +
                 "\n2. Corn (" + Seed.Type.CORN.price + "€)"
-                );
+        );
     }
 
     public void displayBuyMeatMenu() {
         printMenu("MEATS MENU" +
-                "\n1. Mice ("  + Meat.Type.MICE.price + "€)" +
+                "\n1. Mice (" + Meat.Type.MICE.price + "€)" +
                 "\n2. Raw steak (" + Meat.Type.RAW_STEAK.price + "€)"
-                );
+        );
     }
 
     public void displayBuyFishFoodMenu() {
         printMenu("FISH FOOD MENU" +
                 "\n1. Krill (" + FishFood.Type.KRILL.price + "€)" +
                 "\n2. Herring (" + FishFood.Type.HERRING.price + "€)"
-                );
+        );
     }
 
     public void displaySelectFoodMenu(LinkedHashMap<Food, Integer> foods) {
         int i = 0;
-        for(Food food : foods.keySet()) {
+        for (Food food : foods.keySet()) {
             i++;
             System.out.println(i + ". " + food);
         }
@@ -282,7 +285,7 @@ public class View {
         TreeMap<Long, String> highScore = new TreeMap<>(Collections.reverseOrder());
 
         // Sort by money (long) as key
-        for (Player player: allPlayers) {
+        for (Player player : allPlayers) {
             highScore.put(player.getMoney(), player.getName());
         }
 
@@ -290,7 +293,7 @@ public class View {
 
         // Printing value before key produces a high score table
         int j = 1;
-        for (Map.Entry<Long, String>  entry : entries) {
+        for (Map.Entry<Long, String> entry : entries) {
             System.out.println(j + ". " + entry.getValue() + " " + entry.getKey());
             j++;
         }
@@ -339,8 +342,34 @@ public class View {
     public void displayFiles() {
         File[] gameFiles = new File(Game.SAVE_PATH).listFiles();
         printMenu("Saved games:");
-        for(File gameFile : gameFiles){
+        for (File gameFile : gameFiles) {
             System.out.println(gameFile.getName());
         }
+    }
+
+    public int displaySickAnimals(ArrayList<Integer> sickAnimals, ArrayList<Integer> fees) {
+
+        int totalFee = 0;
+        for (int fee : fees) {
+            totalFee += fee;
+        }
+        System.out.println("You have " + sickAnimals.size() + " sick animal(s). Pay veterinary fee (" + totalFee + ") Y/N?");
+        return totalFee;
+    }
+
+    public void displayVeterinaryReceipt(ArrayList[] sickInfo, Player player) {
+
+        byte SICK_ANIMALS = 0;
+        byte FEES = 1;
+
+        for (int i = 0; i < sickInfo[SICK_ANIMALS].size(); i++) {
+            Animal animal = player.getAnimal((Integer) sickInfo[SICK_ANIMALS].get(i));
+            int fee = (int) sickInfo[FEES].get(i);
+            System.out.println("Veterinary Receipt");
+            System.out.println(animal.getType().toString() + " --- " + fee + "€");
+
+        }
+
+
     }
 }
