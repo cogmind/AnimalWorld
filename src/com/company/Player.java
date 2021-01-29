@@ -150,9 +150,6 @@ public class Player implements Serializable {
 
     public Food getFood(int i) {
         //A Linked Hash Map is ordered and allows us to do this
-        System.out.println(foods);
-        System.out.println(foods.entrySet());
-        System.out.println(foods.keySet());
         return (Food) foods.keySet().toArray()[i];
     }
 
@@ -169,7 +166,7 @@ public class Player implements Serializable {
         ArrayList<Animal> animals = getAnimals();
         for (Animal animal : animals){
             r = random.nextInt(100);
-            if (r <= Game.PROBABILITY_SICK) {
+            if (r >= Game.PROBABILITY_SICK) {
                 sickAnimals.add(counter);
                 fees.add(Math.round((100 + Game.SICK_FEE) * animal.getOriginalPrice() / 100));
             }

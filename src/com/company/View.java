@@ -119,7 +119,7 @@ public class View {
         printMenu("BIRD MENU\n1. Pigeon (" + Bird.Type.PIGEON.price + "€" +
                 ")\n2. Parrot (" + Bird.Type.PARROT.price + "€" +
                 ")\n3. Owl (" + Bird.Type.OWL.price + "€" +
-                ")\n4. Eagle (" + Bird.Type.EAGLE.price + "€"
+                ")\n4. Eagle (" + Bird.Type.EAGLE.price + "€)"
         );
     }
 
@@ -170,7 +170,6 @@ public class View {
 
     }
 
-    //TODO
     public void displayAnimalsMenu(ArrayList<Animal> animals) {
         printMenu("OWNED ANIMALS\n");
         int i = 0;
@@ -366,7 +365,7 @@ public class View {
             Animal animal = player.getAnimal((Integer) sickInfo[SICK_ANIMALS].get(i));
             int fee = (int) sickInfo[FEES].get(i);
             System.out.println("Veterinary Receipt");
-            System.out.println(animal.getType().toString() + " --- " + fee + "€");
+            System.out.println(animal.getType().toString().replace("_", " ") + " --- " + fee + "€");
 
         }
 

@@ -18,14 +18,13 @@ public class Game {
     public final static byte MAX_PLAYERS = 4;
     public final static byte BREEDING_SUCCESS_RATE = 50;
     public final static byte PROBABILITY_SICK = 20;
-    public final static byte SICK_FEE = 10; // A percentage of the current price for the animal
+    public final static byte SICK_FEE = 10; // A percentage of the original price for the animal
 
     public Game() {
 
         Scanner scanner = new Scanner(System.in);
         byte rounds = -1;
         players = -1;
-        ArrayList[] sickInfo;
 
         view.displayAnimalWorld();
         view.createLineFeed();
@@ -73,6 +72,7 @@ public class Game {
         while (!gameOver && rounds > 0) {
             for(Player player: allPlayers) {
 
+                ArrayList[] sickInfo;
                 player.updateAllHealth();
 
                 // View statistics
@@ -92,7 +92,6 @@ public class Game {
                 }
 
                 int successfulFeedNumber = -1;
-
                 byte MENU_START = 1;
                 byte MENU_END = 7;
                 menuChoice = -1;
@@ -115,8 +114,8 @@ public class Game {
                     case 7 -> quitGame(scanner);
                 }
 
-                player.setHealthReductions(reduceHealthAndManageDeath(player));
-                sickInfo = manageSickAnimals(player, scanner);
+                player.setHealthReductions(reduceHealthAndManageDeath(player, successfulFeedNumber));
+                manageSickAnimals(player, scanner);
 
                 view.displayEndOfTurn();
                 scanner.nextLine();
@@ -151,7 +150,7 @@ public class Game {
         view.endOfGame();
     }
 
-    private ArrayList[] manageSickAnimals(Player player, Scanner scanner) {
+    private void manageSickAnimals(Player player, Scanner scanner) {
 
         byte SICK_ANIMALS = 0;
         byte FEES = 1;
@@ -170,7 +169,6 @@ public class Game {
             }
 
         }
-        return sickInfo;
     }
 
     private void quitGame(Scanner scanner) {
@@ -222,19 +220,21 @@ public class Game {
         return menuChoice;
     }
 
-    private ArrayList<Integer> reduceHealthAndManageDeath(Player player) {
+    private ArrayList<Integer> reduceHealthAndManageDeath(Player player, int successfulFeedNumber) {
         //Reduce health and record dead animals
-        int i = 0;
         ArrayList<Animal> allAnimals = player.getAnimals();
 
         int healthReduction;
         ArrayList<Integer> healthReductions = new ArrayList<>(allAnimals.size());
 
+        int i = 0;
         for (Animal animal : allAnimals) {
-            healthReduction = animal.fatigueHealth();
-            healthReductions.add(healthReduction);
-            if (animal.getHealth() <= 0) {
-                player.addDeadAnimals(animal);
+            if (i != successfulFeedNumber) { // Except the most recently fed animal
+                healthReduction = animal.fatigueHealth();
+                healthReductions.add(healthReduction);
+                if (animal.getHealth() <= 0) {
+                    player.addDeadAnimals(animal);
+                }
             }
             i++;
         }
