@@ -33,12 +33,12 @@ public class Game {
 
         switch (menuChoice) {
             case 1: break;
-            case 2: ArrayList<Player> allPlayers = loadGame(scanner);
+            case 2: allPlayers = loadGame(scanner);
         }
 
         while (!(rounds >= MIN_ROUNDS && rounds <= MAX_ROUNDS)) {
 
-            while (rounds == -1 || (rounds < 5 || rounds > 30)) {
+            while (rounds < 5 || rounds > 30) {
                 view.howManyRounds();
                 rounds = scanNextByte(scanner); // Separate function to catch errors
                 System.out.println(rounds);
@@ -72,7 +72,6 @@ public class Game {
         while (!gameOver && rounds > 0) {
             for(Player player: allPlayers) {
 
-                ArrayList[] sickInfo;
                 player.updateAllHealth();
 
                 // View statistics
@@ -96,7 +95,7 @@ public class Game {
                 byte MENU_END = 7;
                 menuChoice = -1;
 
-                while (menuChoice < MENU_START || menuChoice > MENU_END || menuChoice == -1) {
+                while (menuChoice < MENU_START || menuChoice > MENU_END) {
 
                     menuChoice = scanNextByte(scanner);
                     if (menuChoice < MENU_START || menuChoice > MENU_END) {
@@ -107,7 +106,7 @@ public class Game {
                 switch (menuChoice) {
                     case 1 -> buyAnimal(player, scanner);
                     case 2 -> buyFood(player, scanner);
-                    case 3 -> {successfulFeedNumber = feed(player, scanner);}
+                    case 3 -> successfulFeedNumber = feed(player, scanner);
                     case 4 -> breed(player, scanner);
                     case 5 -> sell(player, scanner);
                     case 6 -> saveGame(allPlayers, scanner);
@@ -136,7 +135,7 @@ public class Game {
                 rounds--;
             }
             if (allPlayers.size() == 0) {
-                gameOver = true; // TODO check if program halts after removing players
+                gameOver = true;
             }
         }
 
@@ -176,8 +175,6 @@ public class Game {
         String choice = scanner.nextLine();
         if (choice.matches("y|Y|Yes|YES")) {
             System.exit(0);
-        } else {
-            return;
         }
     }
 
@@ -246,7 +243,7 @@ public class Game {
         return healthReductions;
     }
 
-    public void buyAnimal(Player player, Scanner scanner) {
+    private void buyAnimal(Player player, Scanner scanner) {
 
         view.displayBuyAnimalMenu();
         Store animalStore = new Store(player, players);
@@ -291,7 +288,7 @@ public class Game {
         }
     }
 
-    public void buyBird(Player player, Scanner scanner, Store animalStore) {
+    private void buyBird(Player player, Scanner scanner, Store animalStore) {
 
         view.displayBuyBirdMenu();
         byte menuChoice = scanNextByte(scanner);
@@ -313,7 +310,8 @@ public class Game {
         }
     }
 
-    public void buyCat(Player player, Scanner scanner, Store animalStore) {
+    private void buyCat(Player player, Scanner scanner, Store animalStore) {
+
         view.displayBuyCatMenu();
         byte menuChoice = scanNextByte(scanner);
 
@@ -334,7 +332,8 @@ public class Game {
         }
     }
 
-    public void buyLivestock(Player player, Scanner scanner, Store animalStore) {
+    private void buyLivestock(Player player, Scanner scanner, Store animalStore) {
+
         view.displayBuyLivestockMenu();
         byte menuChoice = scanNextByte(scanner);
 
@@ -356,7 +355,8 @@ public class Game {
 
     }
 
-    public void buyFish(Player player, Scanner scanner, Store animalStore) {
+    private void buyFish(Player player, Scanner scanner, Store animalStore) {
+
         view.displayBuyFishMenu();
         byte menuChoice = scanNextByte(scanner);
 
@@ -378,7 +378,7 @@ public class Game {
 
     }
 
-    public void buyMarineMammal(Player player, Scanner scanner, Store animalStore) {
+    private void buyMarineMammal(Player player, Scanner scanner, Store animalStore) {
 
         view.displayBuyMarineMammalMenu();
         byte menuChoice = scanNextByte(scanner);
@@ -400,7 +400,7 @@ public class Game {
         }
     }
 
-    public void buyFood(Player player, Scanner scanner) {
+    private void buyFood(Player player, Scanner scanner) {
 
         view.displayBuyFoodMenu();
         Store foodStore = new Store(player, players);
@@ -500,7 +500,7 @@ public class Game {
         }
     }
 
-    public int feed(Player player, Scanner scanner) {
+    private int feed(Player player, Scanner scanner) {
 
         if (player.getFoods().size() == 0) {
             view.noFoodAvailable();
@@ -518,7 +518,7 @@ public class Game {
         byte MENU_START = 1;
         byte MENU_END = (byte) player.getAnimals().size();
 
-        while (menuChoice < MENU_START || menuChoice > MENU_END || menuChoice == -1) {
+        while (menuChoice < MENU_START || menuChoice > MENU_END) {
             menuChoice = scanNextByte(scanner);
 
             if (menuChoice < MENU_START || menuChoice > MENU_END) {
@@ -533,7 +533,7 @@ public class Game {
 
         MENU_END = (byte) player.getFoods().size();
 
-        while (menuChoice < MENU_START || menuChoice > MENU_END || menuChoice == -1) {
+        while (menuChoice < MENU_START || menuChoice > MENU_END) {
 
             menuChoice = scanNextByte(scanner);
 
@@ -558,7 +558,7 @@ public class Game {
         }
     }
 
-    public void breed(Player player, Scanner scanner) {
+    private void breed(Player player, Scanner scanner) {
 
         if (player.getAnimals().size() < 2) {
             view.youNeedAtLeastTwoAnimals();
@@ -577,7 +577,7 @@ public class Game {
         byte MENU_START = 1;
         byte MENU_END = (byte) player.getAnimals().size();
 
-        while (menuChoice1 < MENU_START || menuChoice1 > MENU_END || menuChoice1 == -1) {
+        while (menuChoice1 < MENU_START || menuChoice1 > MENU_END) {
 
             menuChoice1 = scanNextByte(scanner);
 
@@ -590,7 +590,7 @@ public class Game {
 
         view.displayAnimalsMenu(startingAnimals);
 
-        while (menuChoice2 < MENU_START || menuChoice2 > MENU_END || menuChoice2 == -1) {
+        while (menuChoice2 < MENU_START || menuChoice2 > MENU_END) {
 
             menuChoice2 = scanNextByte(scanner);
             if (menuChoice1 < MENU_START || menuChoice1 > MENU_END) {
@@ -665,7 +665,7 @@ public class Game {
         }
     }
 
-    public void sell(Player player, Scanner scanner) {
+    private void sell(Player player, Scanner scanner) {
 
         if (player.getAnimals().size() == 0){
             view.noAnimalsAvailable();
@@ -674,7 +674,7 @@ public class Game {
 
         Store sellingStore = new Store(player, players);
         view.displayAnimalsMenu(player.getAnimals());
-        Byte menuChoice = scanNextByte(scanner);
+        byte menuChoice = scanNextByte(scanner);
 
         byte MENU_START = 1;
         byte MENU_END = (byte) player.getAnimals().size();
@@ -689,11 +689,12 @@ public class Game {
         player.removeAnimal(menuChoice - 1);
     }
 
-    public static int getMaxKilos(Player player, int price) {
+    private static int getMaxKilos(Player player, int price) {
         return (int) Math.floor(player.getMoney() / price);
     }
 
-    public void sellAll(Player player) {
+    private void sellAll(Player player) {
+
         Store sellingStore = new Store(player, players);
         ArrayList<Animal> allAnimals = player.getAnimals();
         for (Animal animal : allAnimals) {

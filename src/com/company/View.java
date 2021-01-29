@@ -58,7 +58,7 @@ public class View {
         Iterator<Integer> healthReductionIterator = healthReductions.iterator();
 
         while (animalIterator.hasNext() && healthReductionIterator.hasNext()) {
-            System.out.printf(animalIterator.next().toString() + "(-" + healthReductionIterator.next() + " HP). ");
+            System.out.print(animalIterator.next().toString() + "(-" + healthReductionIterator.next() + " HP). ");
         }
     }
 
@@ -290,6 +290,7 @@ public class View {
 
         Set<Map.Entry<Long, String>> entries = highScore.entrySet();
 
+        System.out.println("HIGH SCORES");
         // Printing value before key produces a high score table
         int j = 1;
         for (Map.Entry<Long, String> entry : entries) {
@@ -365,7 +366,7 @@ public class View {
             Animal animal = player.getAnimal((Integer) sickInfo[SICK_ANIMALS].get(i));
             int fee = (int) sickInfo[FEES].get(i);
             System.out.println("Veterinary Receipt");
-            System.out.println(animal.getType().toString().replace("_", " ") + " --- " + fee + "€");
+            System.out.println(animal.getType().replace("_", " ") + " --- " + fee + "€");
 
         }
 
