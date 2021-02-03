@@ -184,6 +184,7 @@ public class Player implements Serializable {
         int r = 0;
 
         Collections.reverse(sickAnimals);
+
         for (int i = sickAnimals.size() - 1; i >= 0; i--) {
             r = random.nextInt(100);
             if (survivalRate < r) {

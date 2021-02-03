@@ -372,4 +372,12 @@ public class View {
 
 
     }
+
+    public void displaySellAnimals(int maxAnimals) {
+        System.out.println("Sell Animals (max " + maxAnimals + ")");
+    }
+
+    public void displaySellMoreAnimals() {
+        System.out.println("Do you wish to sell more animals? (Y/N)");
+    }
 }

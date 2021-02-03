@@ -9,6 +9,7 @@ public class Game {
     private ArrayList<Player> allPlayers = new ArrayList<>();
     private ArrayList<Player> highScore = new ArrayList<>();
     private byte players;
+    private static final int MAX_ANIMALS_FOR_SALE = 3;
     private static final byte PROBABILITY_SURVIVAL = 50;
 
     public static final String SAVE_PATH = "./sav/";
@@ -667,26 +668,46 @@ public class Game {
 
     private void sell(Player player, Scanner scanner) {
 
-        if (player.getAnimals().size() == 0){
+        int animalsAvailable = player.getAnimals().size();
+
+        if (animalsAvailable == 0){
             view.noAnimalsAvailable();
             return;
         }
 
         Store sellingStore = new Store(player, players);
-        view.displayAnimalsMenu(player.getAnimals());
-        byte menuChoice = scanNextByte(scanner);
 
-        byte MENU_START = 1;
-        byte MENU_END = (byte) player.getAnimals().size();
-
-        if (menuChoice < MENU_START || menuChoice > MENU_END) {
-            view.displayMenuOutOfBounds(MENU_END);
+        if (animalsAvailable > MAX_ANIMALS_FOR_SALE) {
+            animalsAvailable = MAX_ANIMALS_FOR_SALE;
         }
 
-        Animal animal = player.getAnimal(menuChoice - 1);
-        sellingStore.buyAnimal(animal);
-        player.setMoney(player.getMoney() + animal.getPrice());
-        player.removeAnimal(menuChoice - 1);
+        while (animalsAvailable > 0) {
+            view.displaySellAnimals(animalsAvailable);
+            view.displayAnimalsMenu(player.getAnimals());
+            byte menuChoice = scanNextByte(scanner);
+
+            byte MENU_START = 1;
+            byte MENU_END = (byte) player.getAnimals().size();
+
+            if (menuChoice < MENU_START || menuChoice > MENU_END) {
+                view.displayMenuOutOfBounds(MENU_END);
+            }
+
+            Animal animal = player.getAnimal(menuChoice - 1);
+            sellingStore.buyAnimal(animal);
+            player.setMoney(player.getMoney() + animal.getPrice());
+            player.removeAnimal(menuChoice - 1);
+
+
+            animalsAvailable -= 1;
+            if (animalsAvailable > 0) {
+                view.displaySellMoreAnimals();
+                String choice = scanner.nextLine();
+                if (!choice.matches("y|Y|Yes|YES")) {
+                    return;
+                }
+            }
+        }
     }
 
     private static int getMaxKilos(Player player, int price) {
