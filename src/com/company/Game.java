@@ -77,7 +77,7 @@ public class Game {
 
                 // View statistics
                 view.create60Lines();
-                view.readyPlayerNo(player.getNumber(), player.getName());
+                view.readyPlayerNo(player.getNumber(), player.getName(), rounds);
                 view.displayMoney(player.getMoney());
                 view.displayTotalHealth(player.getTotalHealth());
                 view.displayAverageHealth(player.getAverageHealth());

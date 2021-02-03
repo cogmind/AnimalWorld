@@ -184,8 +184,8 @@ public class View {
         System.exit(0);
     }
 
-    public void readyPlayerNo(byte number, String name) {
-        System.out.println("Ready player no " + number + " (" + name + ")");
+    public void readyPlayerNo(byte number, String name, int rounds) {
+        System.out.println("Ready player no " + number + " (" + name + "). " + rounds + " rounds left");
     }
 
     public void unsuccessfulSale() {
