@@ -166,7 +166,7 @@ public class Player implements Serializable {
         ArrayList<Animal> animals = getAnimals();
         for (Animal animal : animals){
             r = random.nextInt(100);
-            if (r >= Game.PROBABILITY_SICK) {
+            if (r < Game.PROBABILITY_SICK) {
                 sickAnimals.add(counter);
                 fees.add(Math.round((100 + Game.SICK_FEE) * animal.getOriginalPrice() / 100));
             }
