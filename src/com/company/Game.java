@@ -133,8 +133,8 @@ public class Game {
                         gameOver = true;
                     }
                 }
-                rounds--;
             }
+            rounds--;
             if (allPlayers.size() == 0) {
                 gameOver = true;
             }
