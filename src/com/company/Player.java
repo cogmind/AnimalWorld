@@ -178,18 +178,25 @@ public class Player implements Serializable {
         return sickInfo;
     }
 
-    public void letSickAnimalsDie(ArrayList<Integer> sickAnimals, int survivalRate) {
+    public void letSickAnimalsDie(ArrayList<Integer> sickAnimals, int survivalRate, View view) {
 
         Random random = new Random();
         int r = 0;
 
         Collections.reverse(sickAnimals);
 
+        int deadAnimalsCount = 0;
+
         for (int i = sickAnimals.size() - 1; i >= 0; i--) {
             r = random.nextInt(100);
             if (survivalRate < r) {
                 removeAnimal(sickAnimals.get(i));
+                deadAnimalsCount++;
             }
+        }
+
+        if (deadAnimalsCount > 0) {
+            view.displayAnimalsDied(deadAnimalsCount);
         }
     }
 }

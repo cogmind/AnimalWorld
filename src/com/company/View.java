@@ -380,4 +380,12 @@ public class View {
     public void displaySellMoreAnimals() {
         System.out.println("Do you wish to sell more animals? (Y/N)");
     }
+
+    public void displayOnlyTwoGendersAvailable() {
+        System.out.println("There are only two genders available in this version of the game.");
+    }
+
+    public void displayAnimalsDied(int deadAnimalsCount) {
+        System.out.println(deadAnimalsCount + " animals died.");
+    }
 }

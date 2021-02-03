@@ -10,7 +10,6 @@ public class Store {
     private byte customers;
     private final static boolean ENOUGH_MONEY = true;
     private final static boolean NOT_ENOUGH_MONEY = false;
-    private long money = 40000;
 
     private HashMap<String, Animal> birds = new HashMap<String, Animal>();
     private HashMap<String, Animal> cats = new HashMap<String, Animal>();
@@ -100,7 +99,6 @@ public class Store {
     // The store is buying, the customer is selling
     public void buyAnimal(Animal animal) {
         customer.setMoney(customer.getMoney() + animal.getPrice());
-        money -= animal.getPrice();
     }
 
     // The store is selling, the customer is buying
