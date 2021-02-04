@@ -58,7 +58,7 @@ public class View {
         Iterator<Integer> healthReductionIterator = healthReductions.iterator();
 
         while (animalIterator.hasNext() && healthReductionIterator.hasNext()) {
-            System.out.print(animalIterator.next().toString() + "(-" + healthReductionIterator.next() + " HP). ");
+            System.out.print(animalIterator.next().toString() + "(" + healthReductionIterator.next() + " HP). ");
         }
     }
 

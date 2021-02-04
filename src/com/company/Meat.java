@@ -4,8 +4,8 @@ public class Meat extends Food {
 
     enum Type {
 
-        MICE(200),
-        RAW_STEAK(500);
+        MICE(100),
+        RAW_STEAK(200);
 
         int price;
         Type(int price){

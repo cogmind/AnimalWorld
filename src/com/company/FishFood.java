@@ -5,7 +5,7 @@ public class FishFood extends Food {
     enum Type {
 
         KRILL(50),
-        HERRING(200);
+        HERRING(180);
 
         int price;
         Type(int price){

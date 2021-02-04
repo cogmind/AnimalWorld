@@ -228,11 +228,13 @@ public class Game {
         int i = 0;
         for (Animal animal : allAnimals) {
             if (i != successfulFeedNumber) { // Except the most recently fed animal
-                healthReduction = animal.fatigueHealth();
+                healthReduction = -1 * animal.fatigueHealth();
                 healthReductions.add(healthReduction);
                 if (animal.getHealth() <= 0) {
                     player.addDeadAnimals(animal);
                 }
+            } else {
+                healthReductions.add(0); // Most recently fed animal
             }
             i++;
         }
