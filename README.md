@@ -7,5 +7,5 @@ Developed using IntelliJ and ZenHub
 
 Requires a window height of 11 characters.
 
-Known issues
-# On Windows cmd the '€' character is replaced by '?'
+## Known issues
+* On Windows cmd the '€' character is replaced by '?'
