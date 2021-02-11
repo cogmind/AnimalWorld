@@ -75,7 +75,7 @@ public class Store {
     }
 
     // The store is selling, the customer is buying
-    public boolean sellAnimal(String animalType, String specificAnimal, View view, Scanner scanner) {
+    public boolean sellAnimal(String animalType, String specificAnimal) {
 
         Animal animalForSale = null;
 
@@ -89,8 +89,6 @@ public class Store {
 
         boolean enoughMoney = sell(animalForSale, animalForSale.getPrice());
         if (enoughMoney) {
-            //view.pleaseEnterNameForAnimal();
-            //animalForSale.setName(scanner.nextLine());
             customer.addAnimal(animalForSale);
             return ENOUGH_MONEY;
         } else { return NOT_ENOUGH_MONEY;}

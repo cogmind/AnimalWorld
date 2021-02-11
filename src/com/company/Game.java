@@ -325,7 +325,7 @@ public class Game {
         }
         Bird.Type choice = Bird.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
         // If sale is successful also updates player's (as customer in store) attributes
-        boolean successfulSale = animalStore.sellAnimal("bird", choice.toString(), view, scanner);
+        boolean successfulSale = animalStore.sellAnimal("bird", choice.toString());
         if (!successfulSale) {
             view.unsuccessfulSale();
         } else {
@@ -352,7 +352,7 @@ public class Game {
 
         Cat.Type choice = Cat.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
         // If sale is successful also updates player's (as customer in store) attributes
-        boolean successfulSale = animalStore.sellAnimal("cat", choice.toString(), view, scanner);
+        boolean successfulSale = animalStore.sellAnimal("cat", choice.toString());
         if (!successfulSale) {
             view.unsuccessfulSale();
         } else {
@@ -379,7 +379,7 @@ public class Game {
 
         Livestock.Type choice = Livestock.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
         // If sale is successful also updates player's (as customer in store) attributes
-        boolean successfulSale = animalStore.sellAnimal("livestock", choice.toString(), view, scanner);
+        boolean successfulSale = animalStore.sellAnimal("livestock", choice.toString());
         if (!successfulSale) {
             view.unsuccessfulSale();
         } else {
@@ -406,7 +406,7 @@ public class Game {
 
         Fish.Type choice = Fish.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
         // If sale is successful also updates player's (as customer in store) attributes
-        boolean successfulSale = animalStore.sellAnimal("fish", choice.toString(), view, scanner);
+        boolean successfulSale = animalStore.sellAnimal("fish", choice.toString());
         if (!successfulSale) {
             view.unsuccessfulSale();
         } else {
@@ -433,7 +433,7 @@ public class Game {
 
         MarineMammal.Type choice = MarineMammal.Type.values()[menuChoice - 1]; // DEBUGABLE Requires that the order is the same in menu
         // If sale is successful also updates player's (as customer in store) attributes
-        boolean successfulSale = animalStore.sellAnimal("marine mammal", choice.toString(), view, scanner);
+        boolean successfulSale = animalStore.sellAnimal("marine mammal", choice.toString());
         if (!successfulSale) {
             view.unsuccessfulSale();
         } else {
