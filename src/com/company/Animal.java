@@ -93,7 +93,7 @@ public abstract class Animal implements Serializable {
 
         if (dietList.contains(food.toString()))  {
             while (kilos > 0) {
-                setHealth((byte) Math.round(((0.10 / getFoodFactor()) + 1) * getHealth()));
+                setHealth((byte) Math.round(((Game.FEED_PERCENTAGE / getFoodFactor()) + 1) * getHealth()));
                 if (getHealth() > 100) {
                     setHealth((byte) 100);
                 }

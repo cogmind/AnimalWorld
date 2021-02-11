@@ -20,6 +20,7 @@ public class Game {
     public final static byte BREEDING_SUCCESS_RATE = 50;
     public final static byte PROBABILITY_SICK = 20;
     public final static byte SICK_FEE = 10; // A percentage of the original price for the animal
+    public final static double FEED_PERCENTAGE = 0.10; // Covaries with food factor
 
     public Game() {
 
